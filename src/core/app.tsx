@@ -83,7 +83,7 @@ const useApp = ({ appsData }: UseAppProps): HookApp => {
   }
 }
 
-interface AppProviderProps {
+export interface AppProviderProps {
   appsData: appConfig[]
   config: Config
 }
@@ -111,8 +111,8 @@ export const AppProvider = ({ appsData, config }: AppProviderProps) => {
       const refine = createRefine({
         name: name,
         prefix: name ? '/:app' : undefined,
+        config: config,
         i18nProvider: app.i18nProvider,
-        authProvider: app.apps[name].authProvider,
         router: app.apps[name].getRouter(),
         resources: app.apps[name].getResources().map((item) => {
           item.list = formatResources(item.list)

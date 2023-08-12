@@ -1,20 +1,15 @@
 import { RouteObject } from 'react-router-dom'
-import { type AuthBindings, type ResourceProps } from '@refinedev/core'
+import { type ResourceProps } from '@refinedev/core'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 export interface App {
-  authProvider: AuthBindings
   addRouter: (routes: RouteObject[]) => void
   getRouter: () => RouteObject[]
   addResources: (resource: ResourceProps[]) => void
   getResources: () => ResourceProps[]
 }
 
-export interface createAppProps {
-  authProvider: AuthBindings
-}
-
-export const createApp = ({ authProvider }: createAppProps): App => {
+export const createApp = (): App => {
   let routers: RouteObject[] = []
   const addRouter = (routes: RouteObject[]) => {
     routers = [...routers, ...routes]
@@ -32,7 +27,6 @@ export const createApp = ({ authProvider }: createAppProps): App => {
   }
 
   return {
-    authProvider,
     addRouter,
     getRouter,
     addResources,

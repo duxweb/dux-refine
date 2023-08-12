@@ -10,11 +10,12 @@ import { MessagePlugin, MessageInstance, TdMessageProps } from 'tdesign-react/es
 import { RouteObject, Outlet } from 'react-router-dom'
 import routerBindings, { CatchAllNavigate, NavigateToResource } from '@refinedev/react-router-v6'
 import { Layout } from '../components/layout/layout'
-import { ForgotPassword } from '../pages/admin/forgotPassword'
-import { Login } from '../pages/admin/login'
-import { Register } from '../pages/admin/register'
-import config from '../config'
 import { dataProvider } from '@/provider/dataProvider'
+import { Login } from '@/pages/login'
+import { Register } from '@/pages/register'
+import { ForgotPassword } from '@/pages/forgotPassword'
+import { Config } from './config'
+import { authProvider } from '@/provider/authProvider'
 
 export const lazyComponent = (importComp: () => Promise<{ default: ComponentType<any> }>) => {
   const Comp = lazy(importComp)
@@ -29,18 +30,18 @@ export interface createRefineProps {
   name: string
   prefix?: string
   i18nProvider: I18nProvider
-  authProvider: AuthBindings
   router: RouteObject[]
   resources: ResourceProps[]
+  config: Config
 }
 
 export const createRefine = ({
   name,
   prefix,
   i18nProvider,
-  authProvider,
   router,
   resources,
+  config,
 }: createRefineProps): RouteObject => {
   const notifyMaps: Record<string, Promise<MessageInstance>> = {}
 
@@ -87,8 +88,8 @@ export const createRefine = ({
     path: prefix,
     element: (
       <Refine
-        dataProvider={dataProvider(name, config.apiUrl)}
-        authProvider={authProvider}
+        dataProvider={dataProvider(name, config)}
+        authProvider={authProvider(name, config)}
         i18nProvider={i18nProvider}
         routerProvider={routerBindings}
         notificationProvider={notificationProvider}

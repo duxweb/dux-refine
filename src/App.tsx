@@ -1,9 +1,6 @@
 // refine
 import { RefineKbarProvider } from '@refinedev/kbar'
 
-// components
-import './App.css'
-
 // tdesign
 import { ConfigProvider } from 'tdesign-react/esm'
 import 'tdesign-react/esm/style/index.js'
@@ -12,14 +9,14 @@ import zhConfig from 'tdesign-react/es/locale/zh_CN'
 
 // app
 import { useAppStore } from './stores/app'
-import { AppProvider } from './core/app'
+import { AppProvider, AppProviderProps } from './core/app'
 
 // echarts
 import { registerCharts } from './theme/echarts'
 import { useTranslation } from 'react-i18next'
 registerCharts()
 
-export const DuxApp = () => {
+export const DuxApp = (props: AppProviderProps) => {
   const { i18n } = useTranslation()
   const dark = useAppStore((state) => state.dark)
   document.documentElement.setAttribute('theme-mode', dark ? 'dark' : '')
@@ -32,7 +29,7 @@ export const DuxApp = () => {
   return (
     <ConfigProvider globalConfig={langs[i18n.language]}>
       <RefineKbarProvider>
-        <AppProvider />
+        <AppProvider {...props} />
       </RefineKbarProvider>
     </ConfigProvider>
   )

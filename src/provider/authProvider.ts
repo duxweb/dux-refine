@@ -1,8 +1,8 @@
-import config from '@/config'
 import { client } from './dataProvider'
 import { AuthBindings, HttpError } from '@refinedev/core'
+import { Config } from '@/core/config'
 
-export const authProvider = (app: string): AuthBindings => {
+export const authProvider = (app: string, config: Config): AuthBindings => {
   return {
     login: async ({ username, password }) => {
       return await client
