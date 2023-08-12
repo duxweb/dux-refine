@@ -1,0 +1,28 @@
+.app-media-text {
+  @apply flex items-center gap-4 text-base cursor-default;
+}
+
+.app-media-text-content {
+  @apply flex flex-col items-start;
+}
+
+.app-media-text-title {
+  @apply text-primary;
+}
+
+.app-media-text-desc {
+  @apply text-placeholder;
+}
+
+.app-media-text-sm {
+  @apply gap-2 text-sm;
+}
+
+.app-media-text-sm .app-media-text-content {
+  @apply gap-0;
+}
+.app-media-text-sm .app-media-text-desc {
+}
+.app-media-text-sm .app-media-text-title {
+  @apply leading-5;
+}
