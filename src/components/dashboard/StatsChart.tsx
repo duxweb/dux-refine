@@ -1,9 +1,5 @@
-import clsx from 'clsx'
-import { ReactNode, useCallback, useEffect, useState } from 'react'
-import { Card, Skeleton } from 'tdesign-react/esm'
-import Charts from '../charts'
-import { EChartsOption } from 'echarts'
-import { useAppStore } from '@/stores/app'
+import { ReactNode} from 'react'
+import { Card } from 'tdesign-react/esm'
 
 interface StatsPieProps {
   icon?: string

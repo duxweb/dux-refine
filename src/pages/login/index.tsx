@@ -1,9 +1,9 @@
+import { useState } from 'react'
 import { useLogin, useParsed, useTranslate } from '@refinedev/core'
 import { Form, Input, Button, SubmitContext } from 'tdesign-react/esm'
 import { DesktopIcon, LockOnIcon } from 'tdesign-icons-react'
 import { useAppStore } from '../../stores/app'
-import { useState } from 'react'
-import { DuxLogo } from '@/components/logo'
+import { DuxLogo } from '../../components/logo'
 
 const { FormItem } = Form
 

@@ -13,8 +13,11 @@ import { AppProvider, AppProviderProps } from './core/app'
 
 // echarts
 import { registerCharts } from './theme/echarts'
-import { useTranslation } from 'react-i18next'
 registerCharts()
+
+//i18n
+import './core/i18n'
+import { useTranslation } from 'react-i18next'
 
 export const DuxApp = (props: AppProviderProps) => {
   const { i18n } = useTranslation()

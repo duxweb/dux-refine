@@ -1,6 +1,6 @@
 import { client } from './dataProvider'
 import { AuthBindings, HttpError } from '@refinedev/core'
-import { Config } from '@/core/config'
+import { Config } from '../core/config'
 
 export const authProvider = (app: string, config: Config): AuthBindings => {
   return {

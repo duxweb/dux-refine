@@ -1,8 +1,9 @@
-import config from '@/config'
+import { useAppContext } from '../../core/app'
 import { useApiUrl, useGetIdentity } from '@refinedev/core'
 import { TdUploadProps, UploadFile } from 'tdesign-react/esm'
 
 export const useUpload = (): TdUploadProps => {
+  const { config } = useAppContext()
   const { data } = useGetIdentity<{
     token?: string
   }>()

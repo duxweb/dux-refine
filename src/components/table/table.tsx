@@ -9,7 +9,7 @@ import {
   Radio,
   SelectOptions,
 } from 'tdesign-react/esm'
-import { useWindowSize } from '@/core/helper'
+import { useWindowSize } from '../../core/helper'
 import { useTable } from './useTable'
 
 export interface CardTableTab {

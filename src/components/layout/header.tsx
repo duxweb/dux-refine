@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react'
 import { useSetLocale, useTranslate, useGetIdentity } from '@refinedev/core'
 import { Avatar, Dropdown, Button, DropdownOption, Radio } from 'tdesign-react/esm'
 import { TranslateIcon, SearchIcon } from 'tdesign-icons-react'
-import { useAppStore } from '@/stores/app'
+import { useAppStore } from '../../stores/app'
 
 const User = () => {
   const { data } = useGetIdentity<{

@@ -5,9 +5,10 @@ import { Button, Link } from 'tdesign-react/esm'
 import { CloseIcon } from 'tdesign-icons-react'
 import { TreeMenuItem } from '@refinedev/core/dist/hooks/menu/useMenu'
 import { motion } from 'framer-motion'
-import config from '@/config'
+import { useAppContext } from '../../core/app'
 
 export const TabBar = () => {
+  const {config} = useAppContext()
   const go = useGo()
   const [open, setOpen] = useState(false)
 

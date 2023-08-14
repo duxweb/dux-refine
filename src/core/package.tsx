@@ -1,21 +1,16 @@
 import { Authenticated, ErrorComponent, Refine } from '@refinedev/core'
-import type {
-  I18nProvider,
-  AuthBindings,
-  ResourceProps,
-  NotificationProvider,
-} from '@refinedev/core'
+import type { I18nProvider, ResourceProps, NotificationProvider } from '@refinedev/core'
 import { ComponentType, Suspense, lazy } from 'react'
 import { MessagePlugin, MessageInstance, TdMessageProps } from 'tdesign-react/esm'
 import { RouteObject, Outlet } from 'react-router-dom'
 import routerBindings, { CatchAllNavigate, NavigateToResource } from '@refinedev/react-router-v6'
 import { Layout } from '../components/layout/layout'
-import { dataProvider } from '@/provider/dataProvider'
-import { Login } from '@/pages/login'
-import { Register } from '@/pages/register'
-import { ForgotPassword } from '@/pages/forgotPassword'
+import { dataProvider } from '../provider/dataProvider'
+import { Login } from '../pages/login'
+import { Register } from '../pages/register'
+import { ForgotPassword } from '../pages/forgotPassword'
 import { Config } from './config'
-import { authProvider } from '@/provider/authProvider'
+import { authProvider } from '../provider/authProvider'
 
 export const lazyComponent = (importComp: () => Promise<{ default: ComponentType<any> }>) => {
   const Comp = lazy(importComp)

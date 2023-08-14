@@ -1,9 +1,8 @@
 import { EChartsOption } from 'echarts'
 import ReactECharts from 'echarts-for-react'
-import { useAppStore } from '@/stores/app'
+import { useAppStore } from '../../stores/app'
 import { useMemo } from 'react'
 import merge from 'deepmerge'
-import defineConfig from '../../../vite.config'
 
 interface ChartsProps {
   options?: EChartsOption[]

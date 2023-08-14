@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { createContext, useContext, useMemo } from 'react'
 import { RouteObject, RouterProvider, createHashRouter, Navigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { I18nProvider } from '@refinedev/core'
@@ -83,6 +83,18 @@ const useApp = ({ appsData }: UseAppProps): HookApp => {
   }
 }
 
+export interface AppContext {
+  config: Config
+}
+
+const appContext = createContext<AppContext>({
+  config: {} as Config,
+})
+
+export const useAppContext = (): AppContext => {
+  return useContext(appContext)
+}
+
 export interface AppProviderProps {
   appsData: appConfig[]
   config: Config
@@ -130,7 +142,16 @@ export const AppProvider = ({ appsData, config }: AppProviderProps) => {
       routes.push(refine)
     })
     return createHashRouter(routes)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [app])
 
-  return <RouterProvider router={router} />
+  return (
+    <appContext.Provider
+      value={{
+        config: config,
+      }}
+    >
+      <RouterProvider router={router} />
+    </appContext.Provider>
+  )
 }

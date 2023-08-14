@@ -1,4 +1,4 @@
-import { Config } from '@/core/config'
+import { Config } from '../core/config'
 import { DataProvider, HttpError, CrudOperators, CrudFilters } from '@refinedev/core'
 import axios, { AxiosHeaderValue } from 'axios'
 

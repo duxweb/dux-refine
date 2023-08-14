@@ -2,9 +2,12 @@
   "name": "@duxweb/dux-refine",
   "version": "1.0.0",
   "description": "🌲 Integrated UI based on refine and tdesign",
-  "main": "index.ts",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "files": ["lib", "es", "dist"],
   "scripts": {
-    "build": "tsc && vite build --config vite.config.js",
+    "clean": "rimraf lib es dist",
+    "build": "tsc && vite build --config vite.config.ts",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "keywords": [],
@@ -44,7 +47,6 @@
     "zustand": "^4.3.9"
   },
   "devDependencies": {
-    "@rollup/plugin-typescript": "^11.1.2",
     "@types/node": "^18.16.2",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
@@ -61,6 +63,7 @@
     "eslint-plugin-react-refresh": "^0.3.4",
     "prettier": "^2.8.8",
     "typescript": "^5.0.2",
-    "vite": "^4.4.7"
+    "vite": "^4.4.7",
+    "vite-plugin-build": "^0.10.0"
   }
 }

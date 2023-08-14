@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { FormAction, MetaQuery, BaseKey } from '@refinedev/core'
 import { Form, Button, SubmitContext } from 'tdesign-react/esm'
-import { Modal, useModal } from 'src/components/modal'
+import { Modal, useModal } from '../modal'
 import { useForm } from './useForm'
 
 export interface FormModalProps {
