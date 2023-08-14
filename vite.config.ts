@@ -13,20 +13,6 @@ export default defineConfig({
       fileBuild: {
         emitDeclaration: true,
       },
-      libBuild: {
-        buildOptions: {
-          rollupOptions: {
-            external: ['react'],
-            output: { globals: { react: 'React' } },
-          },
-          lib: {
-            entry: resolve(__dirname, 'src/index.ts'),
-            name: 'RbacComponents',
-            fileName: (format) => `rbac-components.${format}.js`,
-          },
-        },
-      },
-      
     }),
   ],
 })
