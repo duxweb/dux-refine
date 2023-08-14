@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo } from 'react'
+import React, { createContext, useContext, useMemo } from 'react'
 import { RouteObject, RouterProvider, createHashRouter, Navigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { I18nProvider } from '@refinedev/core'

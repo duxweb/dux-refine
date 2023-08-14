@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { Tooltip } from 'tdesign-react/esm'
 import { useMenu, useGo, useLogout, useTranslate } from '@refinedev/core'
-import { useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { TreeMenuItem } from '@refinedev/core/dist/hooks/menu/useMenu'
 import { DuxLogo } from '../logo'
 

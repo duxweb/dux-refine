@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { ReactNode, useCallback, useEffect, useState } from 'react'
+import React, { ReactNode, useCallback, useEffect, useState } from 'react'
 import { Card, Skeleton } from 'tdesign-react/esm'
 
 interface StatsCardProps {

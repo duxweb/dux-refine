@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react'
+import React, { PropsWithChildren } from 'react'
 import { Breadcrumb } from '../breadcrumb'
 
 export const MainHeader: React.FC<PropsWithChildren> = ({ children }) => {

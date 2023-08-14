@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react'
+import React, { PropsWithChildren } from 'react'
 import Header from './header'
 import Sider from './sider'
 import { TabBar } from './tabbar'

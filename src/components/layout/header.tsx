@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react'
+import React, { PropsWithChildren } from 'react'
 import { useSetLocale, useTranslate, useGetIdentity } from '@refinedev/core'
 import { Avatar, Dropdown, Button, DropdownOption, Radio } from 'tdesign-react/esm'
 import { TranslateIcon, SearchIcon } from 'tdesign-icons-react'
