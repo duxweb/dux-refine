@@ -2,17 +2,12 @@
   "name": "@duxweb/dux-refine",
   "version": "0.0.1",
   "description": "🌲 Integrated UI based on refine and tdesign",
-  "main": "lib/index.js",
-  "module": "es/index.js",
-  "files": [
-    "lib",
-    "es",
-    "dist"
-  ],
+  "main": "index.js",
   "scripts": {
     "clean": "rimraf lib es dist",
     "build": "vite build && tsc",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "push": "yarn build && yarn publish dist --access public"
   },
   "keywords": [],
   "author": "duxweb",
