@@ -105,6 +105,8 @@ export const AppProvider = ({ appsData, config }: AppProviderProps) => {
     appsData,
   })
 
+  // 需要把useAPP方法放到router里面执行才行
+
   const router = useMemo(() => {
     const routes: RouteObject[] = [
       {

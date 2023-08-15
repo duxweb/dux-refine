@@ -71,7 +71,7 @@ const MediaTextDesc = ({ children }: { children?: ReactNode }) => {
 }
 MediaTextDesc.displayName = 'MediaText.Desc'
 
-const MediaText = forwardRef(MediaTextComp) as React.ForwardRefExoticComponent<
+export const MediaText = forwardRef(MediaTextComp) as React.ForwardRefExoticComponent<
   MediaTextProps & React.RefAttributes<HTMLDivElement>
 > & {
   Image: typeof MediaTextImage
@@ -82,5 +82,3 @@ const MediaText = forwardRef(MediaTextComp) as React.ForwardRefExoticComponent<
 MediaText.Image = MediaTextImage
 MediaText.Title = MediaTextTitle
 MediaText.Desc = MediaTextDesc
-
-export default MediaText

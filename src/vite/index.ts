@@ -9,7 +9,7 @@ const create = (watcher: FSWatcher) => {
     const paths = key.split(path.sep)
     return paths.slice(-2)
   })
-  const code = `import { appConfig } from '../core/app'
+  const code = `import { appConfig } from '@duxweb/dux-refine'
 ${list.map((v) => `import ${v[1]} from '../${v[0]}/${v[1]}'`).join('\n')}
 
 const app: appConfig[] = [${list.map((v) => v[1]).join(', ')}]

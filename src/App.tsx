@@ -7,6 +7,7 @@ import { ConfigProvider } from 'tdesign-react/esm'
 import 'tdesign-react/esm/style/index.js'
 import enConfig from 'tdesign-react/es/locale/en_US'
 import zhConfig from 'tdesign-react/es/locale/zh_CN'
+import './theme/theme.css'
 
 // app
 import { useAppStore } from './stores/app'
