@@ -12,6 +12,9 @@ export default defineConfig({
     buildPlugin({
       fileBuild: {
         emitDeclaration: true,
+        inputFolder: './src',
+        esOutputDir: './es',
+        commonJsOutputDir: './lib',
       },
     }),
   ],
