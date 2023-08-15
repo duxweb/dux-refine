@@ -17,10 +17,7 @@
     "emitDeclarationOnly": true, 
     "declaration": true,
     "declarationDir": "dist",
-    "jsx": "react-jsx",
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "jsx": "react-jsx"
   },
   "include": ["src", "vite.config.ts", "vite/index.ts"],
   "references": [

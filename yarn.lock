@@ -829,10 +829,10 @@
     tslib "^2.3.1"
     warn-once "^0.1.0"
 
-"@refinedev/inferencer@4.5.2":
-  version "4.5.2"
-  resolved "https://registry.yarnpkg.com/@refinedev/inferencer/-/inferencer-4.5.2.tgz#3a5b02431e541961fe9dc893653fd34452f48900"
-  integrity sha512-uH0vvucXkjXrOhjIjpAoqJWOBXR537jvj548aYs2tuYz1mRG3tvP3JHxFwcTcEVnRglXzmJBmh5+KC3oMJllow==
+"@refinedev/inferencer@4.5.4":
+  version "4.5.4"
+  resolved "https://registry.yarnpkg.com/@refinedev/inferencer/-/inferencer-4.5.4.tgz#114e262a1386c0fe72c25830d5287c104374d9ea"
+  integrity sha512-1CpHWQJCie80kxogMjNYX2QW0JXlS0TxahOu/5iFmKbv+TmYYZOvDY4H/4wsGYQ5wYWkjFb5fG7lhhIMbvnh6g==
   dependencies:
     "@aliemir/react-live" "^4.0.0"
     "@refinedev/core" "^4.32.2"

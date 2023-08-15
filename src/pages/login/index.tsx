@@ -1,4 +1,3 @@
-import React from 'react'
 import { useState } from 'react'
 import { useLogin, useParsed, useTranslate } from '@refinedev/core'
 import { Form, Input, Button, SubmitContext } from 'tdesign-react/esm'
