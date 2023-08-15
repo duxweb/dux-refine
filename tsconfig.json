@@ -19,7 +19,7 @@
     "declarationDir": "dist",
     "jsx": "react-jsx"
   },
-  "include": ["src", "vite.config.ts", "vite/index.ts"],
+  "include": ["src"],
   "references": [
     {
       "path": "./tsconfig.node.json"
