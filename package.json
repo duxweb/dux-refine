@@ -2,7 +2,12 @@
   "name": "@duxweb/dux-refine",
   "version": "0.0.1",
   "description": "🌲 Integrated UI based on refine and tdesign",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "files": [
+    "lib",
+    "es"
+  ],
   "scripts": {
     "clean": "rimraf lib es dist",
     "build": "vite build && tsc",
