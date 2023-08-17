@@ -1,11 +1,5 @@
 import React, { createContext, useContext, useMemo } from 'react'
-import {
-  RouteObject,
-  BrowserRouter,
-  RouterProvider,
-  createHashRouter,
-  Navigate,
-} from 'react-router-dom'
+import { RouteObject, RouterProvider, createHashRouter, Navigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { I18nProvider } from '@refinedev/core'
 import { ResourceRouteComposition } from '@refinedev/core/dist/interfaces/bindings/resource'
@@ -27,34 +21,17 @@ export interface appConfig {
   run?: (context: appContext) => void
 }
 
-export interface AppContext {
-  config: Config
+interface HookApp {
+  i18nProvider: I18nProvider
+  apps: Record<string, App>
 }
 
-const appContext = createContext<AppContext>({
-  config: {} as Config,
-})
-
-export const useAppContext = (): AppContext => {
-  return useContext(appContext)
-}
-
-export interface AppProviderProps {
+interface UseAppProps {
   appsData: appConfig[]
-  config: Config
 }
 
-export const AppProvider = ({ appsData, config }: AppProviderProps) => {
+const useApp = ({ appsData }: UseAppProps): HookApp => {
   const { t, i18n } = useTranslation()
-
-  const i18nProvider = useMemo<I18nProvider>(() => {
-    return {
-      translate: (key: string, params: object) => t(key, params),
-      changeLocale: (lang: string) => i18n.changeLanguage(lang),
-      getLocale: () => i18n.language,
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const apps = useMemo<Record<string, App>>(() => {
     const apps: Record<string, App> = {}
@@ -89,7 +66,47 @@ export const AppProvider = ({ appsData, config }: AppProviderProps) => {
 
     return apps
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [appsData])
+  }, [])
+
+  const i18nProvider = useMemo<I18nProvider>(() => {
+    console.log('default lang', i18n.language)
+    return {
+      translate: (key: string, params: object) => t(key, params),
+      changeLocale: (lang: string) => i18n.changeLanguage(lang),
+      getLocale: () => i18n.language,
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  return {
+    i18nProvider: i18nProvider,
+    apps: apps,
+  }
+}
+
+export interface AppContext {
+  config: Config
+}
+
+const appContext = createContext<AppContext>({
+  config: {} as Config,
+})
+
+export const useAppContext = (): AppContext => {
+  return useContext(appContext)
+}
+
+export interface AppProviderProps {
+  appsData: appConfig[]
+  config: Config
+}
+
+export const AppProvider = ({ appsData, config }: AppProviderProps) => {
+  const app = useApp({
+    appsData,
+  })
+
+  // 需要把useAPP方法放到router里面执行才行
 
   const router = useMemo(() => {
     const routes: RouteObject[] = [
@@ -105,14 +122,14 @@ export const AppProvider = ({ appsData, config }: AppProviderProps) => {
       return typeof res === 'string' ? ['/:app', res].join('/') : res
     }
 
-    Object.keys(apps).map((name) => {
+    Object.keys(app.apps).map((name) => {
       const refine = createRefine({
         name: name,
         prefix: name ? '/:app' : undefined,
         config: config,
-        i18nProvider: i18nProvider,
-        router: apps[name].getRouter(),
-        resources: apps[name].getResources().map((item) => {
+        i18nProvider: app.i18nProvider,
+        router: app.apps[name].getRouter(),
+        resources: app.apps[name].getResources().map((item) => {
           item.list = formatResources(item.list)
           item.create = formatResources(item.create)
           item.clone = formatResources(item.clone)
@@ -129,7 +146,7 @@ export const AppProvider = ({ appsData, config }: AppProviderProps) => {
     })
     return createHashRouter(routes)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apps])
+  }, [app])
 
   return (
     <appContext.Provider
@@ -137,9 +154,7 @@ export const AppProvider = ({ appsData, config }: AppProviderProps) => {
         config: config,
       }}
     >
-      <BrowserRouter>
-        <RouterProvider router={router} />
-      </BrowserRouter>
+      <RouterProvider router={router} />
     </appContext.Provider>
   )
 }
