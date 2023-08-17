@@ -1,3 +1,4 @@
+import './index.css'
 export * from './App'
 export * from './components'
 export * from './core'

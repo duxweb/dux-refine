@@ -100,7 +100,7 @@ interface DuxTheme extends Theme {
   }
 }
 
-export const presetDux = (): Preset<DuxTheme> => {
+const presetDux = (): Preset<DuxTheme> => {
   return {
     name: 'dux-theme',
 
@@ -286,3 +286,5 @@ const refultCSS = (name: string, value: string, rules: Record<string, string>, t
   }
   return
 }
+
+export default presetDux

@@ -1,7 +1,6 @@
 import { clsx } from 'clsx'
 import React, { forwardRef, ReactNode } from 'react'
 import { Image, ImageProps } from 'tdesign-react/esm'
-import './style.css'
 
 export interface MediaTextProps {
   children?: ReactNode

@@ -19,7 +19,7 @@ export default app
   fs.writeFileSync('./src/config/app.ts', code, { encoding: 'utf8' })
 }
 
-export const DuxUI = (): Plugin => {
+const DuxUI = (): Plugin => {
   return {
     name: 'app-config',
     buildStart() {
@@ -40,3 +40,5 @@ export const DuxUI = (): Plugin => {
     },
   }
 }
+
+export default DuxUI

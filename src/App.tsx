@@ -7,7 +7,6 @@ import { ConfigProvider } from 'tdesign-react/esm'
 import enConfig from 'tdesign-react/es/locale/en_US'
 import zhConfig from 'tdesign-react/es/locale/zh_CN'
 import 'tdesign-react/esm/style/index.js'
-import './theme/theme.css'
 
 // app
 import { useAppStore } from './stores/app'
@@ -18,6 +17,7 @@ import { registerCharts } from './theme/echarts'
 registerCharts()
 
 //i18n
+import './i18n'
 import { useTranslation } from 'react-i18next'
 
 export const DuxApp = (props: AppProviderProps) => {
