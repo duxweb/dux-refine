@@ -61,12 +61,12 @@ export const Login = () => {
             <DuxLogo className='w-30 text-white' />
             <div className='mt-4 text-lg'>{translate(`${params?.app}.title`)}</div>
           </div>
+          <div className='my-6'>
           <Form
             statusIcon={true}
             onSubmit={onSubmit}
             colon={true}
             labelWidth={0}
-            className='my-6'
             disabled={loading}
           >
             <FormItem name='username'>
@@ -93,6 +93,7 @@ export const Login = () => {
               </Button>
             </FormItem>
           </Form>
+          </div>
           <div className='text-center text-sm text-placeholder'>{translate(`admin.copyright`)}</div>
         </div>
       </div>

@@ -17,7 +17,6 @@ import { registerCharts } from './theme/echarts'
 registerCharts()
 
 //i18n
-import './i18n'
 import { useTranslation } from 'react-i18next'
 
 export const DuxApp = (props: AppProviderProps) => {
@@ -31,10 +30,12 @@ export const DuxApp = (props: AppProviderProps) => {
   }
 
   return (
-    <ConfigProvider globalConfig={langs[i18n.language]}>
-      <RefineKbarProvider>
-        <AppProvider {...props} />
-      </RefineKbarProvider>
-    </ConfigProvider>
+    <React.Suspense fallback='loading'>
+      <ConfigProvider globalConfig={langs[i18n.language]}>
+        <RefineKbarProvider>
+          <AppProvider {...props} />
+        </RefineKbarProvider>
+      </ConfigProvider>
+    </React.Suspense>
   )
 }

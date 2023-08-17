@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo } from 'react'
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { RouteObject, RouterProvider, createHashRouter, Navigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { I18nProvider } from '@refinedev/core'
@@ -21,19 +21,42 @@ export interface appConfig {
   run?: (context: appContext) => void
 }
 
-interface HookApp {
-  i18nProvider: I18nProvider
-  apps: Record<string, App>
+export interface AppContext {
+  config: Config
 }
 
-interface UseAppProps {
+const appContext = createContext<AppContext>({
+  config: {} as Config,
+})
+
+export const useAppContext = (): AppContext => {
+  return useContext(appContext)
+}
+
+export const useI18nProvider = (): I18nProvider => {
+  const { t, i18n } = useTranslation()
+  return {
+    translate: (key: string, params: object) => t(key, params),
+    changeLocale: (lang: string) => i18n.changeLanguage(lang),
+    getLocale: () => i18n.language,
+  }
+}
+
+export interface AppProviderProps {
   appsData: appConfig[]
+  config: Config
 }
 
-const useApp = ({ appsData }: UseAppProps): HookApp => {
+export const AppProvider = ({ appsData, config }: AppProviderProps) => {
   const { t, i18n } = useTranslation()
 
-  const apps = useMemo<Record<string, App>>(() => {
+  const router = useMemo(() => {
+    const i18nProvider = {
+      translate: (key: string, params: object) => t(key, params),
+      changeLocale: (lang: string) => i18n.changeLanguage(lang),
+      getLocale: () => i18n.language,
+    }
+
     const apps: Record<string, App> = {}
 
     const createApp = (name: string, app: App) => {
@@ -64,49 +87,6 @@ const useApp = ({ appsData }: UseAppProps): HookApp => {
       item?.run?.({ createApp, getApp, getApps, addI18n })
     })
 
-    return apps
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const i18nProvider = useMemo<I18nProvider>(() => {
-    console.log('default lang', i18n.language)
-    return {
-      translate: (key: string, params: object) => t(key, params),
-      changeLocale: (lang: string) => i18n.changeLanguage(lang),
-      getLocale: () => i18n.language,
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  return {
-    i18nProvider: i18nProvider,
-    apps: apps,
-  }
-}
-
-export interface AppContext {
-  config: Config
-}
-
-const appContext = createContext<AppContext>({
-  config: {} as Config,
-})
-
-export const useAppContext = (): AppContext => {
-  return useContext(appContext)
-}
-
-export interface AppProviderProps {
-  appsData: appConfig[]
-  config: Config
-}
-
-export const AppProvider = ({ appsData, config }: AppProviderProps) => {
-  const app = useApp({
-    appsData,
-  })
-
-  const router = useMemo(() => {
     const routes: RouteObject[] = [
       {
         index: true,
@@ -120,14 +100,14 @@ export const AppProvider = ({ appsData, config }: AppProviderProps) => {
       return typeof res === 'string' ? ['/:app', res].join('/') : res
     }
 
-    Object.keys(app.apps).map((name) => {
+    Object.keys(apps).map((name) => {
       const refine = createRefine({
         name: name,
         prefix: name ? '/:app' : undefined,
         config: config,
-        i18nProvider: app.i18nProvider,
-        router: app.apps[name].getRouter(),
-        resources: app.apps[name].getResources().map((item) => {
+        i18nProvider: i18nProvider,
+        router: apps[name].getRouter(),
+        resources: apps[name].getResources().map((item) => {
           item.list = formatResources(item.list)
           item.create = formatResources(item.create)
           item.clone = formatResources(item.clone)
@@ -143,8 +123,7 @@ export const AppProvider = ({ appsData, config }: AppProviderProps) => {
       routes.push(refine)
     })
     return createHashRouter(routes)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [app])
+  }, [appsData, config, i18n, t])
 
   return (
     <appContext.Provider
