@@ -32,7 +32,7 @@ const Sider = () => {
             return (
               <MenuApp
                 key={item.name}
-                name={translate(`${item.name}.name`) || item?.label}
+                name={translate(`${item.label}.name`) || item?.label}
                 icon={item.icon}
                 active={active[active.length - 1] == item.key}
                 onClick={() => {
@@ -76,7 +76,7 @@ const Sider = () => {
           <div className='h-14 flex items-center px-4'>
             {menuInfo?.meta?.element || (
               <div className='font-bold text-secondary'>
-                {translate(`${menuInfo.name}.name`) || menuInfo?.label}
+                {translate(`${menuInfo.label}.name`) || menuInfo?.label}
               </div>
             )}
           </div>
@@ -85,7 +85,7 @@ const Sider = () => {
               {item.children?.length == 0 && item.route && (
                 <MenuTitle
                   key={item.name}
-                  label={translate(`${item.name}.name`) || item?.label}
+                  label={translate(`${item.label}.name`) || item?.label}
                   icon={item?.icon}
                   active={
                     active[active.length - 1] == menuInfo.key &&
@@ -120,7 +120,7 @@ const Sider = () => {
                             })
                           }}
                         >
-                          {translate(`${sub.name}.name`) || sub?.label}
+                          {translate(`${sub.label}.name`) || sub?.label}
                         </div>
                       </li>
                     ))}
@@ -206,7 +206,7 @@ const CollapseMenu = ({ item, children }: CollapseMenuProps) => {
   return (
     <div>
       <MenuTitle
-        label={translate(`${item.name}.name`) || item?.label}
+        label={translate(`${item.label}.name`) || item?.label}
         icon={item?.icon}
         collapse={collapse}
         onClick={() => {

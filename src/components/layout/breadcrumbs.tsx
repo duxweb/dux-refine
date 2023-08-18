@@ -1,5 +1,5 @@
 import React from 'react'
-import { useBreadcrumb } from '@refinedev/core'
+import { useBreadcrumb, useTranslate } from '@refinedev/core'
 import { Link } from 'react-router-dom'
 import { Breadcrumb as TdBreadcrumb } from 'tdesign-react/esm'
 
@@ -7,6 +7,7 @@ const { BreadcrumbItem } = TdBreadcrumb
 
 export const Breadcrumb = () => {
   const { breadcrumbs } = useBreadcrumb()
+  const t = useTranslate()
 
   return (
     <TdBreadcrumb maxItemWidth='200px' separator={<div className='i-tabler:chevron-right'></div>}>
@@ -16,13 +17,12 @@ export const Breadcrumb = () => {
         </Link>
       </BreadcrumbItem>
       {breadcrumbs.map((breadcrumb, index) => {
+        console.log(breadcrumb)
         return (
           <BreadcrumbItem key={index}>
             {breadcrumb.href ? (
-              <Link to={breadcrumb.href}>{breadcrumb.label}</Link>
-            ) : (
-              breadcrumb.label
-            )}
+              <Link to={breadcrumb.href}>{t(`${breadcrumb.label}.name`)}</Link>
+            ) : t(`${breadcrumb.label}.name`)}
           </BreadcrumbItem>
         )
       })}

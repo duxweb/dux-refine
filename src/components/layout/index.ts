@@ -1,4 +1,5 @@
 export * from './header'
 export * from './layout'
-export * from './sider'
-export * from './tabbar'
+export * from '../sider'
+export * from '../tabbar/tabbar'
+export * from './breadcrumbs'

@@ -1,6 +1,8 @@
 {
   "common": {
     "search": "搜索",
+    "menu": "菜单",
+    "more": "更多",
     "login": {
       "signin": "登录",
       "signup": "注册",
@@ -120,61 +122,6 @@
     "importProgress": "已导入 {{processed}}/{{total}}"
   },
   "loading": "加载中",
-  "tags": {
-    "clone": "克隆"
-  },
-  "dashboard": {
-    "title": "仪表盘"
-  },
-  "blog_posts": {
-    "blog_posts": "博客文章",
-    "fields": {
-      "id": "编号",
-      "title": "标题",
-      "content": "内容",
-      "status": "状态",
-      "createdAt": "创建于",
-      "category": "分类"
-    },
-    "titles": {
-      "create": "创建",
-      "edit": "编辑", 
-      "list": "文章",
-      "show": "查看文章"
-    }
-  },
-  "categories": {
-    "categories": "分类",
-    "fields": {
-      "id": "编号",
-      "title": "标题",
-      "createdAt": "创建于"
-    },
-    "titles": {
-      "create": "创建",
-      "edit": "编辑",
-      "list": "文章",
-      "show": "查看文章"
-    }
-  },
-  "documentTitle": {
-    "default": "refine",
-    "suffix": " | refine",
-    "blog_posts": {
-      "list": "博客文章 | refine",
-      "show": "#{{id}} 查看博客文章 | refine",
-      "edit": "#{{id}} 编辑博客文章 | refine",
-      "create": "创建新博客文章 | refine",
-      "clone": "#{{id}} 克隆博客文章 | refine"
-    },
-    "categories": {
-      "list": "分类 | refine",
-      "show": "#{{id}} 查看分类 | refine",
-      "edit": "#{{id}} 编辑分类 | refine",
-      "create": "创建新分类 | refine",
-      "clone": "#{{id}} 克隆分类 | refine"
-    }
-  },
   "table": {
     "actions": "操作" 
   },

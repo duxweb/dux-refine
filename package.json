@@ -14,6 +14,7 @@
     "clean": "rimraf dist",
     "copy-files": "copyfiles -u 1 src/**/*.css dist/",
     "build": "yarn clean && tsc && yarn copy-files",
+    "local": "yarn build && yalc push",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "push": "yarn build && yarn publish --access public"
   },

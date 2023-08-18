@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react'
 import Header from './header'
-import Sider from './sider'
-import { TabBar } from './tabbar'
+import { Sider } from '../sider'
+import { TabBar } from '../tabbar/tabbar'
 
 export const Layout = ({ children }: PropsWithChildren) => {
   return (
