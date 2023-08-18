@@ -36,6 +36,7 @@ export const createApp = (): App => {
 
 export const useWindowSize = (): [number, Record<string, number>] => {
   const [width, setWidth] = useState<number>(0)
+  
 
   const sizeEmit = useMemo(() => {
     return {

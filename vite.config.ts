@@ -11,6 +11,7 @@ export default defineConfig({
     buildPlugin({
       fileBuild: {
         emitDeclaration: true,
+        formats: [{ format: 'es', outDir: 'dist' }],
       },
     }),
   ],

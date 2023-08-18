@@ -1,12 +1,11 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import React, { createContext, useContext, useMemo } from 'react'
 import { RouteObject, RouterProvider, createHashRouter, Navigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import type { I18nProvider } from '@refinedev/core'
 import { ResourceRouteComposition } from '@refinedev/core/dist/interfaces/bindings/resource'
 
 import { createRefine } from './package'
 import { App } from './helper'
 import { Config } from './config'
+import { useI18nProvider } from '../provider'
 
 export interface appContext {
   createApp: (name: string, app: App) => void
@@ -33,30 +32,15 @@ export const useAppContext = (): AppContext => {
   return useContext(appContext)
 }
 
-export const useI18nProvider = (): I18nProvider => {
-  const { t, i18n } = useTranslation()
-  return {
-    translate: (key: string, params: object) => t(key, params),
-    changeLocale: (lang: string) => i18n.changeLanguage(lang),
-    getLocale: () => i18n.language,
-  }
-}
-
 export interface AppProviderProps {
   appsData: appConfig[]
   config: Config
 }
 
 export const AppProvider = ({ appsData, config }: AppProviderProps) => {
-  const { t, i18n } = useTranslation()
+  const { i18nProvider, i18n } = useI18nProvider()
 
   const router = useMemo(() => {
-    const i18nProvider = {
-      translate: (key: string, params: object) => t(key, params),
-      changeLocale: (lang: string) => i18n.changeLanguage(lang),
-      getLocale: () => i18n.language,
-    }
-
     const apps: Record<string, App> = {}
 
     const createApp = (name: string, app: App) => {
@@ -123,7 +107,8 @@ export const AppProvider = ({ appsData, config }: AppProviderProps) => {
       routes.push(refine)
     })
     return createHashRouter(routes)
-  }, [appsData, config, i18n, t])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appsData, config, i18nProvider])
 
   return (
     <appContext.Provider
