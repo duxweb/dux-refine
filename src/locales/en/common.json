@@ -22,11 +22,8 @@
     "register": {
       "title": "Sign up for your account",
       "fields": {
-        "email": "Email",
+        "username": "Username",
         "password": "Password"
-      },
-      "errors": {
-        "validEmail": "Invalid email address"
       },
       "buttons": {
         "submit": "Register",
@@ -36,13 +33,15 @@
     "forgotPassword": {
       "title": "Forgot your password?",
       "fields": {
-        "email": "Email"
-      },
-      "errors": {
-        "validEmail": "Invalid email address"
+        "username": "Username",
+        "password": "Password",
+        "code": "Verifiy code"
       },
       "buttons": {
-        "submit": "Send reset instructions"
+        "submit": "Send verifiy code",
+        "rest": "Reset password",
+        "back": "Back to Login",
+        "code": "Have an code?"
       }
     },
     "updatePassword": {

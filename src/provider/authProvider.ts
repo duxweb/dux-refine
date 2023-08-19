@@ -71,8 +71,7 @@ export const authProvider = (app: string, config: Config): AuthBindings => {
             password: password,
           }
         )
-        .then((res) => {
-          localStorage.setItem(app + ':auth', JSON.stringify(res))
+        .then(() => {
           return {
             success: true,
             redirectTo: `/${app}/login`,
@@ -85,7 +84,7 @@ export const authProvider = (app: string, config: Config): AuthBindings => {
           }
         })
     },
-    forgotPassword: async ({ username, code }) => {
+    forgotPassword: async ({ username, password, code }) => {
       return await client
         .post(
           config.apiUrl +
@@ -94,14 +93,13 @@ export const authProvider = (app: string, config: Config): AuthBindings => {
             config.apiPath.forgotPassword,
           {
             username: username,
+            password: password,
             code: code,
           }
         )
-        .then((res) => {
-          localStorage.setItem(app + ':auth', JSON.stringify(res))
+        .then(() => {
           return {
             success: true,
-            redirectTo: `/${app}/login`,
           }
         })
         .catch((error) => {
@@ -111,7 +109,7 @@ export const authProvider = (app: string, config: Config): AuthBindings => {
           }
         })
     },
-    updatePassword: async ({ username, password, newPassword }) => {
+    updatePassword: async ({ username, password, newPassword, code }) => {
       return await client
         .post(
           config.apiUrl + '/' + (config.resourcesPrefix ? app + '/' : '') + config.apiPath.register,
@@ -119,6 +117,7 @@ export const authProvider = (app: string, config: Config): AuthBindings => {
             username: username,
             password: password,
             newPassword: newPassword,
+            code: code,
           }
         )
         .then((res) => {

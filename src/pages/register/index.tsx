@@ -66,7 +66,7 @@ export const Register = () => {
             {translate(`pages.register.buttons.submit`)}
           </Button>
         </div>
-        <div className='flex justify-justify-between'>
+        <div className='flex justify-between'>
           <Link
             onClick={() => {
               go({

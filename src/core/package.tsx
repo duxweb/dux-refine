@@ -135,6 +135,10 @@ export const createRefine = ({
             path: 'forgot-password',
             element: <ForgotPassword />,
           },
+          {
+            path: 'update-password',
+            element: <ForgotPassword />,
+          },
         ],
       },
     ],

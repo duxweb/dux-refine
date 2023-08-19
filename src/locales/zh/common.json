@@ -33,13 +33,15 @@
     "forgotPassword": {
       "title": "忘记密码了吗?",
       "fields": {
-        "email": "电子邮件"
-      },
-      "errors": {
-        "validEmail": "无效的电子邮件地址" 
+        "username": "用户名",
+        "password": "密码",
+        "code": "验证码"
       },
       "buttons": {
-        "submit": "发送重置说明"
+        "send": "发送验证码",
+        "rest": "重置密码",
+        "back": "返回登录",
+        "code": "已有验证码？"
       }
     },
     

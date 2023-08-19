@@ -66,7 +66,7 @@ export const Login = () => {
           </Button>
         </div>
         {(moduleApp?.register || moduleApp?.forgotPassword) && (
-          <div className='flex justify-justify-between'>
+          <div className='flex justify-between'>
             {moduleApp?.register && (
               <Link
                 onClick={() => {
