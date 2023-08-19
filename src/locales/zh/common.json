@@ -81,7 +81,6 @@
     "error": {
       "info": "你忘记添加 {{action}} 组件到 {{resource}}。",
       "404": "抱歉,页面不存在。",
-      "resource404": "你创建了 {{resource}} 资源吗?",
       "backHome": "返回"
     }
   },

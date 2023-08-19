@@ -1,4 +1,4 @@
-import React, { ReactNode} from 'react'
+import React, { ReactNode } from 'react'
 import { Card } from 'tdesign-react/esm'
 
 interface StatsPieProps {

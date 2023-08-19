@@ -61,7 +61,6 @@
     "error": {
       "info": "You may have forgotten to add the {{action}} component to {{resource}} resource.",
       "404": "Sorry, the page you visited does not exist.",
-      "resource404": "Are you sure you have created the {{resource}} resource.",
       "backHome": "Back Home"
     }
   },

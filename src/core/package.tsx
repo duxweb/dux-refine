@@ -1,4 +1,4 @@
-import { Authenticated, ErrorComponent, Refine } from '@refinedev/core'
+import { Authenticated, Refine } from '@refinedev/core'
 import routerBindings, { CatchAllNavigate, NavigateToResource } from '@refinedev/react-router-v6'
 import type { I18nProvider, ResourceProps, NotificationProvider } from '@refinedev/core'
 import { ComponentType, Suspense, lazy } from 'react'
@@ -11,6 +11,7 @@ import { Register } from '../pages/register'
 import { ForgotPassword } from '../pages/forgotPassword'
 import { Config } from './config'
 import { authProvider } from '../provider/authProvider'
+import { ErrorComponent } from '../components'
 
 export const lazyComponent = (importComp: () => Promise<{ default: ComponentType<any> }>) => {
   const Comp = lazy(importComp)
