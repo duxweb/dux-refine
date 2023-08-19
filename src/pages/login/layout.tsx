@@ -1,7 +1,13 @@
 import { useParsed, useTranslate } from '@refinedev/core'
 import { useAppStore } from '../../stores/app'
 import { DuxLogo } from '../../components/logo'
-export const LoginLayout = ({ children }: React.PropsWithChildren) => {
+
+interface LoginLayoutProps {
+  title?: string
+  children?: React.ReactNode
+}
+
+export const LoginLayout = ({ title, children }: LoginLayoutProps) => {
   const switchDark = useAppStore((state) => state.switchDark)
 
   const { params } = useParsed<{ app?: string }>()
@@ -25,10 +31,12 @@ export const LoginLayout = ({ children }: React.PropsWithChildren) => {
         <div className='flex flex-1 flex-col'>
           <div className='mt-4 flex flex-col items-center justify-center'>
             <DuxLogo className='w-30 text-white' />
-            <div className='mt-4 text-lg'>{translate(`${params?.app}.title`)}</div>
+            <div className='mt-4 text-lg'>{title || translate(`${params?.app}.title`)}</div>
           </div>
           <div className='my-6'>{children}</div>
-          <div className='text-center text-sm text-placeholder'>{translate(`admin.copyright`)}</div>
+          <div className='text-center text-sm text-placeholder'>
+            {translate(`common.copyright`)}
+          </div>
         </div>
       </div>
     </div>

@@ -2,7 +2,9 @@
   "common": {
     "search": "Search",
     "menu": "Menu",
-    "more": "More",
+    "more": "More"
+  },
+  "pages": {
     "login": {
       "signin": "Sign in",
       "signup": "Sign up",
@@ -15,18 +17,6 @@
         "submit": "Login",
         "forgotPassword": "Forgot password?",
         "noAccount": "Don’t have an account?"
-      }
-    },
-    "forgotPassword": {
-      "title": "Forgot your password?",
-      "fields": {
-        "email": "Email"
-      },
-      "errors": {
-        "validEmail": "Invalid email address"
-      },
-      "buttons": {
-        "submit": "Send reset instructions"
       }
     },
     "register": {
@@ -43,6 +33,18 @@
         "haveAccount": "Have an account?"
       }
     },
+    "forgotPassword": {
+      "title": "Forgot your password?",
+      "fields": {
+        "email": "Email"
+      },
+      "errors": {
+        "validEmail": "Invalid email address"
+      },
+      "buttons": {
+        "submit": "Send reset instructions"
+      }
+    },
     "updatePassword": {
       "title": "Update password",
       "fields": {
@@ -55,9 +57,7 @@
       "buttons": {
         "submit": "Update"
       }
-    }
-  },
-  "pages": {
+    },
     "error": {
       "info": "You may have forgotten to add the {{action}} component to {{resource}} resource.",
       "404": "Sorry, the page you visited does not exist.",

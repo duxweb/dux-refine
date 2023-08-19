@@ -1,4 +1,4 @@
-export interface TabBarItem {
+export interface tabBarItem {
   label: string
   icon: string
   route: string
@@ -28,6 +28,6 @@ export interface Config {
   apiPath: apiPath
   defaultApp: string
   resourcesPrefix: boolean
-  tabBar: Record<string, Array<TabBarItem>>
+  tabBar: Record<string, Array<tabBarItem>>
   moduleApp?: Record<string, moduleApp>
 }

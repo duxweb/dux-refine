@@ -1,8 +1,7 @@
 import { createRef, useState } from 'react'
-import { useGo, useLogin, useParsed, useRegister, useTranslate } from '@refinedev/core'
+import { useGo, useParsed, useRegister, useTranslate } from '@refinedev/core'
 import { Form, Input, Button, SubmitContext, Link, FormInstanceFunctions } from 'tdesign-react/esm'
 import { DesktopIcon, LockOnIcon } from 'tdesign-icons-react'
-import { useAppContext } from '../../core'
 import { LoginLayout } from '../login'
 
 const { FormItem } = Form
@@ -10,16 +9,14 @@ const { FormItem } = Form
 type RegisterVariables = {
   username: string
   password: string
-  newPassword: string
 }
 
-export const Login = () => {
+export const Register = () => {
   const { mutate: register } = useRegister<RegisterVariables>({})
   const [loading, setLoading] = useState<boolean>()
   const go = useGo()
 
   const { params } = useParsed<{ app?: string }>()
-  const { config } = useAppContext()
   const form = createRef<FormInstanceFunctions>()
 
   const translate = useTranslate()
@@ -36,17 +33,8 @@ export const Login = () => {
     })
   }
 
-  const rePassword = (val) => {
-    return new Promise((resolve) => {
-      const timer = setTimeout(() => {
-        resolve(form.current?.getFieldValue('password') === val)
-        clearTimeout(timer)
-      })
-    })
-  }
-
   return (
-    <LoginLayout>
+    <LoginLayout title={translate(`pages.register.title`)}>
       <Form
         ref={form}
         statusIcon={true}
@@ -60,66 +48,35 @@ export const Login = () => {
             size='large'
             clearable={true}
             prefixIcon={<DesktopIcon />}
-            placeholder={translate(`common.login.fields.username`)}
+            placeholder={translate(`pages.register.fields.username`)}
           />
         </FormItem>
-        <FormItem name='password' rules={[{ required: true, message: '密码必填', type: 'error' }]}>
+        <FormItem name='password'>
           <Input
             size='large'
             type='password'
             prefixIcon={<LockOnIcon />}
             clearable={true}
-            placeholder={translate(`common.login.fields.password`)}
+            placeholder={translate(`pages.register.fields.password`)}
             autocomplete='new-password'
           />
         </FormItem>
-        <FormItem
-          name='newPassword'
-          rules={[
-            { required: true, message: '密码必填', type: 'error' },
-            { validator: rePassword, message: '两次密码不一致' },
-          ]}
-        >
-          <Input
-            size='large'
-            type='password'
-            prefixIcon={<LockOnIcon />}
-            clearable={true}
-            placeholder={translate(`common.login.fields.password`)}
-            autocomplete='new-password'
-          />
-        </FormItem>
-        <FormItem>
+        <div className='mb-2'>
           <Button theme='primary' type='submit' block size='large' loading={loading}>
-            {translate(`common.login.buttons.submit`)}
+            {translate(`pages.register.buttons.submit`)}
           </Button>
-        </FormItem>
-        <FormItem>
-          <div className='flex justify-justify-between'>
-            {config?.moduleApp?.register && (
-              <Link
-                onClick={() => {
-                  go({
-                    to: `/${params?.app}/login`,
-                  })
-                }}
-              >
-                {translate(`common.login.buttons.noAccount`)}
-              </Link>
-            )}
-            {config?.moduleApp?.forgotPassword && (
-              <Link
-                onClick={() => {
-                  go({
-                    to: `/${params?.app}/forgot-password`,
-                  })
-                }}
-              >
-                {translate(`common.login.buttons.forgotPassword`)}
-              </Link>
-            )}
-          </div>
-        </FormItem>
+        </div>
+        <div className='flex justify-justify-between'>
+          <Link
+            onClick={() => {
+              go({
+                to: `/${params?.app}/login`,
+              })
+            }}
+          >
+            {translate(`pages.register.buttons.haveAccount`)}
+          </Link>
+        </div>
       </Form>
     </LoginLayout>
   )
