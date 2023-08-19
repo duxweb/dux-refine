@@ -6,11 +6,20 @@ export interface TabBarItem {
 
 export interface apiPath {
   login: string
-  check: string
-  register: string
-  forgotPassword: string
-  updatePassword: string
-  upload: string
+  check?: string
+  register?: string
+  forgotPassword?: string
+  updatePassword?: string
+  updateProfile?: string
+  upload?: string
+}
+
+export interface moduleApp {
+  register?: boolean
+  forgotPassword?: boolean
+  updatePassword?: boolean
+  updateProfile?: boolean
+  upload?: boolean
 }
 
 export interface Config {
@@ -20,4 +29,5 @@ export interface Config {
   defaultApp: string
   resourcesPrefix: boolean
   tabBar: Record<string, Array<TabBarItem>>
+  moduleApp?: Record<string, moduleApp>
 }
