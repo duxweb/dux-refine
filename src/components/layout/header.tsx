@@ -117,7 +117,7 @@ const Header = ({ userMenu }: HeaderProps) => {
       .map((item) => {
         return {
           label: translate(`${item.meta?.label}.name`),
-          route: item.route,
+          route: item.list as string,
         }
       })
   }, [resources, translate])

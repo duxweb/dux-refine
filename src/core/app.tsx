@@ -84,6 +84,8 @@ export const AppProvider = ({ appsData, config }: AppProviderProps) => {
       return typeof res === 'string' ? ['/:app', res].join('/') : res
     }
 
+    // 固定 :app 到 name 防止异常
+
     Object.keys(apps).map((name) => {
       const refine = createRefine({
         name: name,

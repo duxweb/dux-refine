@@ -36,6 +36,7 @@ export const authProvider = (app: string, config: Config): AuthBindings => {
     },
     check: async () => {
       const auth = localStorage.getItem(app + ':auth')
+      console.log('check login', auth)
       if (auth) {
         return {
           authenticated: true,

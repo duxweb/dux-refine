@@ -7,6 +7,7 @@ export const canProvider = (app: string): AccessControlProvider => {
       console.log('permission', {
         resource,
         action,
+        auth,
       })
       if (!auth) {
         return { can: false }
