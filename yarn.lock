@@ -6995,10 +6995,10 @@ tdesign-icons-react@^0.3.0:
     "@babel/runtime" "^7.16.5"
     classnames "^2.2.6"
 
-tdesign-react@^1.1.17:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/tdesign-react/-/tdesign-react-1.2.0.tgz#92d3437e8f29856fa198e774f45871b17c50035e"
-  integrity sha512-/dgUjQFZCpMvEPb9mwC8YVhsGPyr5kpCkfpcerMSe+zLMCPXbSzibRwQ4+Sg1i0bmFjfaEktLpTS5TabBmEifg==
+tdesign-react@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/tdesign-react/-/tdesign-react-1.2.1.tgz#a1b9cc98f997ec634d074c31ccab1805f3b48f96"
+  integrity sha512-t8M9QsZV9DOSTzGP97y0muQh99dqlpSiIYTouG2bnAc1d6uDf72KC7qjeyw8KoIUFhJerhjQ8rkbCGePFdcLYg==
   dependencies:
     "@babel/runtime" "~7.17.2"
     "@popperjs/core" "~2.11.2"

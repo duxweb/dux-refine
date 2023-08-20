@@ -9,11 +9,11 @@
 }
 
 .app-result-title {
-  @apply text-lg font-bold text-primary;
+  @apply text-lg font-bold text-primary mt-4;
 }
 
 .app-result-desc {
-  @apply text-secondary;
+  @apply text-secondary text-sm;
 }
 
 .app-result-footer {

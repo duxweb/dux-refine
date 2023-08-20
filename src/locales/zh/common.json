@@ -1,6 +1,7 @@
 {
   "common": {
     "search": "搜索",
+    "notMenu": "没有找到菜单",
     "menu": "菜单",
     "more": "更多"
   },
@@ -58,10 +59,15 @@
         "submit": "更新"
       }
     },
+    
     "error": {
-      "info": "你忘记添加 {{action}} 组件到 {{resource}}。",
-      "404": "抱歉,页面不存在。",
-      "backHome": "返回"
+      "resource": "你忘记添加 {{action}} 组件到 {{resource}}。",
+      "404": "页面不存在",
+      "404Desc": "抱歉，您访问的页面不存在。"
+    },
+    "unauthorized": {
+      "title": "没有权限",
+      "desc": "抱歉，您没有访问该页面的权限"
     }
   },
   "actions": {

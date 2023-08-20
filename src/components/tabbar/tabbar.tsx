@@ -1,11 +1,13 @@
 import { useGo, useParsed, useTranslate } from '@refinedev/core'
 import clsx from 'clsx'
 import { useState } from 'react'
-import { useAppContext } from '../../core/app'
 import { TabMenu } from './menu'
+import { tabBarItem } from '../../core/config'
 
-export const TabBar = () => {
-  const { config } = useAppContext()
+interface TabBarProps {
+  data: tabBarItem[]
+}
+export const TabBar = ({ data }: TabBarProps) => {
   const go = useGo()
   const [open, setOpen] = useState(false)
   const { params } = useParsed<{ app: string }>()
@@ -15,7 +17,7 @@ export const TabBar = () => {
     <>
       <div className='h-15 flex justify-between border-t bg-container border-component md:hidden'>
         {params &&
-          config.tabBar[params.app]?.map((item, index) => (
+          data?.map((item, index) => (
             <TabBarItem
               key={index}
               name={translate(`${item.label}.name`)}

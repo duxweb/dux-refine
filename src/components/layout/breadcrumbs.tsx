@@ -22,7 +22,9 @@ export const Breadcrumb = () => {
           <BreadcrumbItem key={index}>
             {breadcrumb.href ? (
               <Link to={breadcrumb.href}>{t(`${breadcrumb.label}.name`)}</Link>
-            ) : t(`${breadcrumb.label}.name`)}
+            ) : (
+              t(`${breadcrumb.label}.name`)
+            )}
           </BreadcrumbItem>
         )
       })}

@@ -1,6 +1,7 @@
 {
   "common": {
     "search": "Search",
+    "notMenu": "Not found Menu",
     "menu": "Menu",
     "more": "More"
   },
@@ -59,8 +60,12 @@
     },
     "error": {
       "info": "You may have forgotten to add the {{action}} component to {{resource}} resource.",
-      "404": "Sorry, the page you visited does not exist.",
-      "backHome": "Back Home"
+      "404": "Not found",
+      "404Desc": "Sorry, the page you visited does not exist."
+    },
+    "unauthorized": {
+      "title": "Unauthorized",
+      "desc": "Sorry, you do not have permission to access this page"
     }
   },
   "actions": {

@@ -4,6 +4,12 @@ export interface tabBarItem {
   route: string
 }
 
+export interface userMenuItem {
+  label: string
+  icon: string
+  route: string
+}
+
 export interface apiPath {
   login: string
   check?: string
@@ -28,6 +34,5 @@ export interface Config {
   apiPath: apiPath
   defaultApp: string
   resourcesPrefix: boolean
-  tabBar: Record<string, Array<tabBarItem>>
   moduleApp?: Record<string, moduleApp>
 }

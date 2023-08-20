@@ -103,12 +103,12 @@ const IconDanger: FC = () => {
 interface ResultProps {
   title: React.ReactNode
   desc: React.ReactNode
-  footer: React.ReactNode
-  type?: 'info' | 'success' | 'warn' | 'error' | 'text'
-  state?: number | string
+  footer?: React.ReactNode
+  type?: 'info' | 'success' | 'warn' | 'error' | 'text' | 'custom'
+  show?: React.ReactNode
 }
 
-const Result: FC<ResultProps> = ({ title, desc, footer, type = 'info', state = 404 }) => {
+const Result: FC<ResultProps> = ({ title, desc, footer, type = 'info', show = 404 }) => {
   return (
     <div className='app-result'>
       <div className='app-result-inner'>
@@ -117,7 +117,8 @@ const Result: FC<ResultProps> = ({ title, desc, footer, type = 'info', state = 4
           {type === 'success' && <IconSuccess />}
           {type === 'warn' && <IconWarn />}
           {type === 'error' && <IconDanger />}
-          {type === 'text' && <div className='app-result-text'>{state}</div>}
+          {type === 'text' && <div className='app-result-text'>{show}</div>}
+          {type === 'custom' && show}
         </div>
         <div className='app-result-title'>{title}</div>
         <div className='app-result-desc'>{desc}</div>

@@ -1,4 +1,4 @@
-import { Authenticated, Refine } from '@refinedev/core'
+import { Authenticated, Refine, CanAccess } from '@refinedev/core'
 import routerBindings, { CatchAllNavigate, NavigateToResource } from '@refinedev/react-router-v6'
 import type { I18nProvider, ResourceProps, NotificationProvider } from '@refinedev/core'
 import { ComponentType, Suspense, lazy } from 'react'
@@ -7,11 +7,13 @@ import { RouteObject, Outlet } from 'react-router-dom'
 import { Layout } from '../components/layout/layout'
 import { dataProvider } from '../provider/dataProvider'
 import { Login } from '../pages/login'
+import { Error } from '../pages/common/error'
 import { Register } from '../pages/register'
 import { ForgotPassword } from '../pages/forgotPassword'
-import { Config } from './config'
+import { Config, tabBarItem, userMenuItem } from './config'
 import { authProvider } from '../provider/authProvider'
-import { ErrorComponent } from '../components'
+import { canProvider } from '../provider/canProvider'
+import { Unauthorized } from '../pages/common/unauthorized'
 
 export const lazyComponent = (importComp: () => Promise<{ default: ComponentType<any> }>) => {
   const Comp = lazy(importComp)
@@ -29,6 +31,8 @@ export interface createRefineProps {
   router: RouteObject[]
   resources: ResourceProps[]
   config: Config
+  tabar: tabBarItem[]
+  userMenu?: userMenuItem[]
 }
 
 export const createRefine = ({
@@ -38,6 +42,8 @@ export const createRefine = ({
   router,
   resources,
   config,
+  tabar,
+  userMenu,
 }: createRefineProps): RouteObject => {
   const notifyMaps: Record<string, Promise<MessageInstance>> = {}
 
@@ -86,6 +92,7 @@ export const createRefine = ({
       <Refine
         dataProvider={dataProvider(name, config)}
         authProvider={authProvider(name, config)}
+        accessControlProvider={canProvider(name)}
         i18nProvider={i18nProvider}
         routerProvider={routerBindings}
         notificationProvider={notificationProvider}
@@ -103,8 +110,10 @@ export const createRefine = ({
       {
         element: (
           <Authenticated fallback={<CatchAllNavigate to='login' />}>
-            <Layout>
-              <Outlet />
+            <Layout userMenu={userMenu} tabar={tabar}>
+              <CanAccess fallback={<Unauthorized />}>
+                <Outlet />
+              </CanAccess>
             </Layout>
           </Authenticated>
         ),
@@ -112,7 +121,7 @@ export const createRefine = ({
           ...router,
           {
             path: '*',
-            element: <ErrorComponent />,
+            element: <Error />,
           },
         ],
       },

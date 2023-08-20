@@ -1,6 +1,5 @@
 // refine
 import React from 'react'
-import { RefineKbarProvider } from '@refinedev/kbar'
 
 // tdesign
 import { ConfigProvider } from 'tdesign-react/esm'
@@ -43,9 +42,7 @@ const Comp = (props: AppProviderProps) => {
   }
   return (
     <ConfigProvider globalConfig={langs[i18n.language]}>
-      <RefineKbarProvider>
-        <AppProvider {...props} />
-      </RefineKbarProvider>
+      <AppProvider {...props} />
     </ConfigProvider>
   )
 }

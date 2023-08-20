@@ -11,7 +11,7 @@ import React, {
   forwardRef,
   useContext,
 } from 'react'
-import { Dialog } from 'tdesign-react/esm'
+import { Dialog, DialogPlugin } from 'tdesign-react/esm'
 
 export interface ModalContextProps {
   onClose?: () => void
@@ -22,7 +22,7 @@ const context = createContext<ModalContextProps>({})
 export interface ModalProps {
   title?: string
   trigger?: ReactElement<TriggerProps>
-  children?: ReactNode | ((onClose: () => void) => ReactNode)
+  children?: ReactNode | ((close: () => void) => ReactNode)
   component?: () => Promise<{ default: ComponentType<any> }>
   componentProps?: Record<string, any>
   className?: string
@@ -104,3 +104,39 @@ type ModalType = typeof ModalComp & {
 
 export const Modal = ModalComp as ModalType
 Modal.Footer = ModalFooter
+
+export const ModalOpen = ({ title, children, component, componentProps, onClose }: ModalProps) => {
+  const AsyncContent = component ? lazy(component) : undefined
+
+  const dialogNode = DialogPlugin({
+    onClose: onClose,
+    destroyOnClose: true,
+    footer: null,
+    closeOnOverlayClick: false,
+    closeOnEscKeydown: false,
+    draggable: true,
+    header: title,
+    body: component ? (
+      <Suspense>
+        {AsyncContent && (
+          <AsyncContent
+            {...componentProps}
+            onClose={() => {
+              onClose?.()
+              dialogNode.hide()
+            }}
+          />
+        )}
+      </Suspense>
+    ) : typeof children === 'function' ? (
+      children(() => {
+        onClose?.()
+        dialogNode.hide()
+      })
+    ) : (
+      children
+    ),
+  })
+
+  return dialogNode
+}

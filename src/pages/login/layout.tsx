@@ -1,6 +1,7 @@
 import { useParsed, useTranslate } from '@refinedev/core'
 import { useAppStore } from '../../stores/app'
 import { DuxLogo } from '../../components/logo'
+import banner from '../../../assets/loginBanner.svg'
 
 interface LoginLayoutProps {
   title?: string
@@ -26,7 +27,7 @@ export const LoginLayout = ({ title, children }: LoginLayoutProps) => {
           <div className='i-tabler:sun h-5 w-5'></div>
         </div>
         <div className='hidden flex-1 md:block'>
-          <img src='/public/images/login/banner.svg' className='h-full w-full' />
+          <img src={banner} className='h-full w-full' />
         </div>
         <div className='flex flex-1 flex-col'>
           <div className='mt-4 flex flex-col items-center justify-center'>
@@ -34,9 +35,7 @@ export const LoginLayout = ({ title, children }: LoginLayoutProps) => {
             <div className='mt-4 text-lg'>{title || translate(`${params?.app}.title`)}</div>
           </div>
           <div className='my-6'>{children}</div>
-          <div className='text-center text-sm text-placeholder'>
-            {translate(`common.copyright`)}
-          </div>
+          <div className='text-center text-sm text-placeholder'>{translate(`copyright`)}</div>
         </div>
       </div>
     </div>
