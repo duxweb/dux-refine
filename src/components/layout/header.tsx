@@ -54,7 +54,7 @@ const User = ({ menu = [] }: UserProps) => {
     <Dropdown options={options} minColumnWidth={150}>
       <div className='flex items-center gap-2'>
         <Avatar image={data?.userInfo?.avatar} />
-        <div className='flex flex-col'>
+        <div className='hidden md:flex flex-col'>
           <div>{data?.userInfo?.nickname}</div>
         </div>
       </div>
@@ -202,16 +202,16 @@ interface HeaderProps {
 const Header = ({ userMenu }: HeaderProps) => {
   return (
     <>
-      <div className='md:hidden flex h-16  flex-none border-b px-3 bg-container border-component '>
+      <div className='md:hidden flex h-16  flex-none border-b px-3 bg-container border-component items-center'>
         <div>
           <Lang />
         </div>
-        <div className='flex-1'>
+        <div className='flex-1 flex justify-center'>
           <DuxLogo className='w-14' />
         </div>
-        <div>
+        <Item>
           <User menu={userMenu} />
-        </div>
+        </Item>
       </div>
       <div className='hidden md:flex h-16  flex-none border-b px-3 bg-container border-component justify-between'>
         <div className=' items-center md:flex w-50'>
