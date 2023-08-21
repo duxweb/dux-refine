@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { Tooltip } from 'tdesign-react/esm'
-import { useMenu, useGo, useLogout, useTranslate } from '@refinedev/core'
+import { useGo, useLogout, useTranslate } from '@refinedev/core'
 import { DuxLogo } from '../logo'
 import { useSiderContext } from './index'
 
@@ -16,10 +16,11 @@ export const Main = () => {
 
 const SiderFooter = () => {
   const { mutate: logout } = useLogout()
+  const translate = useTranslate()
   return (
     <ul className='mb-2  flex-none flex flex-1 flex-col items-center gap-3 p-2 text-secondary'>
       <SiderMenuItem
-        name='Logout'
+        name={translate(`common.logout`)}
         icon='i-tabler:logout-2'
         onClick={() => {
           logout()
@@ -43,7 +44,7 @@ const SiderMenu = () => {
   const translate = useTranslate()
 
   return (
-    <ul className='mt-6 flex flex-1 flex-col items-center gap-3 p-2 text-secondary'>
+    <ul className='mt-6 flex flex-1 h-1 overflow-auto flex-col items-center gap-3 p-2 text-secondary'>
       {menuData?.map((item) => {
         return (
           <SiderMenuItem

@@ -54,13 +54,9 @@ export const authProvider = (app: string, config: Config): AuthBindings => {
       }
       return null
     },
-    getIdentity: async () => {
+    getIdentity: () => {
       const auth = localStorage.getItem(app + ':auth')
-      if (auth) {
-        const data = JSON.parse(auth)
-        return data
-      }
-      return undefined
+      return auth ? JSON.parse(auth) : null
     },
     register: async ({ username, password }) => {
       return await client

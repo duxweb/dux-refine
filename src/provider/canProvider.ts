@@ -49,9 +49,9 @@ export const canCheck = ({ auth, resource, action }: CanCheck) => {
 }
 
 export const canProvider = (app: string): AccessControlProvider => {
-  const auth = localStorage.getItem(app + ':auth')
   return {
     can: async ({ resource, action }: CanParams): Promise<CanReturnType> => {
+      const auth = localStorage.getItem(app + ':auth')
       return {
         can: canCheck({ auth, resource, action }),
       }
