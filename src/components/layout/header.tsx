@@ -1,5 +1,12 @@
 import React, { PropsWithChildren, useMemo, useState } from 'react'
-import { useSetLocale, useTranslate, useGetIdentity, useGo, useResource } from '@refinedev/core'
+import {
+  useSetLocale,
+  useTranslate,
+  useGetIdentity,
+  useGo,
+  useResource,
+  useLogout,
+} from '@refinedev/core'
 import { Avatar, Dropdown, Button, DropdownOption, Radio, SelectInput } from 'tdesign-react/esm'
 import { TranslateIcon, SearchIcon } from 'tdesign-icons-react'
 import { useAppStore } from '../../stores/app'
@@ -16,9 +23,10 @@ const User = ({ menu = [] }: UserProps) => {
   }>()
   const go = useGo()
   const translate = useTranslate()
+  const { mutate: logout } = useLogout()
 
   const options = useMemo(() => {
-    return menu.map((item) => {
+    const optionData = menu.map((item) => {
       return {
         content: translate(`userMenu.${item.label}`),
         prefixIcon: <div className={item.icon}></div>,
@@ -29,6 +37,14 @@ const User = ({ menu = [] }: UserProps) => {
         },
       }
     })
+    optionData.push({
+      content: translate('common.logout'),
+      prefixIcon: <div className='i-tabler:logout h-4 w-4 text-primary'></div>,
+      onClick: () => {
+        logout()
+      },
+    })
+    return optionData
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menu])
 
@@ -159,7 +175,7 @@ const Header = ({ userMenu }: HeaderProps) => {
                 options.map((item, index) => (
                   <li
                     key={index}
-                    className='px-4 py-1 text-primary hover:bg-brand hover:text-while-1 rounded cursor-pointer'
+                    className='px-4 py-1 text-primary hover:bg-brand hover:text-white-1 rounded cursor-pointer'
                     onClick={() => {
                       setPopupVisible(false)
                       go({

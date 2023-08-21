@@ -3,7 +3,8 @@
     "search": "搜索",
     "notMenu": "没有找到菜单",
     "menu": "菜单",
-    "more": "更多"
+    "more": "更多",
+    "logout": "退出"
   },
   "pages": {
     "login": {

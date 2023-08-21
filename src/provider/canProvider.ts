@@ -4,11 +4,6 @@ export const canProvider = (app: string): AccessControlProvider => {
   return {
     can: async ({ resource, action }: CanParams): Promise<CanReturnType> => {
       const auth = localStorage.getItem(app + ':auth')
-      console.log('permission', {
-        resource,
-        action,
-        auth,
-      })
       if (!auth) {
         return { can: false }
       }
@@ -17,8 +12,6 @@ export const canProvider = (app: string): AccessControlProvider => {
       }
 
       const { permission } = JSON.parse(auth)
-
-      console.log('permission', permission)
 
       if (!permission) {
         return { can: false }

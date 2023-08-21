@@ -17,7 +17,6 @@ export const Breadcrumb = () => {
         </Link>
       </BreadcrumbItem>
       {breadcrumbs.map((breadcrumb, index) => {
-        console.log(breadcrumb)
         return (
           <BreadcrumbItem key={index}>
             {breadcrumb.href ? (

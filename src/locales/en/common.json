@@ -3,7 +3,8 @@
     "search": "Search",
     "notMenu": "Not found Menu",
     "menu": "Menu",
-    "more": "More"
+    "more": "More",
+    "logout":"Logout"
   },
   "pages": {
     "login": {

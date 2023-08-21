@@ -96,7 +96,6 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
     }
   },
   getOne: async ({ resource, id, meta }) => {
-    console.log('meta', meta)
     const url = `${config.apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${resource}/${id}`
     const { data } = await client.get(url, {
       params: meta?.params,

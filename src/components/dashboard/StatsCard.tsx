@@ -32,7 +32,6 @@ export const StatsCard = ({ name, icon, data, children }: StatsCardProps) => {
 
     const lastValue = data.slice(-1)?.[0] || 0
     const pervValue = data.slice(-2, -1)?.[0] || 0
-    console.log(pervValue, lastValue)
 
     const [rate, rateStatus] = calcGrowthRate(pervValue, lastValue)
 
