@@ -51,7 +51,7 @@ const User = ({ menu = [] }: UserProps) => {
   }, [menu])
 
   return (
-    <Dropdown options={options}>
+    <Dropdown options={options} minColumnWidth={150}>
       <div className='flex items-center gap-2'>
         <Avatar image={data?.userInfo?.avatar} />
         <div className='flex flex-col'>
@@ -80,6 +80,7 @@ const Lang = () => {
 
   return (
     <Dropdown
+      minColumnWidth={150}
       options={options}
       onClick={(data) => {
         changeLanguage(data.value as string)
@@ -200,25 +201,35 @@ interface HeaderProps {
 
 const Header = ({ userMenu }: HeaderProps) => {
   return (
-    <div className='h-16 flex flex-none border-b px-3 bg-container border-component justify-between'>
-      <div className='flex items-center md:hidden'>
-        <DuxLogo className='w-14' />
-      </div>
-      <div className='hidden items-center md:flex w-50'>
-        <Search />
-      </div>
-      <div className='flex items-center justify-end'>
-        <Item>
-          <Dark />
-        </Item>
-        <Item>
+    <>
+      <div className='md:hidden flex h-16  flex-none border-b px-3 bg-container border-component '>
+        <div>
           <Lang />
-        </Item>
-        <Item>
+        </div>
+        <div className='flex-1'>
+          <DuxLogo className='w-14' />
+        </div>
+        <div>
           <User menu={userMenu} />
-        </Item>
+        </div>
       </div>
-    </div>
+      <div className='hidden md:flex h-16  flex-none border-b px-3 bg-container border-component justify-between'>
+        <div className=' items-center md:flex w-50'>
+          <Search />
+        </div>
+        <div className='flex items-center justify-end'>
+          <Item>
+            <Dark />
+          </Item>
+          <Item>
+            <Lang />
+          </Item>
+          <Item>
+            <User menu={userMenu} />
+          </Item>
+        </div>
+      </div>
+    </>
   )
 }
 
