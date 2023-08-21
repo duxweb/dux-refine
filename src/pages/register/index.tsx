@@ -1,8 +1,9 @@
 import { createRef, useState } from 'react'
-import { useGo, useParsed, useRegister, useTranslate } from '@refinedev/core'
+import { useGo, useRegister, useTranslate } from '@refinedev/core'
 import { Form, Input, Button, SubmitContext, Link, FormInstanceFunctions } from 'tdesign-react/esm'
 import { DesktopIcon, LockOnIcon } from 'tdesign-icons-react'
 import { LoginLayout } from '../login'
+import { useModuleContext } from '../../core'
 
 const { FormItem } = Form
 
@@ -16,7 +17,7 @@ export const Register = () => {
   const [loading, setLoading] = useState<boolean>()
   const go = useGo()
 
-  const { params } = useParsed<{ app?: string }>()
+  const { name } = useModuleContext()
   const form = createRef<FormInstanceFunctions>()
 
   const translate = useTranslate()
@@ -70,7 +71,7 @@ export const Register = () => {
           <Link
             onClick={() => {
               go({
-                to: `/${params?.app}/login`,
+                to: `/${name}/login`,
               })
             }}
           >

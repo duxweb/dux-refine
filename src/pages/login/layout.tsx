@@ -1,7 +1,8 @@
-import { useParsed, useTranslate } from '@refinedev/core'
+import { useTranslate } from '@refinedev/core'
 import { useAppStore } from '../../stores/app'
 import { DuxLogo } from '../../components/logo'
 import banner from '../../../assets/loginBanner.svg'
+import { useModuleContext } from '../../core/module'
 
 interface LoginLayoutProps {
   title?: string
@@ -10,9 +11,7 @@ interface LoginLayoutProps {
 
 export const LoginLayout = ({ title, children }: LoginLayoutProps) => {
   const switchDark = useAppStore((state) => state.switchDark)
-
-  const { params } = useParsed<{ app?: string }>()
-
+  const { name } = useModuleContext()
   const translate = useTranslate()
 
   return (
@@ -32,7 +31,7 @@ export const LoginLayout = ({ title, children }: LoginLayoutProps) => {
         <div className='flex flex-1 flex-col'>
           <div className='mt-4 flex flex-col items-center justify-center'>
             <DuxLogo className='w-30 text-white' />
-            <div className='mt-4 text-lg'>{title || translate(`${params?.app}.title`)}</div>
+            <div className='mt-4 text-lg'>{title || translate(`${name}.title`)}</div>
           </div>
           <div className='my-6'>{children}</div>
           <div className='text-center text-sm text-placeholder'>{translate(`copyright`)}</div>

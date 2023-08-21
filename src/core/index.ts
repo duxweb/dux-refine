@@ -1,4 +1,5 @@
 export * from './app'
+export * from './module'
 export * from './config'
 export * from './helper'
 export * from './package'

@@ -1,4 +1,4 @@
-import { useGo, useParsed, useTranslate } from '@refinedev/core'
+import { useGo, useTranslate } from '@refinedev/core'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { TabMenu } from './menu'
@@ -10,25 +10,23 @@ interface TabBarProps {
 export const TabBar = ({ data }: TabBarProps) => {
   const go = useGo()
   const [open, setOpen] = useState(false)
-  const { params } = useParsed<{ app: string }>()
   const translate = useTranslate()
 
   return (
     <>
       <div className='h-15 flex justify-between border-t bg-container border-component md:hidden'>
-        {params &&
-          data?.map((item, index) => (
-            <TabBarItem
-              key={index}
-              name={translate(`${item.label}.name`)}
-              icon={item.icon}
-              onClick={() => {
-                go({
-                  to: item.route,
-                })
-              }}
-            />
-          ))}
+        {data?.map((item, index) => (
+          <TabBarItem
+            key={index}
+            name={translate(`${item.label}.name`)}
+            icon={item.icon}
+            onClick={() => {
+              go({
+                to: item.route,
+              })
+            }}
+          />
+        ))}
         <TabBarItem
           name={translate('common.more')}
           icon={'i-tabler:dots'}

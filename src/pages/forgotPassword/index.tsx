@@ -1,8 +1,9 @@
 import { createRef, useState } from 'react'
-import { useGo, useParsed, useForgotPassword, useTranslate } from '@refinedev/core'
+import { useGo, useForgotPassword, useTranslate } from '@refinedev/core'
 import { Form, Input, Button, SubmitContext, Link, FormInstanceFunctions } from 'tdesign-react/esm'
 import { DesktopIcon, LockOnIcon, SystemCodeIcon } from 'tdesign-icons-react'
 import { LoginLayout } from '../login'
+import { useModuleContext } from '../../core/module'
 
 const { FormItem } = Form
 
@@ -17,7 +18,7 @@ export const ForgotPassword = () => {
   const [loading, setLoading] = useState<boolean>()
   const go = useGo()
 
-  const { params } = useParsed<{ app?: string }>()
+  const { name } = useModuleContext()
   const form = createRef<FormInstanceFunctions>()
   const [update, setUpdate] = useState(false)
 
@@ -33,7 +34,7 @@ export const ForgotPassword = () => {
         }
         if (update) {
           go({
-            to: `/${params?.app}/login`,
+            to: `/${name}/login`,
           })
         } else {
           setUpdate(true)
@@ -94,7 +95,7 @@ export const ForgotPassword = () => {
           <Link
             onClick={() => {
               go({
-                to: `/${params?.app}/login`,
+                to: `/${name}/login`,
               })
             }}
           >

@@ -14,6 +14,7 @@ import { Config, tabBarItem, userMenuItem } from './config'
 import { authProvider } from '../provider/authProvider'
 import { canProvider } from '../provider/canProvider'
 import { Unauthorized } from '../pages/common/unauthorized'
+import { Module } from './module'
 
 export const lazyComponent = (importComp: () => Promise<{ default: ComponentType<any> }>) => {
   const Comp = lazy(importComp)
@@ -103,7 +104,9 @@ export const createRefine = ({
           projectId: config.projectId,
         }}
       >
-        <Outlet />
+        <Module name={name} config={config}>
+          <Outlet />
+        </Module>
       </Refine>
     ),
     children: [

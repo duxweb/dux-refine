@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { useGo, useLogin, useParsed, useTranslate } from '@refinedev/core'
+import { useGo, useLogin, useTranslate } from '@refinedev/core'
 import { Form, Input, Button, SubmitContext, Link } from 'tdesign-react/esm'
 import { DesktopIcon, LockOnIcon } from 'tdesign-icons-react'
-import { useAppContext } from '../../core'
+import { useModuleContext } from '../../core/module'
 import { LoginLayout } from './layout'
 import { moduleApp } from '../../core/config'
 
@@ -18,9 +18,8 @@ export const Login = () => {
   const [loading, setLoading] = useState<boolean>()
   const go = useGo()
 
-  const { params } = useParsed<{ app: string }>()
-  const { config } = useAppContext()
-  const moduleApp = (params ? config?.moduleApp?.[params.app] : {}) as moduleApp
+  const { name, config } = useModuleContext()
+  const moduleApp = (name ? config?.moduleApp?.[name] : {}) as moduleApp
 
   const translate = useTranslate()
 
@@ -71,7 +70,7 @@ export const Login = () => {
               <Link
                 onClick={() => {
                   go({
-                    to: `/${params?.app}/register`,
+                    to: `/${name}/register`,
                   })
                 }}
               >
@@ -82,7 +81,7 @@ export const Login = () => {
               <Link
                 onClick={() => {
                   go({
-                    to: `/${params?.app}/forgot-password`,
+                    to: `/${name}/forgot-password`,
                   })
                 }}
               >
