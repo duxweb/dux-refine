@@ -38,16 +38,13 @@ const SiderLogo = () => {
 }
 
 const SiderMenu = () => {
-  const { menuItems } = useMenu({
-    hideOnMissingParameter: true,
-  })
-  const { active, setActive, setCollapse } = useSiderContext()
+  const { active, setActive, setCollapse, menuData } = useSiderContext()
   const go = useGo()
   const translate = useTranslate()
 
   return (
     <ul className='mt-6 flex flex-1 flex-col items-center gap-3 p-2 text-secondary'>
-      {menuItems.map((item) => {
+      {menuData?.map((item) => {
         return (
           <SiderMenuItem
             key={item.name}

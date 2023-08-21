@@ -1,18 +1,17 @@
 import { useMemo, useState } from 'react'
-import { useMenu, useGo, useTranslate } from '@refinedev/core'
+import { useGo, useTranslate } from '@refinedev/core'
 import { TreeMenuItem } from '@refinedev/core/dist/hooks/menu/useMenu'
 import { useSiderContext } from './index'
 import clsx from 'clsx'
 
 export const Sub = () => {
-  const { menuItems } = useMenu()
-  const { active, setActive, collapse } = useSiderContext()
+  const { active, setActive, collapse, menuData } = useSiderContext()
   const translate = useTranslate()
   const go = useGo()
 
   const menuInfo = useMemo<TreeMenuItem>(() => {
-    return menuItems.find((item) => active[active.length - 1] == item.key)
-  }, [active, menuItems])
+    return menuData?.find((item) => active[active.length - 1] == item.key)
+  }, [active, menuData])
 
   if (!menuInfo) {
     return null
@@ -55,7 +54,7 @@ export const Sub = () => {
           {item?.children?.length > 0 && (
             <CollapseMenu key={item.name} item={item}>
               <ul className='flex flex-col'>
-                {item.children.map((sub: TreeMenuItem) => (
+                {item?.children?.map((sub: TreeMenuItem) => (
                   <li key={sub.name}>
                     <div
                       className={clsx([

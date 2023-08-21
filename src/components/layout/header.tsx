@@ -12,6 +12,8 @@ import { TranslateIcon, SearchIcon } from 'tdesign-icons-react'
 import { useAppStore } from '../../stores/app'
 import { userMenuItem } from '../../core/config'
 import { DuxLogo } from '../logo'
+import { useCanHelper } from '../../provider'
+import { useModuleContext } from '../../core/module'
 
 interface UserProps {
   menu?: userMenuItem[]
@@ -111,24 +113,20 @@ const Dark = () => {
   )
 }
 
-const Item = ({ children }: PropsWithChildren) => {
-  return <div className='flex cursor-pointer items-center gap-2 px-2'>{children}</div>
-}
-
-interface HeaderProps {
-  userMenu?: userMenuItem[]
-}
-
-const Header = ({ userMenu }: HeaderProps) => {
+const Search = () => {
   const translate = useTranslate()
   const { resources } = useResource()
-  const go = useGo()
-  const [popupVisible, setPopupVisible] = useState(false)
+
+  const { name } = useModuleContext()
+  const { check } = useCanHelper(name)
 
   const data = useMemo(() => {
     return resources
       .filter((item) => {
-        return !!item.list
+        if (!item.list || !check({ resource: item.name, action: 'list' })) {
+          return false
+        }
+        return true
       })
       .map((item) => {
         return {
@@ -136,8 +134,11 @@ const Header = ({ userMenu }: HeaderProps) => {
           route: item.list as string,
         }
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resources, translate])
 
+  const go = useGo()
+  const [popupVisible, setPopupVisible] = useState(false)
   const [inputValue, setInputValue] = useState('')
   const [options, setOptions] = useState(data)
 
@@ -153,45 +154,58 @@ const Header = ({ userMenu }: HeaderProps) => {
       setOptions(data)
     }
   }
+  return (
+    <SelectInput
+      placeholder={translate('common.search')}
+      allowInput
+      clearable
+      inputValue={inputValue}
+      onInputChange={onInputChange}
+      suffixIcon={<SearchIcon />}
+      popupVisible={popupVisible}
+      onPopupVisibleChange={setPopupVisible}
+      panel={
+        <ul className='flex flex-col gap-2 py-1'>
+          {options.length > 0 ? (
+            options.map((item, index) => (
+              <li
+                key={index}
+                className='px-4 py-1 text-primary hover:bg-brand hover:text-white-1 rounded cursor-pointer'
+                onClick={() => {
+                  setPopupVisible(false)
+                  go({
+                    to: item.route,
+                  })
+                }}
+              >
+                {item.label}
+              </li>
+            ))
+          ) : (
+            <li className='p-4 py-1'>{translate('common.notMenu')}</li>
+          )}
+        </ul>
+      }
+    />
+  )
+}
 
+const Item = ({ children }: PropsWithChildren) => {
+  return <div className='flex cursor-pointer items-center gap-2 px-2'>{children}</div>
+}
+
+interface HeaderProps {
+  userMenu?: userMenuItem[]
+}
+
+const Header = ({ userMenu }: HeaderProps) => {
   return (
     <div className='h-16 flex flex-none border-b px-3 bg-container border-component justify-between'>
       <div className='flex items-center md:hidden'>
         <DuxLogo className='w-14' />
       </div>
       <div className='hidden items-center md:flex w-50'>
-        <SelectInput
-          placeholder={translate('common.search')}
-          allowInput
-          clearable
-          inputValue={inputValue}
-          onInputChange={onInputChange}
-          suffixIcon={<SearchIcon />}
-          popupVisible={popupVisible}
-          onPopupVisibleChange={setPopupVisible}
-          panel={
-            <ul className='flex flex-col gap-2 py-1'>
-              {options.length > 0 ? (
-                options.map((item, index) => (
-                  <li
-                    key={index}
-                    className='px-4 py-1 text-primary hover:bg-brand hover:text-white-1 rounded cursor-pointer'
-                    onClick={() => {
-                      setPopupVisible(false)
-                      go({
-                        to: item.route,
-                      })
-                    }}
-                  >
-                    {item.label}
-                  </li>
-                ))
-              ) : (
-                <li className='p-4 py-1'>{translate('common.notMenu')}</li>
-              )}
-            </ul>
-          }
-        />
+        <Search />
       </div>
       <div className='flex items-center justify-end'>
         <Item>
