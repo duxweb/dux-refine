@@ -1,3 +1,8 @@
+
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/duxweb/duxweb/logo.svg" width="150">
+<p>
+
 <h1 align="center">dux-refine</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-0.0.6-blue.svg?cacheSeconds=2592000" />
