@@ -28,6 +28,7 @@
     "@refinedev/core": "4.34.0",
     "@refinedev/inferencer": "4.5.4",
     "@refinedev/react-router-v6": "4.5.0",
+    "@refinedev/react-table": "^5.6.0",
     "axios": "^1.4.0",
     "clsx": "^2.0.0",
     "deepmerge": "^4.3.1",
