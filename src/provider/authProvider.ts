@@ -36,15 +36,31 @@ export const authProvider = (app: string, config: Config): AuthBindings => {
     },
     check: async () => {
       const auth = localStorage.getItem(app + ':auth')
-      if (auth) {
+      if (!auth) {
         return {
-          authenticated: true,
+          authenticated: false,
+          redirectTo: `/${app}/login`,
         }
       }
-      return {
-        authenticated: false,
-        redirectTo: `/${app}/login`,
-      }
+      const { token } = JSON.parse(auth)
+      return await client
+        .post(
+          config.apiUrl + '/' + (config.resourcesPrefix ? app + '/' : '') + config.apiPath.check,
+          {
+            token: token,
+          }
+        )
+        .then(() => {
+          return {
+            authenticated: true,
+          }
+        })
+        .catch(() => {
+          return {
+            authenticated: false,
+            redirectTo: `/${app}/login`,
+          }
+        })
     },
     getPermissions: () => {
       const auth = localStorage.getItem(app + ':auth')
