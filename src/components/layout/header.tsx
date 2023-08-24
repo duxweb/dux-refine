@@ -84,6 +84,7 @@ const Lang = () => {
       options={options}
       onClick={(data) => {
         changeLanguage(data.value as string)
+        window.location.reload()
       }}
     >
       <Button variant='text'>

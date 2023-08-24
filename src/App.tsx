@@ -17,32 +17,23 @@ import { registerCharts } from './theme/echarts'
 registerCharts()
 
 //i18n
-
-import { I18nextProvider, useTranslation } from 'react-i18next'
-import i18n from './provider/i18n'
+import './provider/i18n'
+import { useTranslation } from 'react-i18next'
 
 export const DuxApp = (props: AppProviderProps) => {
   const dark = useAppStore((state) => state.dark)
   document.documentElement.setAttribute('theme-mode', dark ? 'dark' : '')
 
-  return (
-    <React.Suspense fallback='loading'>
-      <I18nextProvider i18n={i18n}>
-        <Comp {...props} />
-      </I18nextProvider>
-    </React.Suspense>
-  )
-}
-
-const Comp = (props: AppProviderProps) => {
   const { i18n } = useTranslation()
   const langs: Record<string, any> = {
     en: enConfig,
     zh: zhConfig,
   }
   return (
-    <ConfigProvider globalConfig={langs[i18n.language]}>
-      <AppProvider {...props} />
-    </ConfigProvider>
+    <React.Suspense fallback='loading'>
+      <ConfigProvider globalConfig={langs[i18n.language]}>
+        <AppProvider {...props} />
+      </ConfigProvider>
+    </React.Suspense>
   )
 }

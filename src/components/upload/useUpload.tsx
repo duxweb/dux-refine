@@ -27,7 +27,7 @@ export const useUpload = (): TdUploadProps => {
   }
 }
 
-export const formatUploadFile = (file: string | Array<string>): UploadFile => {
+export const formatUploadSingle = (file: string | Array<string>): UploadFile => {
   if (Array.isArray(file)) {
     return file.map((item) => {
       return {
@@ -40,4 +40,8 @@ export const formatUploadFile = (file: string | Array<string>): UploadFile => {
       url: file,
     },
   ]
+}
+
+export const getUploadSingle = (data?: any): unknown => {
+  return data?.[0]?.url
 }

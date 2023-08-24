@@ -60,15 +60,18 @@
         "submit": "更新"
       }
     },
-    
     "error": {
-      "resource": "你忘记添加 {{action}} 组件到 {{resource}}。",
+      "info": "你忘记添加 {{action}} 组件到 {{resource}}",
       "404": "页面不存在",
-      "404Desc": "抱歉，您访问的页面不存在。"
+      "404Desc": "抱歉，您访问的页面不存在"
     },
     "unauthorized": {
       "title": "没有权限",
       "desc": "抱歉，您没有访问该页面的权限"
+    },
+    "boundary": {
+      "title": "系统出错了",
+      "desc": "系统可能已崩溃，请打开调试工具查看具体异常信息"
     }
   },
   "actions": {

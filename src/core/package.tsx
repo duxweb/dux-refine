@@ -15,6 +15,7 @@ import { authProvider } from '../provider/authProvider'
 import { canProvider } from '../provider/canProvider'
 import { Unauthorized } from '../pages/common/unauthorized'
 import { Module } from './module'
+import { ErrorBoundary } from '../pages/common/boundary'
 
 export const lazyComponent = (importComp: () => Promise<{ default: ComponentType<any> }>) => {
   const Comp = lazy(importComp)
@@ -109,6 +110,7 @@ export const createRefine = ({
         </Module>
       </Refine>
     ),
+    errorElement: <ErrorBoundary />,
     children: [
       {
         element: (

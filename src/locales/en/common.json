@@ -67,6 +67,10 @@
     "unauthorized": {
       "title": "Unauthorized",
       "desc": "Sorry, you do not have permission to access this page"
+    },
+    "boundary": {
+      "title": "Ooops, something wrong here",
+      "desc": "The system may have crashed, please open the debugging tool to check the specific exception information"
     }
   },
   "actions": {
