@@ -1,7 +1,7 @@
-import React, { useImperativeHandle, useMemo, useState } from 'react'
+import React, { useImperativeHandle } from 'react'
 import {
   EnhancedTable as TdTable,
-  TableProps,
+  EnhancedTableProps,
   Form,
   NamePath,
   Card,
@@ -24,8 +24,7 @@ export interface CardTableProps {
   tabs?: Array<CardTableTab>
   banner?: React.ReactNode
   footer?: React.ReactNode
-  table?: TableProps
-  rowKey?: string
+  table?: EnhancedTableProps
   columns?: PrimaryTableCol[]
   filterData?: Record<string, any>
   filterRender?: () => React.ReactNode
@@ -44,7 +43,6 @@ export const CardTable = React.forwardRef(
   (
     {
       title,
-      rowKey = 'id',
       table,
       columns,
       header,
@@ -135,8 +133,7 @@ export const CardTable = React.forwardRef(
         {banner}
 
         <TdTable
-          {...table}
-          rowKey={rowKey}
+          rowKey={table?.rowKey || 'id'}
           columns={columns}
           data={data}
           cellEmptyContent={'-'}
@@ -158,6 +155,7 @@ export const CardTable = React.forwardRef(
           onSelectChange={setSelecteds}
           filterValue={tableFilters}
           onFilterChange={setTableFilters}
+          {...table}
         />
         {footer}
       </Card>

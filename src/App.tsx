@@ -19,6 +19,7 @@ registerCharts()
 //i18n
 import './provider/i18n'
 import { useTranslation } from 'react-i18next'
+import * as R from 'remeda'
 
 export const DuxApp = (props: AppProviderProps) => {
   const dark = useAppStore((state) => state.dark)
@@ -26,8 +27,8 @@ export const DuxApp = (props: AppProviderProps) => {
 
   const { i18n } = useTranslation()
   const langs: Record<string, any> = {
-    en: enConfig,
-    zh: zhConfig,
+    en: R.clone(enConfig),
+    zh: R.clone(zhConfig),
   }
   return (
     <React.Suspense fallback='loading'>

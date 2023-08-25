@@ -1,4 +1,3 @@
-import { use } from 'i18next'
 import { createContext, useContext } from 'react'
 import { Config } from './config'
 
