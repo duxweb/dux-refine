@@ -74,20 +74,15 @@
       "desc": "系统可能已崩溃，请打开调试工具查看具体异常信息"
     }
   },
-  "actions": {
-    "list": "列表", 
-    "create": "创建",
-    "edit": "编辑",
-    "show": "查看"
-  },
   "buttons": {
+    "list": "列表", 
     "create": "创建",
     "save": "保存",
     "logout": "退出",
     "delete": "删除",
     "edit": "编辑",
     "cancel": "取消",
-    "confirm": "确认?",
+    "confirm": "确认执行操作?",
     "filter": "筛选",
     "clear": "清空",
     "refresh": "刷新",

@@ -73,13 +73,8 @@
       "desc": "The system may have crashed, please open the debugging tool to check the specific exception information"
     }
   },
-  "actions": {
-    "list": "List",
-    "create": "Create",
-    "edit": "Edit",
-    "show": "Show"
-  },
   "buttons": {
+    "list": "List",
     "create": "Create",
     "save": "Save",
     "logout": "Logout",
