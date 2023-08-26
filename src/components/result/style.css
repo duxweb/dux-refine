@@ -13,7 +13,7 @@
 }
 
 .app-result-desc {
-  @apply text-secondary text-sm;
+  @apply text-secondary text-sm text-center;
 }
 
 .app-result-footer {
