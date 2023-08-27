@@ -1,12 +1,14 @@
 import { Config } from '../core/config'
 import { DataProvider, HttpError, CrudOperators, CrudFilters } from '@refinedev/core'
 import axios, { AxiosHeaderValue } from 'axios'
+import { useTranslation } from 'react-i18next'
 
 export const client = axios.create({
   timeout: 10000,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
+    'Accept-Language': localStorage.getItem('i18nextLng'),
   },
 })
 
