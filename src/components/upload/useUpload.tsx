@@ -27,19 +27,18 @@ export const useUpload = (): TdUploadProps => {
   }
 }
 
-export const formatUploadSingle = (file: string | Array<string>): UploadFile => {
-  if (Array.isArray(file)) {
-    return file.map((item) => {
-      return {
-        url: item,
-      }
-    })
+export const formatUploadSingle = (file: any): UploadFile => {
+  if (!file) {
+    return []
   }
-  return [
-    {
-      url: file,
-    },
-  ]
+  if (typeof file == 'string') {
+    return [
+      {
+        url: file,
+      },
+    ]
+  }
+  return file
 }
 
 export const getUploadSingle = (data?: any): unknown => {

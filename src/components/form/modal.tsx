@@ -1,63 +1,36 @@
-import React, { useEffect } from 'react'
-import { FormAction, MetaQuery, BaseKey, useTranslate } from '@refinedev/core'
-import { Form, Button, SubmitContext } from 'tdesign-react/esm'
+import { useState } from 'react'
+import { useTranslate, UseFormReturnType } from '@refinedev/core'
+import { Button, SubmitContext } from 'tdesign-react/esm'
 import { Modal, useModal } from '../modal'
-import { useForm } from './useForm'
+import { Form, FormProps } from './form'
 
-export interface FormModalProps {
-  children?: React.ReactNode
+export interface FormModalProps extends FormProps {
   onClose?: () => void
-  action?: FormAction
-  id?: BaseKey
-  params?: MetaQuery
-  initFormat?: (data: Record<string, any>) => Record<string, any>
-  saveFormat?: (data: Record<string, any>) => Record<string, any>
 }
-export const FormModal = ({
-  children,
-  onClose,
-  id,
-  params,
-  action,
-  initFormat,
-  saveFormat,
-}: FormModalProps) => {
+export const FormModal = ({ children, onClose, onData, onSubmit, ...props }: FormModalProps) => {
   const modal = useModal()
-  const [form] = Form.useForm()
   const translate = useTranslate()
 
-  const { formLoading, onFinish, queryResult } = useForm({
-    form: form,
-    action: action || id ? 'edit' : 'create',
-    id: id,
-    redirect: false,
-    queryMeta: {
-      params: params,
-    },
-  })
+  const [loading, setLoading] = useState(false)
 
-  const data = queryResult?.data?.data?.info
+  const onDataFn = (form: UseFormReturnType) => {
+    setLoading(form.formLoading)
+    onData?.(form)
+  }
 
-  useEffect(() => {
-    if (data) {
-      form.setFieldsValue(initFormat?.(data) || data)
-    }
-  }, [data, form, initFormat])
-
-  const onSubmit = async (e: SubmitContext) => {
-    if (e.validateResult === true) {
-      await onFinish(saveFormat?.(e.fields) || e.fields)
-      await onClose?.()
-      await modal.onClose?.()
-    }
+  const onSubmitFun = async (e: SubmitContext) => {
+    await onSubmit?.(e)
+    await onClose?.()
+    await modal.onClose?.()
   }
   return (
     <Form
-      onSubmit={onSubmit}
-      disabled={formLoading}
-      initialData={data}
-      form={form}
-      labelAlign={'right'}
+      onSubmit={onSubmitFun}
+      formProps={{
+        labelAlign: 'top',
+      }}
+      onData={onDataFn}
+      {...props}
     >
       <div className='p-6'>{children}</div>
       <Modal.Footer>
@@ -67,11 +40,10 @@ export const FormModal = ({
             onClose?.()
             modal.onClose?.()
           }}
-          disabled={formLoading}
         >
           {translate('buttons.cancel')}
         </Button>
-        <Button type='submit' loading={formLoading}>
+        <Button type='submit' loading={loading}>
           {translate('buttons.save')}
         </Button>
       </Modal.Footer>

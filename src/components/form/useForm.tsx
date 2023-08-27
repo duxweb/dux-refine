@@ -1,19 +1,31 @@
-import { useForm as useRefineForm, UseFormProps as UseRefineFormProps } from '@refinedev/core'
+import {
+  useForm as useRefineForm,
+  UseFormProps as UseRefineFormProps,
+  useTranslate,
+} from '@refinedev/core'
 import { FormInstanceFunctions, FormValidateMessage } from 'tdesign-react/esm'
 
-interface useFormProps extends UseRefineFormProps {
+export interface useFormProps extends UseRefineFormProps {
   form?: FormInstanceFunctions
 }
 
 export const useForm = (props: useFormProps) => {
+  const t = useTranslate()
   return useRefineForm({
-    ...props,
     onMutationError(error, variables, context, isAutoSave) {
       if (error.statusCode == 422) {
         props?.form?.setValidateMessage(convertErrorFormat(error?.data))
       }
       props?.onMutationError?.(error, variables, context, isAutoSave)
     },
+    successNotification: (data, values, resource) => {
+      return {
+        message: t(resource + '.name'),
+        description: (data as Record<string, any>)?.message || t('notifications.success'),
+        type: 'success',
+      }
+    },
+    ...props,
   })
 }
 

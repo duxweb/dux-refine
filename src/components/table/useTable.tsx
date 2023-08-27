@@ -157,18 +157,19 @@ export const useTable = <
     return formatValues(filters as LogicalFilter[])
   }, [filters, formatValues])
 
+  const data = tableQueryResult?.data
   // Pagination
   const pagination: PaginationProps = useMemo(() => {
     return {
       current,
       pageSize,
-      total: tableQueryResult?.data?.total,
+      total: data?.total,
       onChange(pageInfo) {
         setCurrent(pageInfo.current)
         setPageSize(pageInfo.pageSize)
       },
     }
-  }, [current, pageSize, setCurrent, setPageSize, tableQueryResult?.data?.total])
+  }, [current, pageSize, setCurrent, setPageSize, data?.total])
 
   // Refetch
   const refetch = useCallback(() => {
@@ -176,7 +177,7 @@ export const useTable = <
   }, [tableQueryResult])
 
   return {
-    data: tableQueryResult?.data?.data || [],
+    data: data?.data || [],
     filters: getFilters,
     setFilters: setOnFilters,
     tableFilters: tableFilters,

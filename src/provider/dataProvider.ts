@@ -12,7 +12,7 @@ export const client = axios.create({
 
 client.interceptors.response.use(
   (response) => {
-    return response?.data
+    return response
   },
   (error) => {
     const customError: HttpError = {
@@ -28,7 +28,11 @@ client.interceptors.response.use(
 
 export const dataProvider = (app: string, config: Config): DataProvider => ({
   getList: async ({ resource, pagination, sorters, filters, meta }) => {
-    const url = `${config.apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${resource}`
+    let path = `${resource}`
+    if (meta?.path) {
+      path = meta.path
+    }
+    const url = `${config.apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${path}`
     const { current = 1, pageSize = 10 } = pagination ?? {}
 
     const quertSorts: Record<string, any> = {}
@@ -53,23 +57,38 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
         ...meta?.headers,
       },
     })
-    const total = data?.total || data?.length || 0
     return {
-      data: data?.list || data,
-      total,
+      data: data?.data?.list,
+      total: data?.data?.total,
+      message: data?.message,
+      rawData: data?.data,
     }
   },
   create: async ({ resource, variables, meta }) => {
-    const url = `${config.apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${resource}`
+    let path = `${resource}`
+    if (meta?.path) {
+      path = meta.path
+    }
+    const url = `${config.apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${path}`
     const { data } = await client.post(url, variables, {
       params: meta?.params,
     })
     return {
-      data,
+      code: data?.code,
+      data: data?.data?.info,
+      message: data?.message,
+      rawData: data?.data,
     }
   },
   update: async ({ resource, id, variables, meta }) => {
-    const url = `${config.apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${resource}/${id}`
+    let path = `${resource}/${id}`
+    if (meta?.mode == 'page') {
+      path = resource
+    }
+    if (meta?.path) {
+      path = meta.path
+    }
+    const url = `${config.apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${path}`
     const { data } = await client.post(url, variables, {
       params: meta?.params,
       headers: {
@@ -78,11 +97,18 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
       },
     })
     return {
-      data,
+      code: data?.code,
+      data: data?.data?.info,
+      message: data?.message,
+      rawData: data?.data,
     }
   },
   deleteOne: async ({ resource, id, variables, meta }) => {
-    const url = `${config.apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${resource}/${id}`
+    let path = `${resource}/${id}`
+    if (meta?.path) {
+      path = meta.path
+    }
+    const url = `${config.apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${path}`
     const { data } = await client.delete(url, {
       data: variables,
       params: meta?.params,
@@ -92,11 +118,21 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
       },
     })
     return {
-      data,
+      code: data?.code,
+      data: data?.data?.info,
+      message: data?.message,
+      rawData: data?.data,
     }
   },
   getOne: async ({ resource, id, meta }) => {
-    const url = `${config.apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${resource}/${id}`
+    let path = `${resource}/${id}`
+    if (meta?.mode == 'page') {
+      path = resource
+    }
+    if (meta?.path) {
+      path = meta.path
+    }
+    const url = `${config.apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${path}`
     const { data } = await client.get(url, {
       params: meta?.params,
       headers: {
@@ -105,13 +141,20 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
       },
     })
     return {
-      data,
+      code: data?.code,
+      data: data?.data?.info,
+      message: data?.message,
+      rawData: data?.data,
     }
   },
   getApiUrl: () => config.apiUrl,
   getMany: async ({ resource, ids, meta }) => {
+    let path = `${resource}`
+    if (meta?.path) {
+      path = meta.path
+    }
     const { data } = await client.get(
-      `${config.apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${resource}`,
+      `${config.apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${path}`,
       {
         params: {
           ids: ids.join(','),
@@ -124,11 +167,18 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
       }
     )
     return {
-      data,
+      code: data?.code,
+      data: data?.data?.list,
+      message: data?.message,
+      rawData: data?.data,
     }
   },
   createMany: async ({ resource, variables, meta }) => {
-    const url = `${config.apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${resource}`
+    let path = `${resource}`
+    if (meta?.path) {
+      path = meta.path
+    }
+    const url = `${config.apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${path}`
     const { data } = await client.post(url, variables, {
       params: meta?.params,
       headers: {
@@ -137,11 +187,18 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
       },
     })
     return {
-      data,
+      code: data?.code,
+      data: data?.data?.info,
+      message: data?.message,
+      rawData: data?.data,
     }
   },
   deleteMany: async ({ resource, ids, meta }) => {
-    const url = `${config.apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${resource}`
+    let path = `${resource}`
+    if (meta?.path) {
+      path = meta.path
+    }
+    const url = `${config.apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${path}`
     const { data } = await client.delete(url, {
       params: {
         ids: ids.join(','),
@@ -153,11 +210,18 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
       },
     })
     return {
-      data,
+      code: data?.code,
+      data: data?.data?.info,
+      message: data?.message,
+      rawData: data?.data,
     }
   },
   updateMany: async ({ resource, ids, variables, meta }) => {
-    const url = `${config.apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${resource}`
+    let path = `${resource}`
+    if (meta?.path) {
+      path = meta.path
+    }
+    const url = `${config.apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${path}`
     const { data } = await client.post(
       url,
       { variables },
@@ -172,9 +236,11 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
         },
       }
     )
-
     return {
-      data,
+      code: data?.code,
+      data: data?.data?.info,
+      message: data?.message,
+      rawData: data?.data,
     }
   },
   custom: async ({ url, method, filters, sorters, payload, query, headers, meta }) => {
@@ -232,8 +298,7 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
         })
         break
     }
-    const { data } = axiosResponse
-    return { data }
+    return axiosResponse.data
   },
 })
 

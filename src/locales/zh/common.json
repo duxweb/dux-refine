@@ -90,6 +90,8 @@
     "undo": "撤销",
     "import": "导入",
     "clone": "克隆",
+    "back": "返回",
+    "rest": "重置",
     "notAccessTitle": "您无权访问"
   },
   "warnWhenUnsavedChanges": "未保存的更改将不会保留。",
