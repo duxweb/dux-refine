@@ -41,7 +41,7 @@
     "query-string": "^8.1.0",
     "react-i18next": "^13.1.2",
     "remeda": "^1.24.0",
-    "tdesign-react": "^1.2.1",
+    "tdesign-react": "^1.2.3",
     "unocss": "^0.53.5",
     "zustand": "^4.3.9"
   },

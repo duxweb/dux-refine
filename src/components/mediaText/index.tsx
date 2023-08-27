@@ -1,6 +1,6 @@
 import { clsx } from 'clsx'
 import React, { forwardRef, ReactNode } from 'react'
-import { Image, ImageProps } from 'tdesign-react/esm'
+import { Avatar, AvatarProps, Image, ImageProps } from 'tdesign-react/esm'
 
 export interface MediaTextProps {
   children?: ReactNode
@@ -17,7 +17,8 @@ const MediaTextComp = (
         children,
         (child) =>
           React.isValidElement(child) &&
-          (child.type as React.FunctionComponent).displayName === 'MediaText.Image' &&
+          ((child.type as React.FunctionComponent).displayName === 'MediaText.Image' ||
+            (child.type as React.FunctionComponent).displayName === 'MediaText.Avatar') &&
           child
       )}
       <div className='app-media-text-content'>
@@ -41,6 +42,11 @@ const MediaTextComp = (
     </div>
   )
 }
+
+const MediaTextAvatar = (props: AvatarProps) => {
+  return <Avatar {...props} />
+}
+MediaTextAvatar.displayName = 'MediaText.Avatar'
 
 interface MediaTextImageProps extends ImageProps {
   width?: string | number
@@ -73,6 +79,7 @@ MediaTextDesc.displayName = 'MediaText.Desc'
 export const MediaText = forwardRef(MediaTextComp) as React.ForwardRefExoticComponent<
   MediaTextProps & React.RefAttributes<HTMLDivElement>
 > & {
+  Avatar: typeof MediaTextAvatar
   Image: typeof MediaTextImage
   Title: typeof MediaTextTitle
   Desc: typeof MediaTextDesc
@@ -81,3 +88,4 @@ export const MediaText = forwardRef(MediaTextComp) as React.ForwardRefExoticComp
 MediaText.Image = MediaTextImage
 MediaText.Title = MediaTextTitle
 MediaText.Desc = MediaTextDesc
+MediaText.Avatar = MediaTextAvatar
