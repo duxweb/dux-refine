@@ -24,8 +24,6 @@ export interface moduleApp {
   register?: boolean
   forgotPassword?: boolean
   updatePassword?: boolean
-  updateProfile?: boolean
-  upload?: boolean
 }
 
 export interface Config {
