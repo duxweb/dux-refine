@@ -13,7 +13,7 @@
 
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-0.0.6-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-0.0.8-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/duxweb/dux-refine/blob/main/LICENSE" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
