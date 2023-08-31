@@ -13,6 +13,13 @@
 
 > 🌲 Integrated UI based on refine and tdesign
 
+
+<p align="center">
+<a href="https://ui.dux.plus/zh/" target="_blank">中文文档</a>
+|
+<a href="https://ui.dux.plus/en/" target="_blank">English Docs</a>
+<p>
+
 ## Install
 
 ```sh
@@ -23,7 +30,7 @@ npx @duxweb/dux-cli
 
 👤 **duxweb**
 
-* Website: https://github.com/duxweb
+* Website: https://ui.dux.plus
 * Github: [@duxweb](https://github.com/duxweb)
 
 ## 🤝 Contributing
