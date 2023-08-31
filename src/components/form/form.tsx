@@ -60,40 +60,28 @@ export const Form = forwardRef(
       queryMeta: {
         params: params,
       },
+      initData: initData,
+      initFormat: initFormat,
+      saveFormat: saveFormat,
       ...useFormProps,
     })
 
-    const { queryResult, formLoading, onFinish } = formResult
-
-    const getData = useMemo(() => {
-      const info = initData || queryResult?.data?.data
-      if (!info) {
-        return {}
-      }
-      return initFormat?.(info) || info
-    }, [initData, queryResult?.data?.data, initFormat])
-
-    useEffect(() => {
-      form.setFieldsValue(getData)
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [getData])
+    const { formData, formLoading } = formResult
 
     useEffect(() => {
       onData?.(formResult)
     }, [onData, formResult])
 
     const onSubmitFun = async (e: SubmitContext) => {
-      if (e.validateResult === true) {
-        await onFinish(saveFormat?.(e.fields) || e.fields)
-        await onSubmit?.(e)
-      }
+      await formResult.onSubmit(e)
+      await onSubmit?.(e)
     }
 
     return (
       <TdForm
         onSubmit={onSubmitFun}
         disabled={formLoading}
-        initialData={getData}
+        initialData={formData}
         form={form}
         {...formProps}
       >

@@ -20,8 +20,10 @@ export const FormModal = ({ children, onClose, onData, onSubmit, ...props }: For
 
   const onSubmitFun = async (e: SubmitContext) => {
     await onSubmit?.(e)
-    await onClose?.()
-    await modal.onClose?.()
+    if (e.validateResult === true) {
+      await onClose?.()
+      await modal.onClose?.()
+    }
   }
   return (
     <Form
