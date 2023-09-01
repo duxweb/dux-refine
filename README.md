@@ -21,7 +21,7 @@ npx @duxweb/dux-cli
 
 ## Show
 
-<p>
+<p align="center">
 <a href="https://github.com/duxweb/dux-refine/blob/main/LICENSE" target="_blank">
   <img src="https://cdn.jsdelivr.net/gh/duxweb/dux-refine-docs/public/login.jpg" width="300">
   </a>
