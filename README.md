@@ -3,15 +3,24 @@
   <img src="https://cdn.jsdelivr.net/gh/duxweb/duxweb/logo.svg" width="150">
 <p>
 
-<h1 align="center">dux-refine</h1>
+<h1 align="center">Dux Refine</h1>
+
+<p align="center">
+<a href="https://ui.dux.plus/zh/" target="_blank">中文文档</a>
+|
+<a href="https://ui.dux.plus/en/" target="_blank">English Docs</a>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.0.6-blue.svg?cacheSeconds=2592000" />
+
+
+<p align="center">
+  <img alt="Version" src="https://img.shields.io/badge/version-0.0.8-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/duxweb/dux-refine/blob/main/LICENSE" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
 </p>
 
 > 🌲 Integrated UI based on refine and tdesign
+
 
 ## Install
 
@@ -33,7 +42,7 @@ npx @duxweb/dux-cli
 
 👤 **duxweb**
 
-* Website: https://github.com/duxweb
+* Website: https://ui.dux.plus
 * Github: [@duxweb](https://github.com/duxweb)
 
 ## 🤝 Contributing

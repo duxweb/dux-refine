@@ -1,4 +1,4 @@
-import React, { useEffect, useImperativeHandle, useState } from 'react'
+import React, { useImperativeHandle } from 'react'
 import {
   EnhancedTable as TdTable,
   EnhancedTableProps,
@@ -11,7 +11,6 @@ import {
 } from 'tdesign-react/esm'
 import { useWindowSize } from '../../core/helper'
 import { useTable } from './useTable'
-import { BaseRecord } from '@refinedev/core'
 
 export interface CardTableTab {
   label: string
