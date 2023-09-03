@@ -7,13 +7,22 @@ import {
   useResource,
   useLogout,
 } from '@refinedev/core'
-import { Avatar, Dropdown, Button, DropdownOption, Radio, SelectInput } from 'tdesign-react/esm'
+import {
+  Avatar,
+  Dropdown,
+  Button,
+  DropdownOption,
+  Radio,
+  SelectInput,
+  Menu,
+} from 'tdesign-react/esm'
 import { TranslateIcon, SearchIcon } from 'tdesign-icons-react'
 import { useAppStore } from '../../stores/app'
 import { userMenuItem } from '../../core/config'
 import { DuxLogo } from '../logo'
 import { useCanHelper } from '../../provider'
 import { useModuleContext } from '../../core/module'
+const { HeadMenu, MenuItem } = Menu
 
 interface UserProps {
   menu?: userMenuItem[]
@@ -52,7 +61,7 @@ const User = ({ menu = [] }: UserProps) => {
 
   return (
     <Dropdown options={options} minColumnWidth={150}>
-      <div className='flex items-center gap-2'>
+      <div className='flex items-center gap-2 leading-5'>
         <Avatar image={data?.userInfo?.avatar} />
         <div className='hidden md:flex flex-col'>
           <div>{data?.userInfo?.nickname}</div>
@@ -193,7 +202,7 @@ const Search = () => {
 }
 
 const Item = ({ children }: PropsWithChildren) => {
-  return <div className='flex cursor-pointer items-center gap-2 px-2'>{children}</div>
+  return <div className='px-2 flex items-center'>{children}</div>
 }
 
 interface HeaderProps {
@@ -203,7 +212,28 @@ interface HeaderProps {
 const Header = ({ userMenu }: HeaderProps) => {
   return (
     <>
-      <div className='md:hidden flex h-16  flex-none border-b px-3 bg-container border-component items-center'>
+      <HeadMenu
+        className='border-b border-component'
+        logo={<DuxLogo className='w-14 md:hidden ml-4' />}
+        operations={
+          <>
+            <Item>
+              <Dark />
+            </Item>
+            <Item>
+              <Lang />
+            </Item>
+            <Item>
+              <User menu={userMenu} />
+            </Item>
+          </>
+        }
+      >
+        <div className='items-center hidden md:flex w-50'>
+          <Search />
+        </div>
+      </HeadMenu>
+      {/* <div className='md:hidden flex h-16  flex-none border-b px-3 bg-container border-b border-component items-center'>
         <div>
           <Lang />
         </div>
@@ -229,7 +259,7 @@ const Header = ({ userMenu }: HeaderProps) => {
             <User menu={userMenu} />
           </Item>
         </div>
-      </div>
+      </div> */}
     </>
   )
 }

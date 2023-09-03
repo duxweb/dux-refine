@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useGo, useTranslate } from '@refinedev/core'
 import { TreeMenuItem } from '@refinedev/core/dist/hooks/menu/useMenu'
-import { useSiderContext } from './index'
+import { useSiderContext } from '../app'
 import clsx from 'clsx'
 
 export const Sub = () => {

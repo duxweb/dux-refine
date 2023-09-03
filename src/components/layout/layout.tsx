@@ -1,19 +1,21 @@
 import React from 'react'
 import Header from './header'
-import { Sider } from '../sider'
+import { SiderApp, SiderCollapse } from '../sider'
 import { TabBar } from '../tabbar/tabbar'
-import { tabBarItem, userMenuItem } from '../../core/config'
+import { siderType, tabBarItem, userMenuItem } from '../../core/config'
 
 export interface LayoutProps {
+  siderType?: siderType
   tabar: tabBarItem[]
   children?: React.ReactNode
   userMenu?: userMenuItem[]
 }
 
-export const Layout = ({ userMenu, tabar, children }: LayoutProps) => {
+export const Layout = ({ userMenu, tabar, children, siderType = 'app' }: LayoutProps) => {
   return (
     <div className='inset-0 h-screen w-screen flex flex-row overflow-hidden'>
-      <Sider />
+      {siderType === 'app' && <SiderApp />}
+      {siderType === 'collapse' && <SiderCollapse />}
 
       <div className='w-1 flex flex-1 flex-col'>
         <Header userMenu={userMenu} />

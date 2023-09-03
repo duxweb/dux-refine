@@ -1,8 +1,8 @@
 import clsx from 'clsx'
 import { Tooltip } from 'tdesign-react/esm'
 import { useGo, useLogout, useTranslate } from '@refinedev/core'
-import { DuxLogo } from '../logo'
-import { useSiderContext } from './index'
+import { DuxLogo } from '../../logo'
+import { useSiderContext } from '../app'
 
 export const Main = () => {
   return (

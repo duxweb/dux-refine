@@ -1,0 +1,11 @@
+.app-sider-collapse {
+  @apply border-r border-component h-full;
+}
+
+.app-sider-collapse .t-default-menu__inner .t-menu__logo:not(:empty) {
+  height: calc(var(--td-comp-size-xxxl) + 1px);
+  @apply border-b border-component;
+}
+
+.app-sider-collapse .t-menu__item {
+}

@@ -26,6 +26,8 @@ export interface moduleApp {
   updatePassword?: boolean
 }
 
+export type siderType = 'app' | 'collapse'
+
 export interface Config {
   projectId: string
   apiUrl: string
@@ -33,4 +35,5 @@ export interface Config {
   defaultApp: string
   resourcesPrefix: boolean
   moduleApp?: Record<string, moduleApp>
+  sideType?: siderType
 }
