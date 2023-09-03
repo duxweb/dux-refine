@@ -100,6 +100,7 @@ export const createRefine = ({
         notificationProvider={notificationProvider}
         resources={resources}
         options={{
+          disableTelemetry: true,
           syncWithLocation: true,
           warnWhenUnsavedChanges: true,
           projectId: config.projectId,
