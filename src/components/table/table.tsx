@@ -66,6 +66,7 @@ export const CardTable = React.forwardRef(
       setFilters,
       tableFilters,
       setTableFilters,
+      onRowEdit,
       refetch,
       loading,
     } = useTable({
@@ -74,6 +75,7 @@ export const CardTable = React.forwardRef(
         pageSize: 10,
       },
       columns: columns,
+      rowKey: table?.rowKey,
     })
 
     const [size, sizeMap] = useWindowSize()
@@ -155,6 +157,7 @@ export const CardTable = React.forwardRef(
           onSelectChange={setSelecteds}
           filterValue={tableFilters}
           onFilterChange={setTableFilters}
+          onRowEdit={onRowEdit}
           {...table}
         />
         {footer}

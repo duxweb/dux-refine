@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from 'react'
 import {
+  useResource,
   useTable as useRefineTable,
   useTableProps as useRefineTableProps,
   BaseRecord,
@@ -7,6 +8,9 @@ import {
   LogicalFilter,
   CrudSorting,
   CrudSort,
+  useCustom,
+  useApiUrl,
+  useCustomMutation,
 } from '@refinedev/core'
 import {
   PrimaryTableCol,
@@ -16,11 +20,14 @@ import {
   SelectOptions,
   PaginationProps,
   FilterValue,
+  PrimaryTableRowEditContext,
 } from 'tdesign-react/esm'
+import { client } from '../../provider'
 
 export interface useTableProps<TQueryFnData, TError, TData>
   extends useRefineTableProps<TQueryFnData, TError, TData> {
   columns?: PrimaryTableCol[]
+  rowKey?: string
 }
 
 export interface useTableReturnType<TData> {
@@ -35,6 +42,7 @@ export interface useTableReturnType<TData> {
   selectOptions?: SelectOptions<TData>
   setSelecteds: (selectedRowKeys: Array<string | number>, options: SelectOptions<TData>) => void
   pagination: PaginationProps
+  onRowEdit: (context: PrimaryTableRowEditContext<TData>) => void
   loading: boolean
   refetch: () => void
 }
@@ -44,6 +52,7 @@ export const useTable = <
   TData extends BaseRecord = TQueryFnData
 >({
   columns,
+  rowKey = 'id',
   ...props
 }: useTableProps<TQueryFnData, TError, TData>): useTableReturnType<TData> => {
   const {
@@ -157,7 +166,9 @@ export const useTable = <
     return formatValues(filters as LogicalFilter[])
   }, [filters, formatValues])
 
+  // Data
   const data = tableQueryResult?.data
+
   // Pagination
   const pagination: PaginationProps = useMemo(() => {
     return {
@@ -170,6 +181,33 @@ export const useTable = <
       },
     }
   }, [current, pageSize, setCurrent, setPageSize, data?.total])
+
+  // edit
+  const { mutate } = useCustomMutation()
+  const { resource } = useResource(props?.resource)
+  const onRowEdit = useCallback(
+    (context: PrimaryTableRowEditContext<TData>) => {
+      if (!resource?.name) {
+        throw new Error('Resource name does not exist')
+      }
+      const id = context.row[rowKey]
+      if (!id) {
+        throw new Error('Row key does not exist')
+      }
+      if (!context.col?.colKey) {
+        throw new Error('Edit colKey does not exist')
+      }
+      mutate({
+        url: `${resource.name}/${id}`,
+        method: 'patch',
+        values: {
+          [context.col.colKey]: context.value,
+        },
+      })
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [resource?.name, rowKey]
+  )
 
   // Refetch
   const refetch = useCallback(() => {
@@ -189,6 +227,7 @@ export const useTable = <
     setSelecteds: setOnSelecteds,
     loading: tableQueryResult?.isLoading,
     pagination: pagination,
+    onRowEdit: onRowEdit,
     refetch: refetch,
   }
 }

@@ -62,7 +62,7 @@ const User = ({ menu = [] }: UserProps) => {
   return (
     <Dropdown options={options} minColumnWidth={150}>
       <div className='flex items-center gap-2 leading-5'>
-        <Avatar image={data?.userInfo?.avatar} />
+        <Avatar image={data?.userInfo?.avatar}>{data?.userInfo?.nickname[0]}</Avatar>
         <div className='hidden md:flex flex-col'>
           <div>{data?.userInfo?.nickname}</div>
         </div>
