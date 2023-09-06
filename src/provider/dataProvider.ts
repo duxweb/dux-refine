@@ -31,7 +31,7 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
   getApiUrl: () => config.apiUrl,
   getList: async ({ resource, pagination, sorters, filters, meta }) => {
     const path = `${resource}`
-    const url = getUrl(config, path, meta)
+    const url = getUrl(config, app, path, meta)
     const { current = 1, pageSize = 10 } = pagination ?? {}
     const quertSorts: Record<string, any> = {}
     sorters?.map((item) => {
@@ -63,7 +63,7 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
   },
   create: async ({ resource, variables, meta }) => {
     const path = `${resource}`
-    const url = getUrl(config, path, meta)
+    const url = getUrl(config, app, path, meta)
     const { data } = await client.post(url, variables, {
       params: meta?.params,
     })
@@ -79,7 +79,7 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
     if (meta?.mode == 'page') {
       path = resource
     }
-    const url = getUrl(config, path, meta)
+    const url = getUrl(config, app, path, meta)
     const { data } = await client.put(url, variables, {
       params: meta?.params,
       headers: {
@@ -96,7 +96,7 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
   },
   deleteOne: async ({ resource, id, variables, meta }) => {
     const path = `${resource}/${id}`
-    const url = getUrl(config, path, meta)
+    const url = getUrl(config, app, path, meta)
     const { data } = await client.delete(url, {
       data: variables,
       params: meta?.params,
@@ -117,7 +117,7 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
     if (meta?.mode == 'page') {
       path = resource
     }
-    const url = getUrl(config, path, meta)
+    const url = getUrl(config, app, path, meta)
     const { data } = await client.get(url, {
       params: meta?.params,
       headers: {
@@ -134,7 +134,7 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
   },
   getMany: async ({ resource, ids, meta }) => {
     const path = `${resource}`
-    const url = getUrl(config, path, meta)
+    const url = getUrl(config, app, path, meta)
     const { data } = await client.get(url, {
       params: {
         ids: ids.join(','),
@@ -154,7 +154,7 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
   },
   createMany: async ({ resource, variables, meta }) => {
     const path = `${resource}`
-    const url = getUrl(config, path, meta)
+    const url = getUrl(config, app, path, meta)
     const { data } = await client.post(url, variables, {
       params: meta?.params,
       headers: {
@@ -171,7 +171,7 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
   },
   deleteMany: async ({ resource, ids, meta }) => {
     const path = `${resource}`
-    const url = getUrl(config, path, meta)
+    const url = getUrl(config, app, path, meta)
     const { data } = await client.delete(url, {
       params: {
         ids: ids.join(','),
@@ -191,7 +191,7 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
   },
   updateMany: async ({ resource, ids, variables, meta }) => {
     const path = `${resource}`
-    const url = getUrl(config, path, meta)
+    const url = getUrl(config, app, path, meta)
     const { data } = await client.put(
       url,
       { variables },
@@ -234,6 +234,8 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
       ...queryFilters,
       ...quertSorts,
     }
+
+    url = getUrl(config, app, url, meta)
 
     let axiosResponse
     switch (method) {
@@ -278,12 +280,12 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
   },
 })
 
-const getUrl = (config: Config, path: string, meta?: MetaQuery) => {
+const getUrl = (config: Config, app: string, path: string, meta?: MetaQuery) => {
   if (meta?.path) {
     path = meta.path
   }
   path = path.replace(/\./g, '/')
-  return `${config.apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${path}`
+  return `${config.apiUrl}/${config.resourcesPrefix ? app + '/' : ''}${path}`
 }
 
 export const getToken = (app: string) => {

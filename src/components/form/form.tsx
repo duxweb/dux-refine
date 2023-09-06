@@ -69,7 +69,14 @@ export const Form = forwardRef(
     const { formData, formLoading } = formResult
 
     useEffect(() => {
+      let isUnmounted = false
+      if (isUnmounted) {
+        return
+      }
       onData?.(formResult)
+      return () => {
+        isUnmounted = true
+      }
     }, [onData, formResult])
 
     const onSubmitFun = async (e: SubmitContext) => {

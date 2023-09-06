@@ -48,7 +48,14 @@ export const useForm = (props: useFormProps): useFormReturnProps => {
   }, [result.queryResult?.data?.data])
 
   useEffect(() => {
+    let isUnmounted = false
+    if (isUnmounted) {
+      return
+    }
     props?.form?.setFieldsValue(getData)
+    return () => {
+      isUnmounted = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getData])
 
