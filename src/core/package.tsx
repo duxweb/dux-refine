@@ -20,7 +20,7 @@ import { ErrorBoundary } from '../pages/common/boundary'
 export const lazyComponent = (importComp: () => Promise<{ default: ComponentType<any> }>) => {
   const Comp = lazy(importComp)
   return (
-    <Suspense fallback={<div>loading...</div>}>
+    <Suspense fallback={<div>lowing...</div>}>
       <Comp></Comp>
     </Suspense>
   )

@@ -58,6 +58,7 @@ export const authProvider = (app: string, config: Config): AuthBindings => {
         .catch(() => {
           return {
             authenticated: false,
+            logout: true,
             redirectTo: `/${app}/login`,
           }
         })

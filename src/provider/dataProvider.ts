@@ -22,7 +22,9 @@ client.interceptors.response.use(
       data: error.response?.data?.data,
       statusCode: error.response?.status,
     }
-
+    if (error.response && error.response.status === 401) {
+      window.location.reload()
+    }
     return Promise.reject(customError)
   }
 )
@@ -66,6 +68,10 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
     const url = getUrl(config, app, path, meta)
     const { data } = await client.post(url, variables, {
       params: meta?.params,
+      headers: {
+        Authorization: getToken(app),
+        ...meta?.headers,
+      },
     })
     return {
       code: data?.code,
