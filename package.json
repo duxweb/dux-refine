@@ -1,6 +1,6 @@
 {
   "name": "@duxweb/dux-refine",
-  "version": "0.0.12",
+  "version": "0.1.0",
   "description": "🌲 Integrated UI based on refine and tdesign",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -37,7 +37,6 @@
     "query-string": "^8.1.0",
     "react-i18next": "^13.1.2",
     "remeda": "^1.24.0",
-    "tdesign-react": "^1.2.3",
     "zustand": "^4.3.9"
   },
   "devDependencies": {
@@ -65,6 +64,7 @@
     "react-dom": "^18.0.0",
     "rimraf": "^5.0.1",
     "sass": "^1.64.2",
+    "tdesign-react": "^1.2.3",
     "typescript": "^5.0.2",
     "unocss": "^0.53.5",
     "vite": "^4.4.7",
