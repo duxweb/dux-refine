@@ -30,7 +30,7 @@ export const SiderCollapse = () => {
             </div>
           ) : (
             <div className='px-6 flex items-center gap-1'>
-              <DuxLogo className='h-6' />
+              <DuxLogo className='h-5' />
             </div>
           )}
         </>
