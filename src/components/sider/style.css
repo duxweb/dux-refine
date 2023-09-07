@@ -3,7 +3,8 @@
 }
 
 .app-sider-collapse .t-default-menu__inner .t-menu__logo:not(:empty) {
-  @apply border-none;
+  height: calc(var(--td-comp-size-xxxl) + 1px);
+  @apply border-b border-component;
 }
 
 .app-sider-collapse .t-menu__item {

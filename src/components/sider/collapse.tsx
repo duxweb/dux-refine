@@ -18,6 +18,7 @@ export const SiderCollapse = () => {
   return (
     <Menu
       className='app-sider-collapse hidden md:block'
+      width='210px'
       value={value}
       onChange={(value) => setValue(value as string)}
       collapsed={collapse}
@@ -58,7 +59,12 @@ export const SiderCollapse = () => {
             {translate(`${app.label}.name`) || app?.label}
           </MenuItem>
         ) : (
-          <MenuGroup key={app.key} title={translate(`${app.label}.name`) || app?.label}>
+          <SubMenu
+            key={app.key}
+            title={translate(`${app.label}.name`) || app?.label}
+            icon={<div className={clsx(['t-icon', app.icon])}></div>}
+            value={app.key}
+          >
             {app?.children?.length > 0 &&
               app?.children?.map((parent: TreeMenuItem) => {
                 return parent?.children?.length > 0 ? (
@@ -108,7 +114,7 @@ export const SiderCollapse = () => {
                   </MenuItem>
                 )
               })}
-          </MenuGroup>
+          </SubMenu>
         )
       })}
     </Menu>
