@@ -1,6 +1,7 @@
 export * from './layout'
 export * from './charts'
 export * from './dashboard'
+export * from './descriptions'
 export * from './data'
 export * from './charts'
 export * from './form'

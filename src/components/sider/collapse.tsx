@@ -66,13 +66,19 @@ export const SiderCollapse = () => {
                     key={parent.key}
                     title={translate(`${parent.label}.name`) || parent?.label}
                     value={parent.key}
-                    icon={<div className={clsx(['t-icon', app.icon])}></div>}
+                    icon={
+                      parent.icon ? (
+                        <div className={clsx(['t-icon', parent.icon])}></div>
+                      ) : undefined
+                    }
                   >
                     {parent?.children?.map((sub: TreeMenuItem) => (
                       <MenuItem
                         key={sub.name}
                         value={sub.key}
-                        icon={<div className={clsx(['t-icon', app.icon])}></div>}
+                        icon={
+                          sub.icon ? <div className={clsx(['t-icon', sub.icon])}></div> : undefined
+                        }
                         onClick={() => {
                           go({
                             to: sub.route,
@@ -87,7 +93,11 @@ export const SiderCollapse = () => {
                   <MenuItem
                     key={parent.key}
                     value={parent.key}
-                    icon={<div className={clsx(['t-icon', parent.icon])}></div>}
+                    icon={
+                      parent.icon ? (
+                        <div className={clsx(['t-icon', parent.icon])}></div>
+                      ) : undefined
+                    }
                     onClick={() => {
                       go({
                         to: parent.route,
