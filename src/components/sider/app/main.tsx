@@ -6,7 +6,7 @@ import { useSiderContext } from '../app'
 
 export const Main = () => {
   return (
-    <div className='h-screen w-18 flex flex-col border-r bg-container border-component'>
+    <div className='h-screen w-18 flex flex-col border-r bg-secondarycontainer border-component'>
       <SiderLogo />
       <SiderMenu />
       <SiderFooter />

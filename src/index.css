@@ -1,3 +1,20 @@
+html:root, *:root[theme-mode="light"] {
+  --td-gray-color-1: #f8f9fc;
+  --td-gray-color-2: #f2f4f8;
+  --td-gray-color-3: #e4e7ec;
+  --td-gray-color-4: #d6dadf;
+  --td-gray-color-5: #c8cdd3;
+  --td-gray-color-6: #babfc7;
+  --td-gray-color-7: #acb2bb;
+  --td-gray-color-8: #9ea5ae;
+  --td-gray-color-9: #9198a2;
+  --td-gray-color-10: #838b96;
+  --td-gray-color-11: #596371;
+  --td-gray-color-12: #4b5665;
+  --td-gray-color-13: #2f3c4c;
+  --td-gray-color-14: #1d252f;
+}
+
 .t-dialog .t-dialog__body {
   padding: 0;
 }

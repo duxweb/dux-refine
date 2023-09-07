@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Menu, Button } from 'tdesign-react/esm'
+import { Menu, Button, Tag } from 'tdesign-react/esm'
 import { useTranslate, useGo } from '@refinedev/core'
 import { TreeMenuItem } from '@refinedev/core/dist/hooks/menu/useMenu'
 const { MenuGroup, MenuItem, SubMenu } = Menu
@@ -28,7 +28,7 @@ export const SiderCollapse = () => {
               <DuxLogo className='h-3' />
             </div>
           ) : (
-            <div className='px-6 flex items-center'>
+            <div className='px-6 flex items-center gap-1'>
               <DuxLogo className='h-6' />
             </div>
           )}

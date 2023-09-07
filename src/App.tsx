@@ -1,12 +1,12 @@
 // refine
 import React from 'react'
+import './index.css'
 
 // tdesign
 import { ConfigProvider } from 'tdesign-react/esm'
 import enConfig from 'tdesign-react/es/locale/en_US'
 import zhConfig from 'tdesign-react/es/locale/zh_CN'
 import 'tdesign-react/esm/style/index.js'
-import './index.css'
 
 // app
 import { useAppStore } from './stores/app'

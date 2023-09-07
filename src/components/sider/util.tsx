@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { useMenu as useRefMenu } from '@refinedev/core'
 import { TreeMenuItem } from '@refinedev/core/dist/hooks/menu/useMenu'
 import { useCanHelper } from '../../provider'
@@ -11,6 +11,16 @@ export const useMenu = () => {
 
   const { name } = useModuleContext()
   const { check } = useCanHelper(name)
+
+  const sortData = useCallback((arr: TreeMenuItem[]) => {
+    arr.sort((a, b) => a.meta.sort - b.meta.sort)
+    for (const item of arr) {
+      if (Array.isArray(item.children)) {
+        sortData(item.children)
+      }
+    }
+  }, [])
+
   const menuData = useMemo(() => {
     const filterMenuItems = (menuItems: TreeMenuItem[]) => {
       return menuItems.filter((item) => {
@@ -23,7 +33,9 @@ export const useMenu = () => {
         return check({ resource: item.name, action: 'list' })
       })
     }
-    return filterMenuItems(menuItems)
+    const data = filterMenuItems(menuItems)
+    sortData(data)
+    return data
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuItems])
 
