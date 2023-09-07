@@ -1,7 +1,7 @@
 import { clsx } from 'clsx'
 import React, { forwardRef, ReactNode } from 'react'
 import { Avatar, AvatarProps, Image, ImageProps } from 'tdesign-react/esm'
-
+import './style.css'
 export interface MediaTextProps {
   children?: ReactNode
   size?: 'default' | 'small'

@@ -11,7 +11,7 @@
 }
 
 .app-media-text-desc {
-  @apply text-placeholder truncate;
+  @apply text-placeholder;
 }
 
 .app-media-text-sm {
