@@ -1,6 +1,6 @@
 {
   "name": "@duxweb/dux-refine",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "🌲 Integrated UI based on refine and tdesign",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -23,10 +23,6 @@
   "author": "duxweb",
   "license": "MIT",
   "dependencies": {
-    "@iconify-json/tabler": "^1.1.85",
-    "@refinedev/cli": "2.7.6",
-    "@refinedev/core": "4.34.0",
-    "@refinedev/react-router-v6": "4.5.0",
     "axios": "^1.4.0",
     "clsx": "^2.0.0",
     "deepmerge": "^4.3.1",
@@ -42,10 +38,13 @@
     "react-i18next": "^13.1.2",
     "remeda": "^1.24.0",
     "tdesign-react": "^1.2.3",
-    "unocss": "^0.53.5",
     "zustand": "^4.3.9"
   },
   "devDependencies": {
+    "@iconify-json/tabler": "^1.1.85",
+    "@refinedev/cli": "2.7.6",
+    "@refinedev/core": "4.34.0",
+    "@refinedev/react-router-v6": "4.5.0",
     "@types/node": "^18.16.2",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
@@ -67,6 +66,7 @@
     "rimraf": "^5.0.1",
     "sass": "^1.64.2",
     "typescript": "^5.0.2",
+    "unocss": "^0.53.5",
     "vite": "^4.4.7",
     "vite-plugin-build": "^0.10.0"
   }
