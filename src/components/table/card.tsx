@@ -19,15 +19,14 @@ export interface CardTableTab {
 
 export interface CardTableProps {
   title?: React.ReactNode
-  header?: React.ReactNode
   tabs?: Array<CardTableTab>
-  banner?: React.ReactNode
-  footer?: React.ReactNode
   table?: EnhancedTableProps
   columns?: PrimaryTableCol[]
-  filterRender?: () => React.ReactNode
   onFilterChange?: (values: Record<string, any>) => void
-  batchRender?: React.ReactNode
+  headerRender?: () => React.ReactNode
+  footerRender?: () => React.ReactNode
+  batchRender?: () => React.ReactNode
+  filterRender?: () => React.ReactNode
 }
 
 export interface CardTableRef {
@@ -43,10 +42,9 @@ export const CardTable = React.forwardRef(
       title,
       table,
       columns,
-      header,
       tabs,
-      banner,
-      footer,
+      headerRender,
+      footerRender,
       batchRender,
       filterRender,
     }: CardTableProps,
@@ -93,7 +91,7 @@ export const CardTable = React.forwardRef(
         header={
           <div className='flex flex-1 flex-col flex-wrap justify-between gap-2 md:flex-row md:items-center'>
             {selecteds && selecteds.length > 0 && batchRender ? (
-              <div>{batchRender}</div>
+              <div>{batchRender?.()}</div>
             ) : (
               <div>
                 {tabs ? (
@@ -113,7 +111,7 @@ export const CardTable = React.forwardRef(
                     ))}
                   </Radio.Group>
                 ) : (
-                  header || <div className='text-base'>{title}</div>
+                  <div className='text-base'>{title}</div>
                 )}
               </div>
             )}
@@ -130,7 +128,7 @@ export const CardTable = React.forwardRef(
           </div>
         }
       >
-        {banner}
+        {headerRender?.()}
 
         <TdTable
           rowKey={table?.rowKey || 'id'}
@@ -158,7 +156,7 @@ export const CardTable = React.forwardRef(
           onRowEdit={onRowEdit}
           {...table}
         />
-        {footer}
+        {footerRender?.()}
       </Card>
     )
   }
