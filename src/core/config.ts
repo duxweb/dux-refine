@@ -1,9 +1,3 @@
-export interface tabBarItem {
-  label: string
-  icon: string
-  route: string
-}
-
 export interface userMenuItem {
   label: string
   icon: string

@@ -1,15 +1,30 @@
-import { useMemo, useState } from 'react'
-import { Menu, Button, Tag, SelectInput } from 'tdesign-react/esm'
-import { useTranslate, useGo, useResource } from '@refinedev/core'
+import { useCallback, useMemo, useState } from 'react'
+import {
+  useTranslate,
+  useGo,
+  useResource,
+  useGetIdentity,
+  useLogout,
+  useSetLocale,
+} from '@refinedev/core'
 import { TreeMenuItem } from '@refinedev/core/dist/hooks/menu/useMenu'
+import { Menu, Button, Dropdown, SelectInput, Avatar, DropdownOption } from 'tdesign-react/esm'
 const { MenuGroup, MenuItem, SubMenu } = Menu
-import { ViewListIcon, SearchIcon } from 'tdesign-icons-react'
+import {
+  ViewListIcon,
+  SearchIcon,
+  MoreIcon,
+  BrightnessIcon,
+  Brightness1Icon,
+  EarthIcon,
+} from 'tdesign-icons-react'
 import { DuxLogo } from '../logo'
 import { useMenu } from './util'
+import { useModuleContext, userMenuItem } from '../../core'
+import { useCanHelper } from '../../provider'
+import { useAppStore } from '../../stores'
 import clsx from 'clsx'
 import './style.css'
-import { useModuleContext } from '../../core'
-import { useCanHelper } from '../../provider'
 
 const Search = () => {
   const translate = useTranslate()
@@ -94,6 +109,7 @@ export const SiderCollapse = () => {
   const { defaultOpenKeys, menuData } = useMenu()
   const [collapse, setCollapse] = useState<boolean>(false)
   const [value, setValue] = useState<string>(defaultOpenKeys?.[0])
+  const module = useModuleContext()
   return (
     <Menu
       className='app-sider-collapse hidden md:block'
@@ -102,25 +118,37 @@ export const SiderCollapse = () => {
       onChange={(value) => setValue(value as string)}
       collapsed={collapse}
       logo={
-        <>
+        <div className='relative w-full h-full flex items-center'>
           {collapse ? (
-            <div className='w-full flex items-center justify-center'>
+            <div
+              className='w-full h-full flex items-center justify-center cursor-pointer'
+              onClick={() => setCollapse(!collapse)}
+            >
               <DuxLogo className='h-3' />
             </div>
           ) : (
-            <div className='px-6 flex items-center gap-1'>
-              <DuxLogo className='h-5' />
-            </div>
+            <>
+              <div className='flex items-center px-6'>
+                <DuxLogo className='h-5' />
+              </div>
+              <Button
+                size='small'
+                className='absolute -right-3 z-1'
+                shape='circle'
+                variant='outline'
+                icon={<ViewListIcon />}
+                onClick={() => setCollapse(!collapse)}
+              />
+            </>
           )}
-        </>
+        </div>
       }
       operations={
-        <Button
-          variant='text'
-          shape='square'
-          icon={<ViewListIcon />}
-          onClick={() => setCollapse(!collapse)}
-        />
+        <>
+          <div>
+            <User collapse={collapse} menu={module.userMenu} />
+          </div>
+        </>
       }
     >
       {!collapse && (
@@ -197,5 +225,99 @@ export const SiderCollapse = () => {
         )
       })}
     </Menu>
+  )
+}
+
+interface UserProps {
+  menu?: userMenuItem[]
+  collapse: boolean
+}
+const User = ({ collapse, menu = [] }: UserProps) => {
+  const { data } = useGetIdentity<{
+    userInfo: Record<string, any>
+  }>()
+  const go = useGo()
+  const translate = useTranslate()
+  const { mutate: logout } = useLogout()
+  const switchDark = useAppStore((state) => state.switchDark)
+  const dark = useAppStore((state) => state.dark)
+  const changeLanguage = useSetLocale()
+
+  const switchLang = useCallback(
+    (data: DropdownOption) => {
+      changeLanguage(data.value as string)
+      window.location.reload()
+    },
+    [changeLanguage]
+  )
+
+  const options = useMemo(() => {
+    const optionData: Array<DropdownOption> = menu.map((item) => {
+      return {
+        content: translate(`userMenu.${item.label}`),
+        prefixIcon: <div className={item.icon}></div>,
+        onClick: () => {
+          go({
+            to: item.route,
+          })
+        },
+      }
+    })
+    optionData.push({
+      content: dark ? translate('common.light') : translate('common.dark'),
+      prefixIcon: dark ? <BrightnessIcon /> : <Brightness1Icon />,
+      onClick: () => {
+        switchDark()
+      },
+    })
+
+    optionData.push({
+      content: translate('common.lang'),
+      prefixIcon: <EarthIcon />,
+      children: [
+        {
+          value: 'en',
+          content: 'English',
+          prefixIcon: <div>🇬🇧</div>,
+          onClick: switchLang,
+        },
+        {
+          value: 'zh',
+          content: '中文',
+          prefixIcon: <div>🇨🇳</div>,
+          onClick: switchLang,
+        },
+      ],
+    })
+    optionData.push({
+      content: translate('common.logout'),
+      prefixIcon: <div className='i-tabler:logout h-4 w-4 text-primary'></div>,
+      onClick: () => {
+        logout()
+      },
+    })
+    return optionData
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [menu])
+
+  return (
+    <div className='flex items-center gap-2 leading-5'>
+      <Avatar image={data?.userInfo?.avatar}>{data?.userInfo?.nickname[0]}</Avatar>
+      {!collapse && (
+        <>
+          <div className='flex-1 w-1 flex flex-col text-xs truncate'>
+            <div>{data?.userInfo?.nickname}</div>
+            <div className='text-placeholder'>{data?.userInfo?.rolename}</div>
+          </div>
+          <div className='flex-none'>
+            <Dropdown options={options} minColumnWidth={150} trigger='click'>
+              <Button shape='square' variant='text'>
+                <MoreIcon />
+              </Button>
+            </Dropdown>
+          </div>
+        </>
+      )}
+    </div>
   )
 }

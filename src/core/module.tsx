@@ -1,9 +1,10 @@
 import { createContext, useContext } from 'react'
-import { Config } from './config'
+import { Config, userMenuItem } from './config'
 
 interface ModuleContext {
   name: string
   config: Config
+  userMenu?: userMenuItem[]
 }
 
 const moduleContext = createContext<ModuleContext>({} as ModuleContext)
@@ -16,10 +17,13 @@ interface ModuleProps {
   children: React.ReactNode
   name: string
   config: Config
+  userMenu?: userMenuItem[]
 }
 export const Module = (props: ModuleProps) => {
   return (
-    <moduleContext.Provider value={{ name: props.name, config: props.config }}>
+    <moduleContext.Provider
+      value={{ name: props.name, config: props.config, userMenu: props.userMenu }}
+    >
       {props.children}
     </moduleContext.Provider>
   )

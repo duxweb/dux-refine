@@ -10,7 +10,7 @@ import { Login } from '../pages/login'
 import { Error } from '../pages/common/error'
 import { Register } from '../pages/register'
 import { ForgotPassword } from '../pages/forgotPassword'
-import { Config, tabBarItem, userMenuItem } from './config'
+import { Config, userMenuItem } from './config'
 import { authProvider } from '../provider/authProvider'
 import { canProvider } from '../provider/canProvider'
 import { Unauthorized } from '../pages/common/unauthorized'
@@ -33,7 +33,6 @@ export interface createRefineProps {
   router: RouteObject[]
   resources: ResourceProps[]
   config: Config
-  tabar: tabBarItem[]
   userMenu?: userMenuItem[]
 }
 
@@ -44,7 +43,6 @@ export const createRefine = ({
   router,
   resources,
   config,
-  tabar,
   userMenu,
 }: createRefineProps): RouteObject => {
   const notifyMaps: Record<string, Promise<MessageInstance>> = {}
@@ -106,7 +104,7 @@ export const createRefine = ({
           projectId: config.projectId,
         }}
       >
-        <Module name={name} config={config}>
+        <Module name={name} config={config} userMenu={userMenu}>
           <Outlet />
         </Module>
       </Refine>
@@ -116,7 +114,7 @@ export const createRefine = ({
       {
         element: (
           <Authenticated fallback={<CatchAllNavigate to='login' />}>
-            <Layout userMenu={userMenu} tabar={tabar} siderType={config.sideType}>
+            <Layout>
               <CanAccess fallback={<Unauthorized />}>
                 <Outlet />
               </CanAccess>

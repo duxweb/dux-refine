@@ -1,3 +1,3 @@
 export * from './table'
 export * from './page'
-export * from './useTable'
+export * from './card'

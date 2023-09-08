@@ -4,7 +4,10 @@
     "notMenu": "Not found Menu",
     "menu": "Menu",
     "more": "More",
-    "logout":"Logout"
+    "logout":"Logout",
+    "light": "Light",
+    "dark": "Dark",
+    "lang": "Language"
   },
   "pages": {
     "login": {

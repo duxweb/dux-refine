@@ -4,7 +4,10 @@
     "notMenu": "没有找到菜单",
     "menu": "菜单",
     "more": "更多",
-    "logout": "退出"
+    "logout": "退出系统",
+    "light": "明亮模式",
+    "dark": "暗色模式",
+    "lang": "切换语言"
   },
   "pages": {
     "login": {
