@@ -1,13 +1,92 @@
-import { useState } from 'react'
-import { Menu, Button, Tag } from 'tdesign-react/esm'
-import { useTranslate, useGo } from '@refinedev/core'
+import { useMemo, useState } from 'react'
+import { Menu, Button, Tag, SelectInput } from 'tdesign-react/esm'
+import { useTranslate, useGo, useResource } from '@refinedev/core'
 import { TreeMenuItem } from '@refinedev/core/dist/hooks/menu/useMenu'
 const { MenuGroup, MenuItem, SubMenu } = Menu
-import { ViewListIcon } from 'tdesign-icons-react'
+import { ViewListIcon, SearchIcon } from 'tdesign-icons-react'
 import { DuxLogo } from '../logo'
 import { useMenu } from './util'
 import clsx from 'clsx'
 import './style.css'
+import { useModuleContext } from '../../core'
+import { useCanHelper } from '../../provider'
+
+const Search = () => {
+  const translate = useTranslate()
+  const { resources } = useResource()
+
+  const { name } = useModuleContext()
+  const { check } = useCanHelper(name)
+
+  const data = useMemo(() => {
+    return resources
+      .filter((item) => {
+        if (!item.list || !check({ resource: item.name, action: 'list' })) {
+          return false
+        }
+        return true
+      })
+      .map((item) => {
+        return {
+          label: translate(`${item.meta?.label}.name`),
+          route: item.list as string,
+        }
+      })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resources, translate])
+
+  const go = useGo()
+  const [popupVisible, setPopupVisible] = useState(false)
+  const [inputValue, setInputValue] = useState('')
+  const [options, setOptions] = useState(data)
+
+  const onInputChange = (value: string) => {
+    setInputValue(value)
+    if (value) {
+      setOptions(
+        data.filter((item) => {
+          return item.label.includes(value)
+        })
+      )
+    } else {
+      setOptions(data)
+    }
+  }
+  return (
+    <SelectInput
+      placeholder={translate('common.search')}
+      allowInput
+      clearable
+      inputValue={inputValue}
+      onInputChange={onInputChange}
+      suffixIcon={<SearchIcon />}
+      popupVisible={popupVisible}
+      onPopupVisibleChange={setPopupVisible}
+      panel={
+        <ul className='flex flex-col gap-2 py-1'>
+          {options.length > 0 ? (
+            options.map((item, index) => (
+              <li
+                key={index}
+                className='px-4 py-1 text-primary hover:bg-brand hover:text-white-1 rounded cursor-pointer'
+                onClick={() => {
+                  setPopupVisible(false)
+                  go({
+                    to: item.route,
+                  })
+                }}
+              >
+                {item.label}
+              </li>
+            ))
+          ) : (
+            <li className='p-4 py-1'>{translate('common.notMenu')}</li>
+          )}
+        </ul>
+      }
+    />
+  )
+}
 
 export const SiderCollapse = () => {
   const go = useGo()
@@ -44,6 +123,11 @@ export const SiderCollapse = () => {
         />
       }
     >
+      {!collapse && (
+        <div className='mb-2'>
+          <Search />
+        </div>
+      )}
       {menuData.map((app: TreeMenuItem) => {
         return app?.children?.length == 0 ? (
           <MenuItem
@@ -59,12 +143,7 @@ export const SiderCollapse = () => {
             {translate(`${app.label}.name`) || app?.label}
           </MenuItem>
         ) : (
-          <SubMenu
-            key={app.key}
-            title={translate(`${app.label}.name`) || app?.label}
-            icon={<div className={clsx(['t-icon', app.icon])}></div>}
-            value={app.key}
-          >
+          <MenuGroup key={app.key} title={translate(`${app.label}.name`) || app?.label}>
             {app?.children?.length > 0 &&
               app?.children?.map((parent: TreeMenuItem) => {
                 return parent?.children?.length > 0 ? (
@@ -114,7 +193,7 @@ export const SiderCollapse = () => {
                   </MenuItem>
                 )
               })}
-          </SubMenu>
+          </MenuGroup>
         )
       })}
     </Menu>
