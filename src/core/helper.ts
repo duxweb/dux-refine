@@ -1,15 +1,13 @@
 import { RouteObject } from 'react-router-dom'
 import { type ResourceProps } from '@refinedev/core'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { tabBarItem, userMenuItem } from './config'
+import { userMenuItem } from './config'
 
 export interface App {
   addRouter: (routes: RouteObject[]) => void
   getRouter: () => RouteObject[]
   addResources: (resource: ResourceProps[]) => void
   getResources: () => ResourceProps[]
-  getTabar: () => Array<tabBarItem>
-  setTabar: (tabar: Array<tabBarItem>) => void
   getUserMenu: () => Array<userMenuItem>
   setUserMenu: (menu: Array<userMenuItem>) => void
 }
@@ -31,14 +29,6 @@ export const createApp = (): App => {
     return resources
   }
 
-  let tabars: Array<tabBarItem> = []
-  const setTabar = (tabar: Array<tabBarItem>) => {
-    tabars = tabar
-  }
-  const getTabar = () => {
-    return tabars
-  }
-
   let userMenu: Array<userMenuItem> = []
   const setUserMenu = (menu: Array<userMenuItem>) => {
     userMenu = menu
@@ -52,8 +42,6 @@ export const createApp = (): App => {
     getRouter,
     addResources,
     getResources,
-    setTabar,
-    getTabar,
     setUserMenu,
     getUserMenu,
   }

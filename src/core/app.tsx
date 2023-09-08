@@ -94,7 +94,6 @@ export const AppProvider = ({ appsData, config }: AppProviderProps) => {
         config: config,
         i18nProvider: i18nProvider,
         router: apps[name].getRouter(),
-        tabar: apps[name].getTabar(),
         userMenu: apps[name].getUserMenu(),
         resources: apps[name].getResources().map((item) => {
           item.list = formatResources(name, item.list)

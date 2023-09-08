@@ -2,7 +2,7 @@ import { Authenticated, Refine, CanAccess } from '@refinedev/core'
 import routerBindings, { CatchAllNavigate, NavigateToResource } from '@refinedev/react-router-v6'
 import type { I18nProvider, ResourceProps, NotificationProvider } from '@refinedev/core'
 import { ComponentType, Suspense, lazy } from 'react'
-import { MessagePlugin, MessageInstance, TdMessageProps } from 'tdesign-react/esm'
+import { MessagePlugin, MessageInstance, TdMessageProps, Loading } from 'tdesign-react/esm'
 import { RouteObject, Outlet } from 'react-router-dom'
 import { Layout } from '../components/layout/layout'
 import { dataProvider } from '../provider/dataProvider'
@@ -20,7 +20,7 @@ import { ErrorBoundary } from '../pages/common/boundary'
 export const lazyComponent = (importComp: () => Promise<{ default: ComponentType<any> }>) => {
   const Comp = lazy(importComp)
   return (
-    <Suspense fallback={<div>lowing...</div>}>
+    <Suspense fallback={<Loading loading={true} fullscreen preventScrollThrough={true}></Loading>}>
       <Comp></Comp>
     </Suspense>
   )

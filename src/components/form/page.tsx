@@ -1,26 +1,16 @@
 import React, { useRef } from 'react'
-import { useTranslate, useBack } from '@refinedev/core'
+import { useTranslate, useBack, useResource } from '@refinedev/core'
 import { SubmitContext, Card, FormItemProps, Form as TdForm, Button } from 'tdesign-react/esm'
 import { Form, FormProps, FormFef } from './form'
-import { Main, MainHeader } from '../main'
+import { Main } from '../main'
 
 export interface FormPageProps extends FormProps {
   title?: React.ReactNode
-  desc?: React.ReactNode
   headerRender?: React.ReactNode
   back?: boolean
   rest?: boolean
 }
-export const FormPage = ({
-  title,
-  desc,
-  headerRender,
-  children,
-  onSubmit,
-  back,
-  rest,
-  ...props
-}: FormPageProps) => {
+export const FormPage = ({ title, children, onSubmit, back, rest, ...props }: FormPageProps) => {
   const formRef = useRef<FormFef>(null)
   const backFn = useBack()
   const t = useTranslate()
@@ -28,39 +18,46 @@ export const FormPage = ({
   const onSubmitFun = async (e: SubmitContext) => {
     await onSubmit?.(e)
   }
+
+  const { resource } = useResource()
+  const translate = useTranslate()
   return (
-    <Main>
-      <MainHeader>
-        {headerRender}
-        {back && (
+    <Main
+      title={title || translate(`${resource?.meta?.label}.name`)}
+      icon={resource?.meta?.icon}
+      actions={
+        <>
+          {back && (
+            <Button
+              onClick={() => {
+                backFn()
+              }}
+              variant='outline'
+            >
+              {t('buttons.back')}
+            </Button>
+          )}
+          {rest && (
+            <Button
+              onClick={() => {
+                formRef.current?.form.reset()
+              }}
+              variant='outline'
+            >
+              {t('buttons.rest')}
+            </Button>
+          )}
           <Button
             onClick={() => {
-              backFn()
+              formRef.current?.form.submit()
             }}
-            variant='outline'
           >
-            {t('buttons.back')}
+            {t('buttons.save')}
           </Button>
-        )}
-        {rest && (
-          <Button
-            onClick={() => {
-              formRef.current?.form.reset()
-            }}
-            variant='outline'
-          >
-            {t('buttons.rest')}
-          </Button>
-        )}
-        <Button
-          onClick={() => {
-            formRef.current?.form.submit()
-          }}
-        >
-          {t('buttons.save')}
-        </Button>
-      </MainHeader>
-      <Card title={title} description={desc} headerBordered className='px-4'>
+        </>
+      }
+    >
+      <Card>
         <Form
           ref={formRef}
           onSubmit={onSubmitFun}

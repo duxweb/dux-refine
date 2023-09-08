@@ -9,33 +9,32 @@ import {
 } from 'tdesign-react/esm'
 import { useWindowSize } from '../../core/helper'
 import { TableRef, TableTab, useTable } from './table'
-import { Main, MainHeader } from '../main'
+import { Main } from '../main'
+import { useResource, useTranslate } from '@refinedev/core'
 
 export interface PageTableProps {
   title?: React.ReactNode
-  header?: React.ReactNode
   tabs?: Array<TableTab>
-  banner?: React.ReactNode
-  footer?: React.ReactNode
-  headerRender?: React.ReactNode
-  filterRender?: () => React.ReactNode
-  batchRender?: React.ReactNode
   table?: EnhancedTableProps
   columns?: PrimaryTableCol[]
+  headerRender?: () => React.ReactElement
+  footerRender?: () => React.ReactElement
+  actionRender?: () => React.ReactElement
+  filterRender?: () => React.ReactElement
+  batchRender?: () => React.ReactElement
 }
 
 export const PageTable = forwardRef(
   (
     {
       title,
-      header,
       tabs,
       columns,
       table,
-      banner,
-      footer,
-      filterRender,
       headerRender,
+      footerRender,
+      filterRender,
+      actionRender,
       batchRender,
     }: PageTableProps,
     ref: React.ForwardedRef<TableRef>
@@ -74,35 +73,35 @@ export const PageTable = forwardRef(
         filters,
       }
     })
+    const { resource } = useResource()
+    const translate = useTranslate()
 
     return (
       <Main
+        title={title || translate(`${resource?.meta?.label}.name`)}
+        icon={resource?.meta?.icon}
         header={
-          <div>
-            {tabs ? (
-              <Radio.Group
-                variant='default-filled'
-                value={filters?.tab == undefined ? tabs?.[0]?.value : filters?.tab}
-                onChange={(value) => {
-                  setFilters({
-                    tab: value,
-                  })
-                }}
-              >
-                {tabs.map((item, key) => (
-                  <Radio.Button key={key} value={item.value}>
-                    {item.label}
-                  </Radio.Button>
-                ))}
-              </Radio.Group>
-            ) : (
-              header || <div className='text-base'>{title}</div>
-            )}
-          </div>
+          tabs && (
+            <Radio.Group
+              variant='default-filled'
+              value={filters?.tab == undefined ? tabs?.[0]?.value : filters?.tab}
+              onChange={(value) => {
+                setFilters({
+                  tab: value,
+                })
+              }}
+            >
+              {tabs.map((item, key) => (
+                <Radio.Button key={key} value={item.value}>
+                  {item.label}
+                </Radio.Button>
+              ))}
+            </Radio.Group>
+          )
         }
-        actions={headerRender}
+        actions={actionRender?.()}
       >
-        {size > sizeMap.md && <MainHeader></MainHeader>}
+        {headerRender?.()}
 
         {size <= sizeMap.md && (
           <div className='md:hidden flex flex-col gap-2 mb-2 app-mobile-header'>
@@ -123,30 +122,24 @@ export const PageTable = forwardRef(
                 ))}
               </Radio.Group>
             )}
-            <div>{headerRender}</div>
+            <div>{actionRender?.()}</div>
           </div>
         )}
-
-        {banner}
 
         <Card
           headerBordered
           header={
             (filterRender || (selecteds && selecteds.length > 0)) && (
               <div className='flex flex-1 flex-col flex-wrap justify-between gap-2 md:flex-row md:items-center'>
-                {selecteds && selecteds.length > 0 ? (
-                  batchRender
-                ) : (
-                  <Form
-                    initialData={filters}
-                    labelWidth={0}
-                    className='flex flex-col gap-2 md:flex-row'
-                    onValuesChange={setFilters}
-                  >
-                    {filterRender?.()}
-                  </Form>
-                )}
-                <div>{selecteds && selecteds.length > 0 && batchRender}</div>
+                <Form
+                  initialData={filters}
+                  labelWidth={0}
+                  className='flex flex-col gap-2 md:flex-row'
+                  onValuesChange={setFilters}
+                >
+                  {filterRender?.()}
+                </Form>
+                <div>{selecteds && selecteds.length > 0 && batchRender?.()}</div>
               </div>
             )
           }
@@ -178,7 +171,7 @@ export const PageTable = forwardRef(
             {...table}
           />
         </Card>
-        {footer}
+        {footerRender?.()}
       </Main>
     )
   }

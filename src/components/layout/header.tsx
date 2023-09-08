@@ -4,14 +4,17 @@ import { useWindowSize } from '../../core'
 import { Button, Menu } from 'tdesign-react/esm'
 import { MoreIcon } from 'tdesign-icons-react'
 import { TabMenu } from './menu'
+import clsx from 'clsx'
 const { HeadMenu } = Menu
 
 interface HeaderProps {
   actions?: React.ReactNode
   children?: React.ReactNode
+  title?: React.ReactNode
+  icon?: React.ReactNode
 }
 
-const Header = ({ actions, children }: HeaderProps) => {
+const Header = ({ title, icon, actions, children }: HeaderProps) => {
   const [size, sizeMap] = useWindowSize()
   const [open, setOpen] = useState(false)
   return (
@@ -29,7 +32,13 @@ const Header = ({ actions, children }: HeaderProps) => {
           )
         }
       >
-        {size > sizeMap.md && children}
+        {size > sizeMap.md &&
+          (children || (
+            <div className='flex items-center gap-2'>
+              <div className={clsx(['w-5 h-5', icon])}></div>
+              <div className='text-base'>{title}</div>
+            </div>
+          ))}
       </HeadMenu>
       {open && <TabMenu close={() => setOpen(false)} />}
     </>
