@@ -30,4 +30,9 @@ export interface Config {
   resourcesPrefix: boolean
   moduleApp?: Record<string, moduleApp>
   sideType?: siderType
+  appLogo?: string
+  appDarkLogo?: string
+  sideLogo?: string
+  sideDarkLogo?: string
+  loginBanner?: string
 }

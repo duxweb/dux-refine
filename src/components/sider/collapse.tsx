@@ -110,6 +110,7 @@ export const SiderCollapse = () => {
   const [collapse, setCollapse] = useState<boolean>(false)
   const [value, setValue] = useState<string>(defaultOpenKeys?.[0])
   const module = useModuleContext()
+  const dark = useAppStore((state) => state.dark)
   return (
     <Menu
       className='app-sider-collapse hidden md:block'
@@ -124,12 +125,34 @@ export const SiderCollapse = () => {
               className='w-full h-full flex items-center justify-center cursor-pointer'
               onClick={() => setCollapse(!collapse)}
             >
-              <DuxLogo className='h-3' />
+              {module.config?.sideLogo ? (
+                <img
+                  src={
+                    dark
+                      ? module.config?.appDarkLogo || module.config.appLogo
+                      : module.config.appLogo
+                  }
+                  className='h-3'
+                />
+              ) : (
+                <DuxLogo className='h-3' />
+              )}
             </div>
           ) : (
             <>
-              <div className='flex items-center px-6'>
-                <DuxLogo className='h-5' />
+              <div className='flex items-center px-4'>
+                {module.config?.sideLogo ? (
+                  <img
+                    src={
+                      dark
+                        ? module.config?.sideDarkLogo || module.config.sideLogo
+                        : module.config.sideLogo
+                    }
+                    className='h-5'
+                  />
+                ) : (
+                  <DuxLogo className='h-6' />
+                )}
               </div>
               <Button
                 size='small'

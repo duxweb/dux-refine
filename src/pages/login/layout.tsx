@@ -11,7 +11,7 @@ interface LoginLayoutProps {
 
 export const LoginLayout = ({ title, children }: LoginLayoutProps) => {
   const switchDark = useAppStore((state) => state.switchDark)
-  const { name } = useModuleContext()
+  const { name, config } = useModuleContext()
   const translate = useTranslate()
 
   return (
@@ -26,11 +26,16 @@ export const LoginLayout = ({ title, children }: LoginLayoutProps) => {
           <div className='i-tabler:sun h-5 w-5'></div>
         </div>
         <div className='hidden flex-1 md:block'>
-          <img src={banner} className='h-full w-full' />
+          <img src={config?.loginBanner || banner} className='h-full w-full' />
         </div>
         <div className='flex flex-1 flex-col'>
           <div className='mt-4 flex flex-col items-center justify-center'>
-            <DuxLogo className='w-30 text-white' />
+            {config?.appLogo ? (
+              <img src={config.appLogo} className='w-30 text-white' />
+            ) : (
+              <DuxLogo className='w-30 text-white' />
+            )}
+
             <div className='mt-4 text-lg'>{title || translate(`${name}.title`)}</div>
           </div>
           <div className='my-6'>{children}</div>
