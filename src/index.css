@@ -33,7 +33,7 @@ html:root, *:root[theme-mode="light"] {
   @apply w-full;
 }
 
-.t-form .t-input-number--column, .t-form .t-date-picker {
+.t-form .t-input-number.t-is-controls-right, .t-form .t-date-picker {
   @apply w-full;
 }
 
