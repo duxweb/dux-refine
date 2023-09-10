@@ -33,6 +33,11 @@ html:root, *:root[theme-mode="light"] {
   @apply w-full;
 }
 
+.t-form .t-input-number--column, .t-form .t-date-picker {
+  @apply w-full;
+}
+
+
 .app-code {
   @apply flex-grow rounded-lg p-2 bg-gray-12 text-white-1;
 }

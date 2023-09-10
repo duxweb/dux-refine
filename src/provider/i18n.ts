@@ -4,8 +4,14 @@ import detector from 'i18next-browser-languagedetector'
 import enTranslation from '../locales/en/common.json'
 import zhTranslation from '../locales/zh/common.json'
 
-const userLanguage = navigator.language
-const mainLanguage = userLanguage.split('-')[0]
+let storedLang = localStorage.getItem('i18nextLng')
+
+if (!storedLang) {
+  const userLanguage = navigator.language
+  const mainLanguage = userLanguage.split('-')[0]
+  localStorage.setItem('i18nextLng', mainLanguage)
+  storedLang = mainLanguage
+}
 
 i18n
   .use(detector)
@@ -22,7 +28,7 @@ i18n
     },
     ns: ['common'],
     defaultNS: 'common',
-    lng: mainLanguage,
+    lng: storedLang,
     fallbackLng: ['en', 'zh'],
     interpolation: {
       escapeValue: false,

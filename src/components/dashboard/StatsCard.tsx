@@ -5,11 +5,12 @@ import { Card, Skeleton } from 'tdesign-react/esm'
 interface StatsCardProps {
   icon: string
   name: string
+  desc?: string
   children?: ReactNode
   data?: any[]
 }
 
-export const StatsCard = ({ name, icon, data, children }: StatsCardProps) => {
+export const StatsCard = ({ name, desc, icon, data, children }: StatsCardProps) => {
   const calcGrowthRate = useCallback((pre: number, cur: number) => {
     const growthRate = (cur - pre) / pre
     let status
@@ -82,7 +83,7 @@ export const StatsCard = ({ name, icon, data, children }: StatsCardProps) => {
             {(info?.rateStatus == 'equal' || !info) && <div className='text-warning'>0%</div>}
             {info?.rateStatus == 'increase' && <div className='text-success'>{info?.rate}%</div>}
             {info?.rateStatus == 'decrease' && <div className='text-error'>{info?.rate}%</div>}
-            <div className='text-placeholder'>from last month</div>
+            <div className='text-placeholder'>{desc}</div>
           </div>
         </div>
       </div>

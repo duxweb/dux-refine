@@ -171,7 +171,12 @@ export const SiderCollapse = () => {
             {translate(`${app.label}.name`) || app?.label}
           </MenuItem>
         ) : (
-          <MenuGroup key={app.key} title={translate(`${app.label}.name`) || app?.label}>
+          <SubMenu
+            key={app.key}
+            title={translate(`${app.label}.name`) || app?.label}
+            value={app.key}
+            icon={app.icon ? <div className={clsx(['t-icon', app.icon])}></div> : undefined}
+          >
             {app?.children?.length > 0 &&
               app?.children?.map((parent: TreeMenuItem) => {
                 return parent?.children?.length > 0 ? (
@@ -221,7 +226,7 @@ export const SiderCollapse = () => {
                   </MenuItem>
                 )
               })}
-          </MenuGroup>
+          </SubMenu>
         )
       })}
     </Menu>

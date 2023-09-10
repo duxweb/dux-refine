@@ -75,7 +75,6 @@ export const PageTable = forwardRef(
     })
     const { resource } = useResource()
     const translate = useTranslate()
-
     return (
       <Main
         title={title || translate(`${resource?.meta?.label}.name`)}
