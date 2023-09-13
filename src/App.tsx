@@ -2,10 +2,10 @@
 import React from 'react'
 import './index.css'
 
-// acro.design
-import { ConfigProvider } from '@arco-design/web-react'
-import enUS from '@arco-design/web-react/es/locale/en-US'
-import zhCN from '@arco-design/web-react/es/locale/zh-CN'
+// tdesign
+import { ConfigProvider } from 'tdesign-react/esm'
+import enConfig from 'tdesign-react/es/locale/en_US'
+import zhConfig from 'tdesign-react/es/locale/zh_CN'
 import 'tdesign-react/esm/style/index.js'
 
 // app
@@ -27,12 +27,12 @@ export const DuxApp = (props: AppProviderProps) => {
 
   const { i18n } = useTranslation()
   const langs: Record<string, any> = {
-    en: enUS,
-    zh: zhCN,
+    en: R.clone(enConfig),
+    zh: R.clone(zhConfig),
   }
   return (
     <React.Suspense fallback='loading'>
-      <ConfigProvider locale={langs[i18n.language]}>
+      <ConfigProvider globalConfig={langs[i18n.language]}>
         <AppProvider {...props} />
       </ConfigProvider>
     </React.Suspense>
