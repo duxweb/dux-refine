@@ -7,7 +7,6 @@ import { App } from './helper'
 import { Config } from './config'
 import { useI18nProvider } from '../provider'
 import { Error } from '../pages/common/error'
-import { SearchIcon } from 'tdesign-icons-react'
 
 export interface appContext {
   createApp: (name: string, app: App) => void

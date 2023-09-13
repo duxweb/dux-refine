@@ -1,7 +1,7 @@
 {
   "name": "@duxweb/dux-refine",
   "version": "0.1.5",
-  "description": "🌲 Integrated UI based on refine and tdesign",
+  "description": "🌲 Integrated UI based on refine and arco design",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -69,6 +69,7 @@
     "zustand": "^4.3.9"
   },
   "devDependencies": {
+    "@arco-design/web-react": "^2.53.0",
     "@iconify-json/tabler": "^1.1.85",
     "@refinedev/cli": "2.7.6",
     "@refinedev/core": "4.34.0",
@@ -93,7 +94,6 @@
     "react-dom": "^18.0.0",
     "rimraf": "^5.0.1",
     "sass": "^1.64.2",
-    "tdesign-react": "^1.2.3",
     "typescript": "^5.0.2",
     "unocss": "^0.53.5",
     "vite": "^4.4.7",
