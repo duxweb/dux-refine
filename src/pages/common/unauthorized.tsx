@@ -1,6 +1,5 @@
 import { useTranslate, useBack } from '@refinedev/core'
-import Result from '../../components/result'
-import { Button } from 'tdesign-react/esm'
+import { Result } from '../../components/result'
 import show from '../../../assets/unauthorized.svg'
 
 export const Unauthorized = () => {

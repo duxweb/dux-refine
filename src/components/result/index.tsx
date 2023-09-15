@@ -108,7 +108,7 @@ interface ResultProps {
   show?: React.ReactNode
 }
 
-const Result: FC<ResultProps> = ({ title, desc, footer, type = 'info', show = 404 }) => {
+export const Result: FC<ResultProps> = ({ title, desc, footer, type = 'info', show = 404 }) => {
   return (
     <div className='app-result'>
       <div className='app-result-inner'>
@@ -127,5 +127,3 @@ const Result: FC<ResultProps> = ({ title, desc, footer, type = 'info', show = 40
     </div>
   )
 }
-
-export default Result

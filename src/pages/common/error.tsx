@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useTranslate, useResource } from '@refinedev/core'
-import Result from '../../components/result'
+import { Result } from '../../components/result'
 import show from '../../../assets/notFound.svg'
 import { useTranslation } from 'react-i18next'
 

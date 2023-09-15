@@ -52,10 +52,9 @@ export const Editor = ({ config, value }: EditorProps) => {
             'wordcount',
           ],
           toolbar:
-            'undo redo | blocks | ' +
-            'bold italic forecolor | alignleft aligncenter ' +
-            'alignright alignjustify | bullist numlist outdent indent | ' +
-            'removeformat',
+            'code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | \
+    styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | \
+    table image media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen',
           content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
         }}
         {...config}

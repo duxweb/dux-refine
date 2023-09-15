@@ -1,26 +1,33 @@
-import { useAppContext } from '../../core/app'
 import { useApiUrl, useGetIdentity } from '@refinedev/core'
 import { TdUploadProps, UploadFile } from 'tdesign-react/esm'
+import { useModuleContext } from '../../core'
 
 export const useUpload = (): TdUploadProps => {
-  const { config } = useAppContext()
+  const { name, config } = useModuleContext()
   const { data } = useGetIdentity<{
     token?: string
   }>()
   const apiUrl = useApiUrl()
 
   return {
-    action: `${apiUrl}/${config.apiPath.upload}`,
+    action: `${apiUrl}/${name}/${config.apiPath.upload}`,
     headers: {
       Accept: 'application/json',
       Authorization: data?.token || '',
     },
     formatResponse: (res) => {
-      if (res?.code != 200) {
-        res.error = res?.message || res.error
+      const requrst: XMLHttpRequest = res.XMLHttpRequest
+      if (requrst.status != 200) {
+        let result: Record<string, any> = {}
+        try {
+          result = JSON.parse(requrst.response)
+        } catch {
+          /* empty */
+        }
+        res.error = result?.message || res.statusText
       } else {
-        res.url = res?.data?.list?.[0]?.url
-        res.name = res?.data?.list?.[0]?.name
+        res.url = res?.data?.[0]?.url
+        res.name = res?.data?.[0]?.name
       }
       return res
     },
