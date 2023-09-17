@@ -42,7 +42,7 @@
   "video": {
     "name": "Video",
     "local": "Local",
-    "upload": "Upload",
+    "remote": "Remote",
     "url": "URL",
     "bubble": {
       "control": "Controls",

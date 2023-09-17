@@ -32,7 +32,7 @@ export const ImageItem = () => {
                 }}
               />
             </Tabs.TabPanel>
-            <Tabs.TabPanel value={2} label={t('image.upload', { ns: 'editor' })}>
+            <Tabs.TabPanel value={2} label={t('image.remote', { ns: 'editor' })}>
               <ImageUrlPopup close={close} />
             </Tabs.TabPanel>
           </Tabs>

@@ -32,7 +32,7 @@ export const VideoItem = () => {
                 }}
               />
             </Tabs.TabPanel>
-            <Tabs.TabPanel value={2} label={t('video.upload', { ns: 'editor' })}>
+            <Tabs.TabPanel value={2} label={t('video.remote', { ns: 'editor' })}>
               <VideoUrlPopup close={close} />
             </Tabs.TabPanel>
           </Tabs>

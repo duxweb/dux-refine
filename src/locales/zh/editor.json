@@ -42,7 +42,7 @@
   "video": {
     "name": "视频",
     "local": "本地视频",
-    "upload": "上传视频",
+    "remote": "远程视频",
     "url": "网址",
     "bubble": {
       "control": "控件",
