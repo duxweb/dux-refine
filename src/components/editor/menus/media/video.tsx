@@ -1,12 +1,12 @@
-import { useCurrentEditor } from '@tiptap/react'
 import { UIMenuItem } from '../../ui/menu'
 import { Tabs } from 'tdesign-react/esm'
 import { UploadPopup } from './common/upload'
 import { VideoUrlPopup } from './video/url'
 import { useTranslate } from '@refinedev/core'
+import { useEditorContext } from '../../editor'
 
 export const VideoItem = () => {
-  const { editor } = useCurrentEditor()
+  const { editor } = useEditorContext()
   const t = useTranslate()
 
   if (!editor) {

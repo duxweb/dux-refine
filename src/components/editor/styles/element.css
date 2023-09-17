@@ -4,6 +4,8 @@
   padding: 0.5rem;
   flex-wrap: wrap;
   align-items: center;
+  background-color: var(--td-bg-color-container);
+  border-radius: var(--td-radius-default) 0 var(--td-radius-default) 0;
 }
 
 .app-editor .tiptap-menu-icon {
@@ -24,8 +26,8 @@
 .tiptap-popup {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: 0.5rem;
+  gap: 0.25rem;
+  padding: 0.25rem;
 }
 
 .tiptap-popup-space {

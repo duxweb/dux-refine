@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import { useCurrentEditor } from '@tiptap/react'
 import { Button, Input } from 'tdesign-react/esm'
 import { useTranslate } from '@refinedev/core'
+import { useEditorContext } from '../../../editor'
 
 interface UploadAreaProps {
   close: () => void
 }
 export const ImageUrlPopup = ({ close }: UploadAreaProps) => {
-  const { editor } = useCurrentEditor()
+  const { editor } = useEditorContext()
   const [url, setUrl] = useState<string>('')
   const t = useTranslate()
 

@@ -106,5 +106,15 @@
     "name": "Title",
     "custom": "Custom",
     "paragraph": "Paragraph"
+  },
+  "link": {
+    "name": "Link",
+    "delete": "Delete"
+  },
+  "type": {
+    "name": "Type",
+    "web": "Web",
+    "docs": "Docs",
+    "mobile": "Mobile"
   }
 }

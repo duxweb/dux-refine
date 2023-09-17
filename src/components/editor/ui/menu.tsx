@@ -3,7 +3,12 @@ import { Button, Dropdown, DropdownOption, Popup, Tooltip } from 'tdesign-react/
 import { ReactNode, useCallback, useState } from 'react'
 import { Icon } from 'tdesign-icons-react'
 
-export const UIMenuBar = ({ children }: React.PropsWithChildren) => {
+export interface UIMenuBarProps {
+  children?: ReactNode
+  tools?: ReactNode
+}
+
+export const UIMenuBar = ({ children }: UIMenuBarProps) => {
   return <div className='tiptap-menu'>{children}</div>
 }
 
@@ -69,6 +74,7 @@ export const UIMenuItem = ({
           visible={open}
           onVisibleChange={setOpen}
           content={popupRender?.(close)}
+          destroyOnClose
           showArrow
         >
           <div>

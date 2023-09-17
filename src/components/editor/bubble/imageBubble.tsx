@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
-import { useCurrentEditor } from '@tiptap/react'
 import { Button, Input, Checkbox, Form } from 'tdesign-react/esm'
 import { UIMenuItem } from '../ui/menu'
 import { useTranslate } from '@refinedev/core'
+import { useEditorContext } from '../editor'
 
 export const ImageBubble = () => {
-  const { editor } = useCurrentEditor()
+  const { editor } = useEditorContext()
 
   if (!editor) {
     return null
@@ -54,7 +54,7 @@ interface ConfigProps {
 }
 
 const Config = ({ close }: ConfigProps) => {
-  const { editor } = useCurrentEditor()
+  const { editor } = useEditorContext()
   const [form] = Form.useForm()
   const isRatio = Form.useWatch('ratio', form)
   const t = useTranslate()

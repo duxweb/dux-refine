@@ -1,12 +1,12 @@
 import clsx from 'clsx'
-import { useCurrentEditor } from '@tiptap/react'
 import { Colors } from './types'
 import { UIMenuItem } from '../../ui/menu'
 import { Button } from 'tdesign-react/esm'
 import { useTranslate } from '@refinedev/core'
+import { useEditorContext } from '../../editor'
 
 export const BgColorItem = () => {
-  const { editor } = useCurrentEditor()
+  const { editor } = useEditorContext()
   const t = useTranslate()
   if (!editor) {
     return null

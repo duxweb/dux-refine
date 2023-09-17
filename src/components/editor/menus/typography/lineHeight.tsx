@@ -1,10 +1,9 @@
-import { useCurrentEditor } from '@tiptap/react'
-import { useMemo } from 'react'
+import { useEditorContext } from '../../editor'
 import { UIMenuItem } from '../../ui/menu'
 import { useTranslate } from '@refinedev/core'
 
 export const LineHeightItem = () => {
-  const { editor } = useCurrentEditor()
+  const { editor } = useEditorContext()
   const t = useTranslate()
 
   const lineData = [1, 1.25, 1.5, 2, 2.5, 3]

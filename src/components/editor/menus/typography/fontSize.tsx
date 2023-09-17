@@ -1,9 +1,9 @@
-import { useCurrentEditor } from '@tiptap/react'
+import { useEditorContext } from '../../editor'
 import { UIMenuItem } from '../../ui/menu'
 import { useTranslate } from '@refinedev/core'
 
 export const FontSizeItem = () => {
-  const { editor } = useCurrentEditor()
+  const { editor } = useEditorContext()
   const t = useTranslate()
 
   const sizeData = ['12px', '14px', '16px', '19px', '22px', '24px', '29px', '32px', '40px', '48px']

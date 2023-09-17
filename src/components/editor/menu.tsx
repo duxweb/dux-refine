@@ -1,4 +1,3 @@
-import { useCurrentEditor } from '@tiptap/react'
 import { Divider } from 'tdesign-react/esm'
 import { UIMenuBar } from './ui/menu'
 import { UndoItem } from './menus/action/undo'
@@ -19,7 +18,10 @@ import { OrderedListItem } from './menus/list/orderedList'
 import { TableItem } from './menus/table'
 import { ImageItem } from './menus/media/image'
 import { VideoItem } from './menus/media/video'
-import { cloneElement, useMemo } from 'react'
+import { useMemo } from 'react'
+import { TypeItem } from './menus/typography/type'
+import { useEditorContext } from './editor'
+import { LinkItem } from './menus/media/link'
 
 interface MenuProps {
   toolsBar?: string[]
@@ -29,6 +31,7 @@ export const MenuBar = ({
     'undo',
     'redo',
     '|',
+    'type',
     'title',
     'fontSize',
     'lineHeight',
@@ -46,17 +49,19 @@ export const MenuBar = ({
     'bulletList',
     'orderedList',
     '|',
+    'link',
     'table',
     'image',
     'video',
   ],
 }: MenuProps) => {
-  const { editor } = useCurrentEditor()
+  const { editor } = useEditorContext()
 
   const toolsBarPlugin = useMemo<Record<string, any>>(() => {
     return {
       undo: UndoItem,
       redo: RedoItem,
+      type: TypeItem,
       title: TitleItem,
       fontSize: FontSizeItem,
       lineHeight: LineHeightItem,
@@ -70,6 +75,7 @@ export const MenuBar = ({
       bgColor: BgColorItem,
       bulletList: BulletListItem,
       orderedList: OrderedListItem,
+      link: LinkItem,
       table: TableItem,
       image: ImageItem,
       video: VideoItem,

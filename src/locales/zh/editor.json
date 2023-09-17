@@ -106,5 +106,15 @@
     "name": "标题",
     "custom": "自定义",
     "paragraph": "段落"
+  },
+  "link": {
+    "name": "链接",
+    "delete": "删除"
+  },
+  "type": {
+    "name": "类型",
+    "web": "网页",
+    "docs": "文档",
+    "mobile": "手机"
   }
 }

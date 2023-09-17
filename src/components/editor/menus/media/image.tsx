@@ -1,12 +1,12 @@
-import { useCurrentEditor } from '@tiptap/react'
 import { Tabs } from 'tdesign-react/esm'
 import { UIMenuItem } from '../../ui/menu'
 import { UploadPopup } from './common/upload'
 import { ImageUrlPopup } from './image/url'
 import { useTranslate } from '@refinedev/core'
+import { useEditorContext } from '../../editor'
 
 export const ImageItem = () => {
-  const { editor } = useCurrentEditor()
+  const { editor } = useEditorContext()
   const t = useTranslate()
 
   if (!editor) {

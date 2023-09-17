@@ -1,9 +1,9 @@
-import { useCurrentEditor } from '@tiptap/react'
+import { useEditorContext } from '../../editor'
 import { UIMenuItem } from '../../ui/menu'
 import { useTranslate } from '@refinedev/core'
 
 export const TitleItem = () => {
-  const { editor } = useCurrentEditor()
+  const { editor } = useEditorContext()
   const t = useTranslate()
 
   const options = [

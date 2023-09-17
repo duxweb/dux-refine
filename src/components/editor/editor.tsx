@@ -1,5 +1,11 @@
 // src/Tiptap.jsx
-import { EditorProvider, BubbleMenu, Content } from '@tiptap/react'
+import {
+  BubbleMenu,
+  Content,
+  Editor as TiptapEditor,
+  useEditor,
+  EditorContent,
+} from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { Color } from '@tiptap/extension-color'
 import ListItem from '@tiptap/extension-list-item'
@@ -10,6 +16,7 @@ import TableCell from '@tiptap/extension-table-cell'
 import TableHeader from '@tiptap/extension-table-header'
 import TableRow from '@tiptap/extension-table-row'
 import TextAlign from '@tiptap/extension-text-align'
+import Link from '@tiptap/extension-link'
 
 import { LineHeight } from './extensions/lineHeight'
 import { FontSize } from './extensions/fontSize'
@@ -22,6 +29,8 @@ import { TableBubble } from './bubble/tableBubble'
 import { VideoBubble } from './bubble/videoBubble'
 
 import './styles/main.css'
+import { createContext, useContext, useState } from 'react'
+import clsx from 'clsx'
 
 const extensions = [
   Highlight.configure({ multicolor: true }),
@@ -51,12 +60,32 @@ const extensions = [
   TextAlign.configure({
     types: ['heading', 'paragraph'],
   }),
+  Link.configure({
+    openOnClick: false,
+  }),
 
   LineHeight,
   FontSize,
   TextStyle,
   Video,
 ]
+
+export type editorPageType = 'mobile' | 'docs' | 'web'
+interface EditorContext {
+  editor: TiptapEditor | null
+  pageType?: editorPageType
+  setPageType?: (type: editorPageType) => void
+}
+
+const context = createContext<EditorContext>({
+  editor: null,
+})
+
+export const useEditorContext = () => {
+  return useContext(context)
+}
+
+export const EditorConsumer = context.Consumer
 
 interface EditorProps {
   value?: Content
@@ -66,22 +95,47 @@ interface EditorProps {
 }
 
 export const Editor = ({ toolsBar, className, value, onChange }: EditorProps) => {
+  const [pageType, setPageType] = useState<editorPageType>('web')
+
+  const setPage = (type: editorPageType) => {
+    setPageType(type)
+  }
+
+  const editor = useEditor({
+    extensions: extensions,
+    content: value,
+    onUpdate: ({ editor }) => {
+      onChange?.(editor.getHTML())
+    },
+    editorProps: {
+      attributes: {
+        class: `app-editor-content prose w-full max-w-full ${className || ''}`,
+      },
+    },
+  })
+
+  if (!editor) {
+    return null
+  }
+
   return (
-    <div className='app-editor'>
-      <EditorProvider
-        slotBefore={<MenuBar toolsBar={toolsBar} />}
-        extensions={extensions}
-        content={value}
-        onUpdate={({ editor }) => {
-          onChange?.(editor.getHTML())
-        }}
-        editorProps={{
-          attributes: {
-            class: `app-editor-content prose w-full max-w-full ${className}`,
-          },
+    <div className={clsx(['app-editor', `app-editor-${pageType}`])}>
+      <context.Provider
+        value={{
+          editor,
+          setPageType: setPage,
+          pageType: pageType,
         }}
       >
+        <MenuBar toolsBar={toolsBar} />
+        <EditorConsumer>
+          {({ editor: currentEditor }) => (
+            <EditorContent className='app-editor-content-warp' editor={currentEditor} />
+          )}
+        </EditorConsumer>
+
         <BubbleMenu
+          editor={editor}
           className='tiptap-bubble'
           tippyOptions={{
             placement: 'bottom-start',
@@ -93,6 +147,7 @@ export const Editor = ({ toolsBar, className, value, onChange }: EditorProps) =>
           <TableBubble />
         </BubbleMenu>
         <BubbleMenu
+          editor={editor}
           className='tiptap-bubble'
           tippyOptions={{
             placement: 'bottom',
@@ -104,6 +159,7 @@ export const Editor = ({ toolsBar, className, value, onChange }: EditorProps) =>
           <ImageBubble />
         </BubbleMenu>
         <BubbleMenu
+          editor={editor}
           className='tiptap-bubble'
           tippyOptions={{
             placement: 'bottom',
@@ -114,7 +170,7 @@ export const Editor = ({ toolsBar, className, value, onChange }: EditorProps) =>
         >
           <VideoBubble />
         </BubbleMenu>
-      </EditorProvider>
+      </context.Provider>
     </div>
   )
 }

@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
-import { useCurrentEditor } from '@tiptap/react'
 import { Button, Input, Checkbox, Form } from 'tdesign-react/esm'
 import { useTranslate } from '@refinedev/core'
 import { UIMenuItem } from '../ui/menu'
+import { useEditorContext } from '../editor'
 
 export const VideoBubble = () => {
-  const { editor } = useCurrentEditor()
+  const { editor } = useEditorContext()
   const t = useTranslate()
 
   if (!editor) {
@@ -89,7 +89,7 @@ interface ConfigProps {
 }
 
 const Config = ({ close }: ConfigProps) => {
-  const { editor } = useCurrentEditor()
+  const { editor } = useEditorContext()
   const [form] = Form.useForm()
   const isRatio = Form.useWatch('ratio', form)
   const t = useTranslate()

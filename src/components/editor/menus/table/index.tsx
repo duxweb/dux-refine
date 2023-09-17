@@ -1,11 +1,11 @@
-import { useCurrentEditor } from '@tiptap/react'
 import { Button, InputNumber } from 'tdesign-react/esm'
 import { useState } from 'react'
 import { UIMenuItem } from '../../ui/menu'
 import { useTranslate } from '@refinedev/core'
+import { useEditorContext } from '../../editor'
 
 export const TableItem = () => {
-  const { editor } = useCurrentEditor()
+  const { editor } = useEditorContext()
   const [data, setData] = useState<Record<string, any>>({
     row: 4,
     col: 4,
@@ -22,7 +22,7 @@ export const TableItem = () => {
         label={t('table.name', { ns: 'editor' })}
         type='popup'
         popupRender={(close) => (
-          <div className='flex flex-col gap-2 p-2'>
+          <div className='flex flex-col gap-2 py-1'>
             <InputNumber
               theme='normal'
               align='right'
