@@ -32,6 +32,7 @@ export const MenuBar = ({
     'redo',
     '|',
     'type',
+    '|',
     'title',
     'fontSize',
     'lineHeight',

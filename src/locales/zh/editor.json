@@ -33,7 +33,7 @@
   "image": {
     "name": "图片",
     "local": "本地图片",
-    "upload": "上传图片",
+    "remote": "远程图片",
     "url": "网址",
     "width": "宽度",
     "height": "高度",

@@ -33,7 +33,7 @@
   "image": {
     "name": "Image",
     "local": "Local",
-    "upload": "Upload",
+    "remote": "Remote",
     "url": "URL",
     "width": "W",
     "height": "H",
