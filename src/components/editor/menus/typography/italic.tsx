@@ -12,7 +12,7 @@ export const ItalicItem = () => {
 
   return (
     <UIMenuItem
-      label={t('clear.italic', { ns: 'editor' })}
+      label={t('italic.name', { ns: 'editor' })}
       type='button'
       active={editor.isActive('italic')}
       onClick={() => editor.chain().focus().toggleItalic().run()}

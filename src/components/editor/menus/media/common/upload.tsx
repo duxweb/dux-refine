@@ -100,7 +100,7 @@ export const UploadPopup = ({ accept, close, onConfirm }: UploadAreaProps) => {
             {uploadStatus == 3 && (
               <div className='flex flex-col items-center gap-4'>
                 <div className='i-tabler:circle-check-filled h-14 w-14 text-success'></div>
-                <div>上传完成</div>
+                <div>{t('common.upload.complete', { ns: 'editor' })}</div>
               </div>
             )}
           </>
