@@ -1,0 +1,110 @@
+{
+  "common": {
+    "confirm": "OK",
+    "cancel": "Cancel",
+    "insert": "Insert",
+    "upload": {
+      "error": "Upload Failed, Try Again",
+      "tip": "Click to Upload",
+      "drag": "Or drag the file here",
+      "complete": "Upload Done"
+    }
+  },
+  "redo": {
+    "name": "Redo"
+  },
+  "undo": {
+    "name": "Undo"
+  },
+  "bgColor": {
+    "name": "BG Color",
+    "clear": "Clear Color"
+  },
+  "fontColor": {
+    "name": "Font Color",
+    "clear": "Clear Color"
+  },
+  "bulletList": {
+    "name": "Unordered List"
+  },
+  "orderedList": {
+    "name": "Ordered List"
+  },
+  "image": {
+    "name": "Image",
+    "local": "Local",
+    "upload": "Upload",
+    "url": "URL",
+    "width": "W",
+    "height": "H",
+    "ratio": "Aspect"
+  },
+  "video": {
+    "name": "Video",
+    "local": "Local",
+    "upload": "Upload",
+    "url": "URL",
+    "bubble": {
+      "control": "Controls",
+      "size": "Size",
+      "align": "Align",
+      "left": "Left",
+      "center": "Center",
+      "right": "Right",
+      "width": "W",
+      "height": "H",
+      "ratio": "Aspect"
+    }
+  },
+  "table": {
+    "name": "Table",
+    "row": "Row",
+    "col": "Col",
+    "bubble": {
+      "headerRow": "Header Row",
+      "headerCol": "Header Col",
+      "insertCol": "Insert Col",
+      "deleteCol": "Delete Col",
+      "insertRow": "Insert Row",
+      "deleteRow": "Delete Row",
+      "mergeOrSplit": "Merge/Split",
+      "delete": "Delete Table"
+    }
+  },
+  "align": {
+    "name": "Align",
+    "left": "Left",
+    "center": "Center",
+    "right": "Right",
+    "justify": "Justify",
+    "custom": "Custom"
+  },
+  "bold": {
+    "name": "Bold"
+  },
+  "clear": {
+    "name": "Clear"
+  },
+  "code": {
+    "name": "Code"
+  },
+  "fontSize": {
+    "name": "Font Size",
+    "default": "Default"
+  },
+  "italic": {
+    "name": "Italic"
+  },
+  "lineHeight": {
+    "name": "Line Ht.",
+    "default": "Default"
+  },
+  "strike": {
+    "name": "Strike"
+  },
+  "title": {
+    "name": "Title",
+    "custom": "Custom",
+    "paragraph": "Paragraph"
+  }
+}

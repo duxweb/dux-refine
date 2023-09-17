@@ -1,0 +1,62 @@
+.app-editor .tiptap-menu {
+  border-bottom: 1px solid var(--td-bg-color-component);
+  display: flex;
+  padding: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.app-editor .tiptap-menu-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.tiptap-bubble {
+  box-shadow: var(--td-shadow-1),var(--td-shadow-inset-top),var(--td-shadow-inset-right),var(--td-shadow-inset-bottom),var(--td-shadow-inset-left);
+  background-color: var(--td-bg-color-container);
+  padding: 0.5rem;
+  min-width: 2.5rem;
+  display: flex;
+  flex-direction: row;
+  border-radius: 4px;
+}
+
+.tiptap-popup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.tiptap-popup-space {
+  margin-bottom: 0.5rem;
+}
+
+.tiptap-btn {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.tiptap-btn .t-button__suffix:not(:empty) {
+  margin-left: 0.25rem;
+}
+
+.tiptap-tools-colors-item {
+  padding: 0.125rem;
+  border: 1px solid transparent;
+  border-radius: 0.125rem;
+}
+
+.tiptap-tools-colors-item:hover {
+  border-color: var(--td-gray-color-7);
+}
+
+.tiptap-tools-colors-item-active {
+  border-color: var(--td-gray-color-7);
+}
+
+.tiptap-tools-colors-black {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.125rem;
+}

@@ -1,0 +1,45 @@
+.tiptap .table-wrapper {
+  padding: 1rem 0;
+  overflow-x: auto
+}
+
+.tiptap.resize-cursor {
+  cursor: ew-resize;
+  cursor: col-resize;
+}
+.tiptap .resizer {
+  position: relative;
+  border: 2px solid transparent;
+}
+
+.tiptap .resizer-active .resizer-trigger {
+  display: block;
+}
+
+.tiptap .resizer-active {
+  border-color: var(--td-brand-color-4);
+}
+
+.tiptap .resizer-control {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  inset: 0;
+  z-index: 0;
+}
+
+.tiptap .resizer-trigger {
+  z-index: 1;
+  display: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: var(--td-brand-color-6);
+  position: absolute;
+}
+
+
+.tiptap .node-video {
+  background-image: linear-gradient(45deg,#eee 25%,transparent 0,transparent 75%,#eee 0,#eee),linear-gradient(45deg,#eee 25%,#fff 0,#fff 75%,#eee 0,#eee);
+  background-position: 0 0,10px 10px;
+  background-size: 20px 20px;
+}

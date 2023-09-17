@@ -1,0 +1,16 @@
+@import url('./element.css');
+@import url('./content.css');
+@import url('./extension.css');
+
+.app-editor {
+  position: relative;
+  width: 100%;
+  border: 1px solid var(--td-component-border);
+  border-radius: var(--td-radius-default);
+}
+
+.app-editor-content {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  max-width: 100%;
+}

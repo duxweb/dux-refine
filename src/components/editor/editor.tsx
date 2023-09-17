@@ -1,64 +1,120 @@
-import React, { forwardRef, useImperativeHandle, useRef } from 'react'
-import { Editor as Tinymce, IAllProps } from '@tinymce/tinymce-react'
-import { useGetLocale } from '@refinedev/core'
-import { useAppStore } from '../../stores'
+// src/Tiptap.jsx
+import { EditorProvider, BubbleMenu, Content } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+import { Color } from '@tiptap/extension-color'
+import ListItem from '@tiptap/extension-list-item'
+import TextStyle from '@tiptap/extension-text-style'
+import Highlight from '@tiptap/extension-highlight'
+import Table from '@tiptap/extension-table'
+import TableCell from '@tiptap/extension-table-cell'
+import TableHeader from '@tiptap/extension-table-header'
+import TableRow from '@tiptap/extension-table-row'
+import TextAlign from '@tiptap/extension-text-align'
+
+import { LineHeight } from './extensions/lineHeight'
+import { FontSize } from './extensions/fontSize'
+import { Video } from './extensions/video'
+import { MenuBar } from './menu'
+
+import { ImageResize } from './extensions/image'
+import { ImageBubble } from './bubble/imageBubble'
+import { TableBubble } from './bubble/tableBubble'
+import { VideoBubble } from './bubble/videoBubble'
+
+import './styles/main.css'
+
+const extensions = [
+  Highlight.configure({ multicolor: true }),
+  Color.configure({ types: [TextStyle.name, ListItem.name] }),
+  StarterKit.configure({
+    bulletList: {
+      keepMarks: true,
+      keepAttributes: false,
+    },
+    orderedList: {
+      keepMarks: true,
+      keepAttributes: false,
+    },
+  }),
+  Table.configure({
+    resizable: true,
+    HTMLAttributes: {
+      class: 'no-prose',
+    },
+  }),
+  TableRow,
+  TableHeader,
+  TableCell,
+  ImageResize.configure({
+    inline: true,
+  }),
+  TextAlign.configure({
+    types: ['heading', 'paragraph'],
+  }),
+
+  LineHeight,
+  FontSize,
+  TextStyle,
+  Video,
+]
 
 interface EditorProps {
-  config: IAllProps
-  value: any
+  value?: Content
+  onChange?: (value?: string) => void
+  toolsBar?: string[]
+  className?: string
 }
 
-export const Editor = ({ config, value }: EditorProps) => {
-  const locale = useGetLocale()
-  const langMaps: Record<string, string> = {
-    zh: 'zh-Hans',
-    en: 'en',
-  }
-  const lang = langMaps[locale() || 'en']
-
-  const dark = useAppStore((state) => state.dark)
-
+export const Editor = ({ toolsBar, className, value, onChange }: EditorProps) => {
   return (
-    <div className='w-full'>
-      <Tinymce
-        tinymceScriptSrc='//registry.npmmirror.com/tinymce/6.7.0/files/tinymce.min.js'
-        initialValue={value}
-        init={{
-          height: 500,
-          menubar: false,
-          language: lang,
-          skin: !dark ? 'tinymce-5' : 'tinymce-5-dark',
-          content_css: !dark
-            ? '//registry.npmmirror.com/tinymce/6.7.0/files/skins/content/default/content.min.css'
-            : '//registry.npmmirror.com/tinymce/6.7.0/files/skins/content/dark/content.min.css',
-          language_url: `//registry.npmmirror.com/tinymce-i18n/23.9.11/files/langs6/${lang}.js`,
-          plugins: [
-            'advlist',
-            'autolink',
-            'lists',
-            'link',
-            'image',
-            'charmap',
-            'preview',
-            'anchor',
-            'searchreplace',
-            'visualblocks',
-            'code',
-            'fullscreen',
-            'insertdatetime',
-            'media',
-            'table',
-            'code',
-            'wordcount',
-          ],
-          toolbar:
-            'code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | \
-    styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | \
-    table image media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen',
-          content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+    <div className='app-editor'>
+      <EditorProvider
+        slotBefore={<MenuBar toolsBar={toolsBar} />}
+        extensions={extensions}
+        content={value}
+        onUpdate={({ editor }) => {
+          onChange?.(editor.getHTML())
         }}
-        {...config}
-      />
+        editorProps={{
+          attributes: {
+            class: `app-editor-content prose w-full max-w-full ${className}`,
+          },
+        }}
+      >
+        <BubbleMenu
+          className='tiptap-bubble'
+          tippyOptions={{
+            placement: 'bottom-start',
+          }}
+          shouldShow={({ editor }) => {
+            return editor.isActive('table')
+          }}
+        >
+          <TableBubble />
+        </BubbleMenu>
+        <BubbleMenu
+          className='tiptap-bubble'
+          tippyOptions={{
+            placement: 'bottom',
+          }}
+          shouldShow={({ editor }) => {
+            return editor.isActive('imageResize')
+          }}
+        >
+          <ImageBubble />
+        </BubbleMenu>
+        <BubbleMenu
+          className='tiptap-bubble'
+          tippyOptions={{
+            placement: 'bottom',
+          }}
+          shouldShow={({ editor }) => {
+            return editor.isActive('video')
+          }}
+        >
+          <VideoBubble />
+        </BubbleMenu>
+      </EditorProvider>
     </div>
   )
 }

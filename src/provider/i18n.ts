@@ -3,6 +3,8 @@ import { initReactI18next } from 'react-i18next'
 import detector from 'i18next-browser-languagedetector'
 import enTranslation from '../locales/en/common.json'
 import zhTranslation from '../locales/zh/common.json'
+import enEditor from '../locales/en/editor.json'
+import zhEditor from '../locales/zh/editor.json'
 
 let storedLang = localStorage.getItem('i18nextLng')
 
@@ -21,9 +23,11 @@ i18n
     resources: {
       en: {
         common: enTranslation,
+        editor: enEditor,
       },
       zh: {
         common: zhTranslation,
+        editor: zhEditor,
       },
     },
     ns: ['common'],
