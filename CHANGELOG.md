@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.6
+## 0.1.6 unpublished
 
 ### Added
 - Add basic rich text editor using tiptap
