@@ -274,7 +274,6 @@ const User = ({ collapse, menu = [] }: UserProps) => {
   const switchLang = useCallback(
     (data: DropdownOption) => {
       changeLanguage(data.value as string)
-      window.location.reload()
     },
     [changeLanguage]
   )

@@ -69,7 +69,7 @@ export const TitleItem = () => {
         }
       }}
     >
-      <div className='w-10'>
+      <div className='min-w-10'>
         {options.find((item) => item.active)?.content || t('title.custom', { ns: 'editor' })}
       </div>
     </UIMenuItem>

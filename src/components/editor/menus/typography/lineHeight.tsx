@@ -12,7 +12,7 @@ export const LineHeightItem = () => {
   const lintHeight =
     editor?.getAttributes('heading').lineHeight || editor?.getAttributes('paragraph').lineHeight
 
-  const lineOptions = useMemo(() => {
+  const lineOptions = () => {
     const data: Array<Record<string, any>> = [
       {
         content: t('lineHeight.default', { ns: 'editor' }),
@@ -29,7 +29,7 @@ export const LineHeightItem = () => {
     })
     return data
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editor?.state.selection])
+  }
 
   if (!editor) {
     return null
@@ -39,7 +39,7 @@ export const LineHeightItem = () => {
     <UIMenuItem
       label={t('lineHeight.name', { ns: 'editor' })}
       type='menu'
-      menuOptions={lineOptions}
+      menuOptions={lineOptions()}
       arrow
       onMenuSelect={(item) => {
         if (typeof item.value !== 'number') {
@@ -49,7 +49,9 @@ export const LineHeightItem = () => {
         editor.chain().focus().setLineHeight(item.value).run()
       }}
       content={
-        <div className='w-15'>{lineOptions.find((item) => item.active)?.content || lintHeight}</div>
+        <div className='w-15'>
+          {lineOptions().find((item) => item.active)?.content || lintHeight}
+        </div>
       }
     />
   )
