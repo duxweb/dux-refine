@@ -2,11 +2,11 @@
 import React from 'react'
 import './index.css'
 
-// tdesign
-import { ConfigProvider } from 'tdesign-react/esm'
-import enConfig from 'tdesign-react/es/locale/en_US'
-import zhConfig from 'tdesign-react/es/locale/zh_CN'
-import 'tdesign-react/esm/style/index.js'
+// arco-design
+import { ConfigProvider } from '@arco-design/web-react'
+import enUS from '@arco-design/web-react/es/locale/en-US'
+import zhCN from '@arco-design/web-react/es/locale/zh-CN'
+import '@arco-design/web-react/dist/css/arco.css'
 
 // app
 import { useAppStore } from './stores/app'
@@ -27,12 +27,12 @@ export const DuxApp = (props: AppProviderProps) => {
 
   const { i18n } = useTranslation()
   const langs: Record<string, any> = {
-    en: R.clone(enConfig),
-    zh: R.clone(zhConfig),
+    en: R.clone(enUS),
+    zh: R.clone(zhCN),
   }
   return (
     <React.Suspense fallback='loading'>
-      <ConfigProvider globalConfig={langs[i18n.language]}>
+      <ConfigProvider locale={langs[i18n.language]}>
         <AppProvider {...props} />
       </ConfigProvider>
     </React.Suspense>

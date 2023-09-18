@@ -11,7 +11,8 @@ import React, {
   forwardRef,
   useContext,
 } from 'react'
-import { Dialog, DialogPlugin } from 'tdesign-react/esm'
+import { Modal as ArcoModal, Button, Space, ModalHookReturnType } from '@arco-design/web-react'
+import { useModuleContext } from '../../core'
 
 export interface ModalContextProps {
   onClose?: () => void
@@ -40,6 +41,8 @@ const ModalComp = forwardRef<ModalContextProps, ModalProps>(
   ({ title, trigger, children, component, componentProps, onClose, defaultOpen = false }, ref) => {
     const [open, setOpen] = useState(defaultOpen)
     const AsyncContent = component ? lazy(component) : undefined
+
+    const [modal, contextHolder] = ArcoModal.useModal()
 
     const onCloseFun = useCallback(() => {
       setOpen(false)
@@ -105,38 +108,35 @@ type ModalType = typeof ModalComp & {
 export const Modal = ModalComp as ModalType
 Modal.Footer = ModalFooter
 
-export const ModalOpen = ({ title, children, component, componentProps, onClose }: ModalProps) => {
-  const AsyncContent = component ? lazy(component) : undefined
+export interface HookModalProps {
+  title?: string
+  component?: () => Promise<{ default: ComponentType<any> }>
+  componentProps?: Record<string, any>
+  className?: string
+  width?: number
+  onClose?: () => void
+}
 
-  const dialogNode = DialogPlugin({
-    onClose: onClose,
-    destroyOnClose: true,
-    footer: null,
-    closeOnOverlayClick: false,
-    closeOnEscKeydown: false,
-    draggable: true,
-    header: title,
-    body: component ? (
-      <Suspense>
-        {AsyncContent && (
-          <AsyncContent
-            {...componentProps}
-            onClose={() => {
-              onClose?.()
-              dialogNode.hide()
-            }}
-          />
-        )}
-      </Suspense>
-    ) : typeof children === 'function' ? (
-      children(() => {
-        onClose?.()
-        dialogNode.hide()
-      })
-    ) : (
-      children
-    ),
-  })
+export const useModuleModal = () => {
+  const { modal } = useModuleContext()
 
-  return dialogNode
+  const open = (props: HookModalProps) => {
+    const AsyncContent = props.component ? lazy(props.component) : undefined
+
+    return modal({
+      title: props.title,
+      content: props.component ? (
+        <Suspense>
+          {AsyncContent && <AsyncContent {...props.componentProps} onClose={props.onClose} />}
+        </Suspense>
+      ) : typeof children === 'function' ? (
+        children(onCloseFun)
+      ) : (
+        children
+      ),
+    })
+  }
+  return {
+    open: open,
+  }
 }

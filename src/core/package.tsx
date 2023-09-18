@@ -2,7 +2,9 @@ import { Authenticated, Refine, CanAccess } from '@refinedev/core'
 import routerBindings, { CatchAllNavigate, NavigateToResource } from '@refinedev/react-router-v6'
 import type { I18nProvider, ResourceProps, NotificationProvider } from '@refinedev/core'
 import { ComponentType, Suspense, lazy } from 'react'
-import { MessagePlugin, MessageInstance, TdMessageProps, Loading } from 'tdesign-react/esm'
+import { Message, Spin, MessageProps } from '@arco-design/web-react/es'
+import { MessageType } from '@arco-design/web-react/es/Message'
+
 import { RouteObject, Outlet } from 'react-router-dom'
 import { Layout } from '../components/layout/layout'
 import { dataProvider } from '../provider/dataProvider'
@@ -20,7 +22,7 @@ import { ErrorBoundary } from '../pages/common/boundary'
 export const lazyComponent = (importComp: () => Promise<{ default: ComponentType<any> }>) => {
   const Comp = lazy(importComp)
   return (
-    <Suspense fallback={<Loading loading={true} fullscreen preventScrollThrough={true}></Loading>}>
+    <Suspense fallback={<Spin loading={true} size={30} className='w-full h-full'></Spin>}>
       <Comp></Comp>
     </Suspense>
   )
@@ -45,11 +47,11 @@ export const createRefine = ({
   config,
   userMenu,
 }: createRefineProps): RouteObject => {
-  const notifyMaps: Record<string, Promise<MessageInstance>> = {}
+  const notifyMaps: Record<string, MessageType> = {}
 
   const notificationProvider: NotificationProvider = {
     open: ({ message, description, key, type, undoableTimeout }) => {
-      const notifyConfig: TdMessageProps = {
+      const notifyConfig: MessageProps = {
         content: description || message,
         onClose: () => {
           if (key) {
@@ -58,19 +60,19 @@ export const createRefine = ({
         },
       }
       if (type === 'success') {
-        const msg = MessagePlugin.success(notifyConfig)
+        const msg = Message.success(notifyConfig)
         if (key) {
           notifyMaps[key] = msg
         }
       }
       if (type === 'error') {
-        const msg = MessagePlugin.error(notifyConfig)
+        const msg = Message.error(notifyConfig)
         if (key) {
           notifyMaps[key] = msg
         }
       }
       if (type === 'progress') {
-        const msg = MessagePlugin.warning({
+        const msg = Message.warning({
           ...notifyConfig,
           duration: undoableTimeout,
         })
@@ -81,7 +83,7 @@ export const createRefine = ({
     },
     close: (key) => {
       if (Object.prototype.hasOwnProperty.call(notifyMaps, key)) {
-        MessagePlugin.close(notifyMaps[key])
+        notifyMaps[key]()
       }
     },
   }
