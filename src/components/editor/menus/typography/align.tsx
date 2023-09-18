@@ -56,7 +56,7 @@ export const AlignItem = () => {
         content={
           <div className='w-15'>
             {alignOptions().find((item) => item.active)?.content ||
-              t('align.justify', { ns: 'custom' })}
+              t('align.custom', { ns: 'editor' })}
           </div>
         }
       />
