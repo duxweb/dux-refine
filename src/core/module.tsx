@@ -7,7 +7,7 @@ interface ModuleContext {
   name: string
   config: Config
   userMenu?: userMenuItem[]
-  modal: (props: ConfirmProps) => (() => void) | undefined
+  modal?: (props: ConfirmProps) => (() => void) | undefined
 }
 
 const moduleContext = createContext<ModuleContext>({} as ModuleContext)

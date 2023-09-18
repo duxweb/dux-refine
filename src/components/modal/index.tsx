@@ -11,7 +11,7 @@ import React, {
   forwardRef,
   useContext,
 } from 'react'
-import { Modal as ArcoModal, Button, Space, ModalHookReturnType } from '@arco-design/web-react'
+import { Modal as ArcoModal } from '@arco-design/web-react'
 import { useModuleContext } from '../../core'
 
 export interface ModalContextProps {
@@ -42,8 +42,6 @@ const ModalComp = forwardRef<ModalContextProps, ModalProps>(
     const [open, setOpen] = useState(defaultOpen)
     const AsyncContent = component ? lazy(component) : undefined
 
-    const [modal, contextHolder] = ArcoModal.useModal()
-
     const onCloseFun = useCallback(() => {
       setOpen(false)
       onClose?.()
@@ -62,15 +60,14 @@ const ModalComp = forwardRef<ModalContextProps, ModalProps>(
             },
           })}
         <context.Provider value={{ onClose: onCloseFun }}>
-          <Dialog
+          <ArcoModal
             visible={open}
-            onClose={onCloseFun}
-            destroyOnClose
-            header={title}
+            onCancel={onCloseFun}
+            unmountOnExit
+            title={title}
             footer={null}
-            closeOnOverlayClick={false}
-            closeOnEscKeydown={false}
-            draggable={true}
+            maskClosable={false}
+            escToExit={false}
           >
             {component ? (
               <Suspense>
@@ -81,7 +78,7 @@ const ModalComp = forwardRef<ModalContextProps, ModalProps>(
             ) : (
               children
             )}
-          </Dialog>
+          </ArcoModal>
         </context.Provider>
       </>
     )
@@ -98,7 +95,7 @@ export interface ModalFooterProps {
   children?: ReactNode
 }
 const ModalFooter = ({ children }: ModalFooterProps) => {
-  return <div className='t-dialog__footer'>{children}</div>
+  return <div className='arco-modal-footer'>{children}</div>
 }
 
 type ModalType = typeof ModalComp & {
@@ -110,7 +107,7 @@ Modal.Footer = ModalFooter
 
 export interface HookModalProps {
   title?: string
-  component?: () => Promise<{ default: ComponentType<any> }>
+  component: () => Promise<{ default: ComponentType<any> }>
   componentProps?: Record<string, any>
   className?: string
   width?: number
@@ -119,20 +116,14 @@ export interface HookModalProps {
 
 export const useModuleModal = () => {
   const { modal } = useModuleContext()
-
   const open = (props: HookModalProps) => {
-    const AsyncContent = props.component ? lazy(props.component) : undefined
-
-    return modal({
+    const AsyncContent = lazy(props.component)
+    return modal?.({
       title: props.title,
-      content: props.component ? (
+      content: (
         <Suspense>
           {AsyncContent && <AsyncContent {...props.componentProps} onClose={props.onClose} />}
         </Suspense>
-      ) : typeof children === 'function' ? (
-        children(onCloseFun)
-      ) : (
-        children
       ),
     })
   }
