@@ -2,6 +2,8 @@ import { clsx } from 'clsx'
 import React, { forwardRef, ReactNode } from 'react'
 import { Avatar, AvatarProps, Image, ImageProps } from 'tdesign-react/esm'
 import './style.css'
+import { ImageError } from '../image'
+import { ImageLoading } from '../image/loading'
 export interface MediaTextProps {
   children?: ReactNode
   size?: 'default' | 'small'
@@ -51,11 +53,20 @@ MediaTextAvatar.displayName = 'MediaText.Avatar'
 interface MediaTextImageProps extends ImageProps {
   width?: string | number
   height?: string | number
+  statsSize?: string | number
 }
 
 const MediaTextImage = (props: MediaTextImageProps) => {
-  const { width = 45, height = 45, shape = 'round' } = props
-  return <Image {...props} shape={shape} style={{ width: width, height: height }} loading={' '} />
+  const { width = 45, height = 45, shape = 'round', statsSize = 18 } = props
+  return (
+    <Image
+      error={<ImageError size={statsSize} />}
+      shape={shape}
+      style={{ width: width, height: height }}
+      loading={<ImageLoading size={statsSize} />}
+      {...props}
+    />
+  )
 }
 MediaTextImage.displayName = 'MediaText.Image'
 

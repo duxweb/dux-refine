@@ -110,6 +110,8 @@ export const FormPage = ({
           {children}
           {settingRender && (
             <Drawer
+              confirmBtn={t('buttons.save')}
+              onConfirm={() => formRef.current?.form.submit()}
               header={t('buttons.setting')}
               visible={visibleDrawer}
               onClose={() => setVisibleDrawer(false)}

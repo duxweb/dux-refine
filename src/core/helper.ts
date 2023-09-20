@@ -3,10 +3,18 @@ import { type ResourceProps } from '@refinedev/core'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { userMenuItem } from './config'
 
+interface ResourceModuleProps extends ResourceProps {
+  listElenemt?: React.ReactNode | null
+  createElenemt?: React.ReactNode | null
+  cloneElenemt?: React.ReactNode | null
+  editElenemt?: React.ReactNode | null
+  showElenemt?: React.ReactNode | null
+}
+
 export interface App {
   addRouter: (routes: RouteObject[]) => void
   getRouter: () => RouteObject[]
-  addResources: (resource: ResourceProps[]) => void
+  addResources: (resource: ResourceModuleProps[]) => void
   getResources: () => ResourceProps[]
   getUserMenu: () => Array<userMenuItem>
   setUserMenu: (menu: Array<userMenuItem>) => void
@@ -14,19 +22,54 @@ export interface App {
 
 export const createApp = (): App => {
   let routers: RouteObject[] = []
+  let resources: ResourceProps[] = []
+
+  const addResources = (resource: ResourceModuleProps[]) => {
+    resource = resource?.map((item) => {
+      const { listElenemt, createElenemt, cloneElenemt, editElenemt, showElenemt, ...items } = item
+      if (listElenemt && typeof item.list == 'string') {
+        routers.push({
+          path: item.list,
+          element: listElenemt,
+        })
+      }
+      if (createElenemt && typeof item.create == 'string') {
+        routers.push({
+          path: item.create,
+          element: createElenemt,
+        })
+      }
+      if (cloneElenemt && typeof item.clone == 'string') {
+        routers.push({
+          path: item.clone,
+          element: cloneElenemt,
+        })
+      }
+      if (editElenemt && typeof item.edit == 'string') {
+        routers.push({
+          path: item.edit,
+          element: editElenemt,
+        })
+      }
+      if (showElenemt && typeof item.show == 'string') {
+        routers.push({
+          path: item.show,
+          element: showElenemt,
+        })
+      }
+      return items
+    })
+    resources = [...resources, ...resource]
+  }
+  const getResources = () => {
+    return resources
+  }
+
   const addRouter = (routes: RouteObject[]) => {
     routers = [...routers, ...routes]
   }
   const getRouter = () => {
     return routers
-  }
-
-  let resources: ResourceProps[] = []
-  const addResources = (resource: ResourceProps[]) => {
-    resources = [...resources, ...resource]
-  }
-  const getResources = () => {
-    return resources
   }
 
   let userMenu: Array<userMenuItem> = []

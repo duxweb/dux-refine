@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, Input } from 'tdesign-react/esm'
+import { Button, Input, MessagePlugin } from 'tdesign-react/esm'
 import { useTranslate } from '@refinedev/core'
 import { useEditorContext } from '../../../editor'
 
@@ -35,8 +35,16 @@ export const ImageUrlPopup = ({ close }: UploadAreaProps) => {
         </Button>
         <Button
           onClick={() => {
-            close()
-            editor.chain().focus().setImage({ src: url }).run()
+            const img = new Image()
+            img.src = url
+            img.onerror = () => {
+              MessagePlugin.error(t('image.error', { ns: 'editor' }))
+            }
+            img.onload = () => {
+              const width = img.width
+              editor.chain().focus().setImage({ src: url, width: width, height: 'auto' }).run()
+              close()
+            }
           }}
         >
           {t('common.insert', { ns: 'editor' })}

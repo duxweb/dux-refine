@@ -22,7 +22,8 @@ export const inputRegex = /(!\[(.+|:?)]\((\S+)(?:(?:\s+)["'](\S+)["'])?\))$/
 
 export const Video = Node.create<VideoOptions>({
   name: 'video',
-  group: 'block',
+  inline: true,
+  group: 'inline',
   draggable: true,
   selectable: true,
   addOptions() {
@@ -56,12 +57,6 @@ export const Video = Node.create<VideoOptions>({
           return {}
         },
       },
-      align: {
-        default: 'center',
-        renderHTML: () => {
-          return {}
-        },
-      },
     }
   },
 
@@ -74,15 +69,13 @@ export const Video = Node.create<VideoOptions>({
   },
 
   renderHTML({ HTMLAttributes }) {
-    const textAlign = HTMLAttributes.align ? `text-align: ${HTMLAttributes.align};` : ''
-    return [
-      'div',
-      ['video', mergeAttributes(this.options.HTMLAttributes, { style: textAlign }, HTMLAttributes)],
-    ]
+    return ['video', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)]
   },
 
   addNodeView() {
-    return ReactNodeViewRenderer(VideoWrapper)
+    return ReactNodeViewRenderer(VideoWrapper, {
+      className: 'inline-block',
+    })
   },
 
   addCommands() {
@@ -104,9 +97,8 @@ export const Video = Node.create<VideoOptions>({
         find: inputRegex,
         type: this.type,
         getAttributes: (match) => {
-          const [, , alt, src, title, height, width, autoplay, controls, poster, ratio, align] =
-            match
-          return { src, alt, title, height, width, autoplay, controls, poster, ratio, align }
+          const [, , alt, src, title, height, width, autoplay, controls, poster, ratio] = match
+          return { src, alt, title, height, width, autoplay, controls, poster, ratio }
         },
       }),
     ]

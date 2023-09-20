@@ -37,7 +37,8 @@
     "url": "网址",
     "width": "宽度",
     "height": "高度",
-    "ratio": "等比例"
+    "ratio": "等比例",
+    "error": "图片加载失败"
   },
   "video": {
     "name": "视频",
@@ -47,10 +48,6 @@
     "bubble": {
       "control": "控件",
       "size": "大小",
-      "align": "对齐",
-      "left": "左对齐",
-      "center": "居中",
-      "right": "右对齐",
       "width": "宽度",
       "height": "高度",
       "ratio": "等比例"

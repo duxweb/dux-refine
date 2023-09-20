@@ -1,4 +1,4 @@
-import { Tabs } from 'tdesign-react/esm'
+import { Message, MessagePlugin, Tabs } from 'tdesign-react/esm'
 import { UIMenuItem } from '../../ui/menu'
 import { UploadPopup } from './common/upload'
 import { ImageUrlPopup } from './image/url'
@@ -27,7 +27,19 @@ export const ImageItem = () => {
                 close={close}
                 onConfirm={(files) => {
                   files?.map((item) => {
-                    editor.chain().focus().setImage({ src: item }).run()
+                    const img = new Image()
+                    img.src = item
+                    img.onerror = () => {
+                      MessagePlugin.error(t('image.error', { ns: 'editor' }))
+                    }
+                    img.onload = () => {
+                      const width = img.width
+                      editor
+                        .chain()
+                        .focus()
+                        .setImage({ src: item, width: width, height: 'auto' })
+                        .run()
+                    }
                   })
                 }}
               />

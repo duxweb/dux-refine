@@ -34,7 +34,7 @@ export const FormModal = ({ children, onClose, onData, onSubmit, ...props }: For
       onData={onDataFn}
       {...props}
     >
-      <div className='p-6'>{children}</div>
+      <div className='p-5'>{children}</div>
       <Modal.Footer>
         <Button
           variant='outline'

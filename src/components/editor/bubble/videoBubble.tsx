@@ -49,32 +49,6 @@ export const VideoBubble = () => {
       ></UIMenuItem>
 
       <UIMenuItem
-        type='menu'
-        label={t('video.bubble.align', { ns: 'editor' })}
-        menuOptions={[
-          {
-            content: t('video.bubble.left', { ns: 'editor' }),
-            value: 'left',
-            prefixIcon: <div className='tiptap-menu-icon i-tabler:align-left'></div>,
-          },
-          {
-            content: t('video.bubble.center', { ns: 'editor' }),
-            value: 'center',
-            prefixIcon: <div className='tiptap-menu-icon i-tabler:align-center'></div>,
-          },
-          {
-            content: t('video.bubble.right', { ns: 'editor' }),
-            value: 'right',
-            prefixIcon: <div className='tiptap-menu-icon i-tabler:align-right'></div>,
-          },
-        ]}
-        onMenuSelect={(item) => {
-          editor.chain().focus().updateAttributes('video', { align: item.value }).run()
-        }}
-        icon='i-tabler:align-center'
-      />
-
-      <UIMenuItem
         type='popup'
         label={t('video.bubble.size', { ns: 'editor' })}
         popupRender={(close) => <Config close={close} />}

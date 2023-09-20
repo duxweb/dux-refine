@@ -4,6 +4,14 @@
 
 ### Feature
 - Add `FormPage` element `settingRender` props, Custom Render Drawer Form Extension
+- Add `ImageError` component for image error status
+- Enhanced `addResources` method to add automatic route creation
+
+### Fix
+- fix `editor` edit data update
+
+### deprecate
+- fix `video` align attribute
 
 ## 0.2.0
 

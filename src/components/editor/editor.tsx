@@ -1,10 +1,10 @@
 // src/Tiptap.jsx
 import {
   BubbleMenu,
-  Content,
   Editor as TiptapEditor,
   useEditor,
   EditorContent,
+  Content,
 } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { Color } from '@tiptap/extension-color'
@@ -29,7 +29,7 @@ import { TableBubble } from './bubble/tableBubble'
 import { VideoBubble } from './bubble/videoBubble'
 
 import './styles/main.css'
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import clsx from 'clsx'
 
 const extensions = [
@@ -88,13 +88,14 @@ export const useEditorContext = () => {
 export const EditorConsumer = context.Consumer
 
 interface EditorProps {
+  defaultValue?: string
   value?: Content
   onChange?: (value?: string) => void
   toolsBar?: string[]
   className?: string
 }
 
-export const Editor = ({ toolsBar, className, value, onChange }: EditorProps) => {
+export const Editor = ({ toolsBar, className, defaultValue, value, onChange }: EditorProps) => {
   const [pageType, setPageType] = useState<editorPageType>('web')
 
   const setPage = (type: editorPageType) => {
@@ -103,16 +104,23 @@ export const Editor = ({ toolsBar, className, value, onChange }: EditorProps) =>
 
   const editor = useEditor({
     extensions: extensions,
-    content: value,
+    content: value || defaultValue,
     onUpdate: ({ editor }) => {
       onChange?.(editor.getHTML())
     },
     editorProps: {
       attributes: {
-        class: `app-editor-content prose w-full max-w-full ${className || ''}`,
+        class: `app-editor-content prose max-w-full ${className || ''}`,
       },
     },
   })
+
+  useEffect(() => {
+    setTimeout(() => {
+      editor?.commands.setContent(value || '')
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value])
 
   if (!editor) {
     return null

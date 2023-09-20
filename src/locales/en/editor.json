@@ -37,7 +37,8 @@
     "url": "URL",
     "width": "W",
     "height": "H",
-    "ratio": "Aspect"
+    "ratio": "Aspect",
+    "error": "Image failed to load"
   },
   "video": {
     "name": "Video",

@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect, useImperativeHandle } from 'react'
-import { FormAction, MetaQuery, BaseKey, UseFormReturnType } from '@refinedev/core'
+import { FormAction, MetaQuery, BaseKey, UseFormReturnType, RedirectAction } from '@refinedev/core'
 import {
   Form as TdForm,
   SubmitContext,
@@ -21,6 +21,7 @@ export interface FormProps {
   formProps?: TdFormProps
   onData?: (form: UseFormReturnType) => void
   initData?: Record<string, any>
+  redirect?: RedirectAction
 }
 
 export interface FormFef {
@@ -42,6 +43,7 @@ export const Form = forwardRef(
       onSubmit,
       onData,
       initData,
+      redirect,
     }: FormProps,
     ref: React.ForwardedRef<FormFef>
   ) => {
@@ -56,7 +58,7 @@ export const Form = forwardRef(
       form: form,
       action: action || id ? 'edit' : 'create',
       id: id,
-      redirect: false,
+      redirect: redirect,
       queryMeta: {
         params: params,
       },
@@ -66,7 +68,7 @@ export const Form = forwardRef(
       ...useFormProps,
     })
 
-    const { formData, formLoading } = formResult
+    const { formData, formLoading, onFinish } = formResult
 
     useEffect(() => {
       let isUnmounted = false
