@@ -1,8 +1,8 @@
 # Changelog
 
-## 0.1.6 unpublished
+## 0.2.0 unpublished
 
-### Added
+### Feature
 - Add basic rich text editor using tiptap
 - Add form `actionRender` props
 
