@@ -1,6 +1,8 @@
 # Changelog
 
 ## 0.2.1 unpublished
+
+### Feature
 - Add `FormPage` element `settingRender` props, Custom Render Drawer Form Extension
 
 ## 0.2.0
