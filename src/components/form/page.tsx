@@ -1,7 +1,14 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useTranslate, useBack, useResource } from '@refinedev/core'
-import { SubmitContext, Card, FormItemProps, Form as TdForm, Button } from 'tdesign-react/esm'
-import { ChevronLeftIcon, LoadIcon, SaveIcon } from 'tdesign-icons-react'
+import {
+  SubmitContext,
+  Card,
+  FormItemProps,
+  Form as TdForm,
+  Button,
+  Drawer,
+} from 'tdesign-react/esm'
+import { ChevronLeftIcon, LoadIcon, SaveIcon, SettingIcon } from 'tdesign-icons-react'
 import { Form, FormProps, FormFef } from './form'
 import { Main } from '../main'
 import clsx from 'clsx'
@@ -10,6 +17,7 @@ export interface FormPageProps extends FormProps {
   title?: React.ReactNode
   headerRender?: React.ReactNode
   actionRender?: React.ReactNode
+  settingRender?: React.ReactNode
   back?: boolean
   rest?: boolean
 }
@@ -21,6 +29,7 @@ export const FormPage = ({
   rest,
   headerRender,
   actionRender,
+  settingRender,
   formProps,
   ...props
 }: FormPageProps) => {
@@ -34,6 +43,8 @@ export const FormPage = ({
 
   const { resource } = useResource()
   const translate = useTranslate()
+  const [visibleDrawer, setVisibleDrawer] = useState(false)
+
   return (
     <Main
       title={title || translate(`${resource?.meta?.label}.name`)}
@@ -64,6 +75,16 @@ export const FormPage = ({
             </Button>
           )}
           {actionRender}
+          {settingRender && (
+            <Button
+              variant='outline'
+              theme='primary'
+              icon={<SettingIcon />}
+              onClick={() => setVisibleDrawer(true)}
+            >
+              {t('buttons.setting')}
+            </Button>
+          )}
           <Button
             onClick={() => {
               formRef.current?.form.submit()
@@ -87,6 +108,15 @@ export const FormPage = ({
           {...props}
         >
           {children}
+          {settingRender && (
+            <Drawer
+              header={t('buttons.setting')}
+              visible={visibleDrawer}
+              onClose={() => setVisibleDrawer(false)}
+            >
+              {settingRender}
+            </Drawer>
+          )}
         </Form>
       </Card>
     </Main>

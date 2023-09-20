@@ -94,6 +94,7 @@
     "clone": "Clone",
     "back": "Back",
     "rest": "Rest",
+    "setting": "Setting",
     "notAccessTitle": "You don't have permission to access"
   },
   "warnWhenUnsavedChanges": "Are you sure you want to leave? You have unsaved changes.",

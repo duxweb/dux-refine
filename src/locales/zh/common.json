@@ -95,6 +95,7 @@
     "clone": "克隆",
     "back": "返回",
     "rest": "重置",
+    "setting": "设置",
     "notAccessTitle": "您无权访问"
   },
   "warnWhenUnsavedChanges": "未保存的更改将不会保留。",
