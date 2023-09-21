@@ -7,9 +7,8 @@ import {
   useLogout,
   useSetLocale,
 } from '@refinedev/core'
-import { TreeMenuItem } from '@refinedev/core/dist/hooks/menu/useMenu'
 import { Menu, Button, Dropdown, SelectInput, Avatar, DropdownOption } from 'tdesign-react/esm'
-const { MenuGroup, MenuItem, SubMenu } = Menu
+const { MenuItem, SubMenu } = Menu
 import {
   ViewListIcon,
   SearchIcon,
@@ -19,7 +18,7 @@ import {
   EarthIcon,
 } from 'tdesign-icons-react'
 import { DuxLogo } from '../logo'
-import { useMenu } from './util'
+import { MenuItemProps, useMenu } from './util'
 import { useModuleContext, userMenuItem } from '../../core'
 import { useCanHelper } from '../../provider'
 import { useAppStore } from '../../stores'
@@ -179,7 +178,7 @@ export const SiderCollapse = () => {
           <Search />
         </div>
       )}
-      {menuData.map((app: TreeMenuItem) => {
+      {menuData.map((app: MenuItemProps) => {
         return app?.children?.length == 0 ? (
           <MenuItem
             key={app.key}
@@ -191,21 +190,21 @@ export const SiderCollapse = () => {
               })
             }}
           >
-            {translate(`${app.label}.name`) || app?.label}
+            {translate(`${app.label}.name`, app?.label)}
           </MenuItem>
         ) : (
           <SubMenu
             key={app.key}
-            title={translate(`${app.label}.name`) || app?.label}
+            title={translate(`${app.label}.name`, app?.label)}
             value={app.key}
             icon={app.icon ? <div className={clsx(['t-icon', app.icon])}></div> : undefined}
           >
             {app?.children?.length > 0 &&
-              app?.children?.map((parent: TreeMenuItem) => {
+              app?.children?.map((parent: MenuItemProps) => {
                 return parent?.children?.length > 0 ? (
                   <SubMenu
                     key={parent.key}
-                    title={translate(`${parent.label}.name`) || parent?.label}
+                    title={translate(`${parent.label}.name`, parent?.label)}
                     value={parent.key}
                     icon={
                       parent.icon ? (
@@ -213,9 +212,9 @@ export const SiderCollapse = () => {
                       ) : undefined
                     }
                   >
-                    {parent?.children?.map((sub: TreeMenuItem) => (
+                    {parent?.children?.map((sub: MenuItemProps) => (
                       <MenuItem
-                        key={sub.name}
+                        key={sub.key}
                         value={sub.key}
                         icon={
                           sub.icon ? <div className={clsx(['t-icon', sub.icon])}></div> : undefined
@@ -226,7 +225,7 @@ export const SiderCollapse = () => {
                           })
                         }}
                       >
-                        {translate(`${sub.label}.name`) || sub?.label}
+                        {translate(`${sub.label}.name`, sub?.label)}
                       </MenuItem>
                     ))}
                   </SubMenu>
@@ -245,7 +244,7 @@ export const SiderCollapse = () => {
                       })
                     }}
                   >
-                    {translate(`${parent.label}.name`) || parent?.label}
+                    {translate(`${parent.label}.name`, parent?.label)}
                   </MenuItem>
                 )
               })}

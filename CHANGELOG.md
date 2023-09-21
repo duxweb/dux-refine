@@ -6,6 +6,7 @@
 - Add `FormPage` element `settingRender` props, Custom Render Drawer Form Extension
 - Add `ImageError` component for image error status
 - Enhanced `addResources` method to add automatic route creation
+- Add `apiPath` menu params
 
 ### Fix
 - fix `editor` edit data update
