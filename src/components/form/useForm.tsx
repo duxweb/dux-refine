@@ -22,7 +22,7 @@ export interface useFormReturnProps extends UseFormReturnType {
 export const useForm = (props: useFormProps): useFormReturnProps => {
   const t = useTranslate()
   const result = useRefineForm({
-    onMutationError(error, variables, context, isAutoSave) {
+    onMutationError: (error, variables, context, isAutoSave) => {
       if (error.statusCode == 422) {
         props?.form?.setValidateMessage(convertErrorFormat(error?.data))
       }
@@ -72,17 +72,15 @@ export const useForm = (props: useFormProps): useFormReturnProps => {
   }
 }
 
-export const convertErrorFormat = (data: Array<Record<string, Array<string>>>) => {
-  return data.reduce((output: FormValidateMessage<any>, item) => {
-    for (const key in item) {
-      if (Object.prototype.hasOwnProperty.call(item, key)) {
-        const messages = item[key]
-        output[key] = messages.map((message) => ({
-          type: 'error',
-          message: message,
-        }))
-      }
-    }
-    return output
-  }, {})
+export const convertErrorFormat = (data: Record<string, Array<string>>) => {
+  const output: FormValidateMessage<any> = {}
+
+  for (const key in data) {
+    const messages = data[key]
+    output[key] = messages.map((message) => ({
+      type: 'error',
+      message: Array.isArray(message) ? message[0] : message,
+    }))
+  }
+  return output
 }

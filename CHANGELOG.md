@@ -9,6 +9,8 @@
 
 ### Fix
 - fix `editor` edit data update
+- fix `useForm` error validate
+- fix `bradcroumbs` translate label name
 
 ### deprecate
 - fix `video` align attribute
