@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   useTranslate,
   useGo,
@@ -10,6 +10,7 @@ import {
 import { Menu, Button, Dropdown, SelectInput, Avatar, DropdownOption } from 'tdesign-react/esm'
 const { MenuItem, SubMenu } = Menu
 import {
+  Icon,
   ViewListIcon,
   SearchIcon,
   MoreIcon,
@@ -107,9 +108,18 @@ export const SiderCollapse = () => {
   const translate = useTranslate()
   const { defaultOpenKeys, menuData } = useMenu()
   const [collapse, setCollapse] = useState<boolean>(false)
-  const [value, setValue] = useState<string>(defaultOpenKeys?.[0])
+  const [value, setValue] = useState<string | undefined>()
   const module = useModuleContext()
   const dark = useAppStore((state) => state.dark)
+
+  useEffect(() => {
+    if (value) {
+      return
+    }
+    setValue(defaultOpenKeys[0])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultOpenKeys])
+
   return (
     <Menu
       className='app-sider-collapse hidden md:block'
@@ -183,7 +193,7 @@ export const SiderCollapse = () => {
           <MenuItem
             key={app.key}
             value={app.key}
-            icon={<div className={clsx(['t-icon', app.icon])}></div>}
+            icon={<Icon name={app.icon} />}
             onClick={() => {
               go({
                 to: app.route,
@@ -197,7 +207,7 @@ export const SiderCollapse = () => {
             key={app.key}
             title={translate(`${app.label}.name`, app?.label)}
             value={app.key}
-            icon={app.icon ? <div className={clsx(['t-icon', app.icon])}></div> : undefined}
+            icon={app.icon ? <Icon name={app.icon} /> : undefined}
           >
             {app?.children?.length > 0 &&
               app?.children?.map((parent: MenuItemProps) => {
@@ -206,19 +216,13 @@ export const SiderCollapse = () => {
                     key={parent.key}
                     title={translate(`${parent.label}.name`, parent?.label)}
                     value={parent.key}
-                    icon={
-                      parent.icon ? (
-                        <div className={clsx(['t-icon', parent.icon])}></div>
-                      ) : undefined
-                    }
+                    icon={parent.icon ? <Icon name={parent.icon} /> : undefined}
                   >
                     {parent?.children?.map((sub: MenuItemProps) => (
                       <MenuItem
                         key={sub.key}
                         value={sub.key}
-                        icon={
-                          sub.icon ? <div className={clsx(['t-icon', sub.icon])}></div> : undefined
-                        }
+                        icon={sub.icon ? <Icon name={sub.icon} /> : undefined}
                         onClick={() => {
                           go({
                             to: sub.route,
@@ -233,11 +237,7 @@ export const SiderCollapse = () => {
                   <MenuItem
                     key={parent.key}
                     value={parent.key}
-                    icon={
-                      parent.icon ? (
-                        <div className={clsx(['t-icon', parent.icon])}></div>
-                      ) : undefined
-                    }
+                    icon={parent.icon ? <Icon name={parent.icon} /> : undefined}
                     onClick={() => {
                       go({
                         to: parent.route,

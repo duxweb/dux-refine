@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useGetIdentity, useMenu as useRefMenu } from '@refinedev/core'
+import { useGetIdentity, useParsed, useMenu as useRefMenu } from '@refinedev/core'
 import { TreeMenuItem } from '@refinedev/core/dist/hooks/menu/useMenu'
 import { client, useCanHelper } from '../../provider'
 import { useModuleContext } from '../../core/module'
@@ -25,6 +25,11 @@ export const useMenu = (): UseMenuProps => {
   const { defaultOpenKeys, menuItems } = useRefMenu({
     hideOnMissingParameter: true,
   })
+  const { pathname } = useParsed()
+
+  console.log('pathname', pathname)
+
+  const [openkeys, setOpenkeys] = useState<string[]>([])
   const [menuData, setMenuData] = useState<MenuItemProps[]>([])
 
   const sortData = useCallback((arr: MenuItemProps[]) => {
@@ -40,6 +45,7 @@ export const useMenu = (): UseMenuProps => {
     token: string
   }>()
 
+  // api menu
   useEffect(() => {
     if (!config.apiPath.menu || !identity?.token) {
       return
@@ -51,10 +57,34 @@ export const useMenu = (): UseMenuProps => {
         },
       })
       .then((res) => {
-        setMenuData(res?.data)
+        setMenuData(res.data?.data)
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config.apiPath.menu, identity?.token])
+
+  useEffect(() => {
+    if (!config.apiPath.menu) {
+      return
+    }
+    const pathList = getPathByKey(
+      (name ? pathname?.replace(`/${name}/`, '') : pathname) || '',
+      menuData
+    )
+    console.log(
+      'path',
+      pathList.map((item) => item.key)
+    )
+    setOpenkeys(pathList.map((item) => item.key).reverse())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [menuData, config.apiPath.menu, defaultOpenKeys])
+
+  // Refine Menu
+  useEffect(() => {
+    if (config.apiPath.menu) {
+      return
+    }
+    setOpenkeys(defaultOpenKeys)
+  }, [config.apiPath.menu, defaultOpenKeys])
 
   useEffect(() => {
     if (config.apiPath.menu) {
@@ -91,6 +121,29 @@ export const useMenu = (): UseMenuProps => {
 
   return {
     menuData: menuData,
-    defaultOpenKeys,
+    defaultOpenKeys: openkeys,
   }
+}
+
+const getPathByKey = (curKey: string, data: MenuItemProps[]) => {
+  let result: MenuItemProps[] = []
+
+  const traverse = (curKey: string | number, path: any[], data: MenuItemProps[]) => {
+    if (data.length === 0) {
+      return
+    }
+    for (const item of data) {
+      path.push(item)
+      if (item.route === curKey) {
+        result = JSON.parse(JSON.stringify(path))
+        return
+      }
+
+      const children = Array.isArray(item.children) ? item.children : []
+      traverse(curKey, path, children)
+      path.pop()
+    }
+  }
+  traverse(curKey, [], data)
+  return result
 }
