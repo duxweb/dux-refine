@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useGetIdentity, useParsed, useMenu as useRefMenu } from '@refinedev/core'
 import { TreeMenuItem } from '@refinedev/core/dist/hooks/menu/useMenu'
 import { client, useCanHelper } from '../../provider'
@@ -22,15 +22,13 @@ export interface UseMenuProps {
 export const useMenu = (): UseMenuProps => {
   const { name, config } = useModuleContext()
   const { check } = useCanHelper(name)
-  const { defaultOpenKeys, menuItems } = useRefMenu({
+  const { menuItems } = useRefMenu({
     hideOnMissingParameter: true,
   })
   const { pathname } = useParsed()
 
-  console.log('pathname', pathname)
-
-  const [openkeys, setOpenkeys] = useState<string[]>([])
   const [menuData, setMenuData] = useState<MenuItemProps[]>([])
+  const [apiMenuData, setApiMenuData] = useState<MenuItemProps[]>([])
 
   const sortData = useCallback((arr: MenuItemProps[]) => {
     arr.sort((a, b) => a.sort - b.sort)
@@ -41,12 +39,36 @@ export const useMenu = (): UseMenuProps => {
     }
   }, [])
 
+  const formatMenu = useCallback((menuItems: TreeMenuItem[]) => {
+    return menuItems
+      .filter((item) => {
+        if (!item.meta?.label) {
+          return false
+        }
+        if (item.children.length > 0) {
+          item.children = formatMenu(item.children)
+        }
+        return check({ resource: item.name, action: 'list' })
+      })
+      .map((item) => {
+        return {
+          name: item.name,
+          key: item.key,
+          route: item.route,
+          icon: item.icon,
+          label: item.label,
+          children: item.children,
+          sort: item.meta.sort,
+        } as MenuItemProps
+      })
+  }, [])
+
   const { data: identity } = useGetIdentity<{
     token: string
   }>()
 
   // api menu
-  useEffect(() => {
+  useMemo(() => {
     if (!config.apiPath.menu || !identity?.token) {
       return
     }
@@ -57,15 +79,12 @@ export const useMenu = (): UseMenuProps => {
         },
       })
       .then((res) => {
-        setMenuData(res.data?.data)
+        setApiMenuData(res.data?.data)
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config.apiPath.menu, identity?.token])
 
-  useEffect(() => {
-    if (!config.apiPath.menu) {
-      return
-    }
+  const openkeys = useMemo(() => {
     const pathList = getPathByKey(
       (name ? pathname?.replace(`/${name}/`, '') : pathname) || '',
       menuData
@@ -74,50 +93,16 @@ export const useMenu = (): UseMenuProps => {
       'path',
       pathList.map((item) => item.key)
     )
-    setOpenkeys(pathList.map((item) => item.key).reverse())
+    return pathList.map((item) => item.key).reverse()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [menuData, config.apiPath.menu, defaultOpenKeys])
+  }, [menuData, config.apiPath.menu])
 
-  // Refine Menu
-  useEffect(() => {
-    if (config.apiPath.menu) {
-      return
-    }
-    setOpenkeys(defaultOpenKeys)
-  }, [config.apiPath.menu, defaultOpenKeys])
-
-  useEffect(() => {
-    if (config.apiPath.menu) {
-      return
-    }
-    const filterMenuItems = (menuItems: TreeMenuItem[]) => {
-      return menuItems
-        .filter((item) => {
-          if (!item.meta?.label) {
-            return false
-          }
-          if (item.children.length > 0) {
-            item.children = filterMenuItems(item.children)
-          }
-          return check({ resource: item.name, action: 'list' })
-        })
-        .map((item) => {
-          return {
-            name: item.name,
-            key: item.key,
-            route: item.route,
-            icon: item.icon,
-            label: item.label,
-            children: item.children,
-            sort: item.meta.sort,
-          } as MenuItemProps
-        })
-    }
-    const data = filterMenuItems(menuItems)
+  useMemo(() => {
+    const data = formatMenu([...menuItems, apiMenuData])
     sortData(data)
     setMenuData(data)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [menuItems, config.apiPath.menu])
+  }, [apiMenuData, menuItems, config.apiPath.menu])
 
   return {
     menuData: menuData,
