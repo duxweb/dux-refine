@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useGetIdentity, useParsed, useMenu as useRefMenu } from '@refinedev/core'
 import { TreeMenuItem } from '@refinedev/core/dist/hooks/menu/useMenu'
 import { client, useCanHelper } from '../../provider'
@@ -26,8 +26,6 @@ export const useMenu = (): UseMenuProps => {
     hideOnMissingParameter: true,
   })
   const { pathname } = useParsed()
-
-  const [menuData, setMenuData] = useState<MenuItemProps[]>([])
   const [apiMenuData, setApiMenuData] = useState<MenuItemProps[]>([])
 
   const sortData = useCallback((arr: MenuItemProps[]) => {
@@ -39,36 +37,42 @@ export const useMenu = (): UseMenuProps => {
     }
   }, [])
 
-  const formatMenu = useCallback((menuItems: TreeMenuItem[]) => {
-    return menuItems
-      .filter((item) => {
-        if (!item.meta?.label) {
-          return false
-        }
-        if (item.children.length > 0) {
-          item.children = formatMenu(item.children)
-        }
-        return check({ resource: item.name, action: 'list' })
-      })
-      .map((item) => {
-        return {
-          name: item.name,
-          key: item.key,
-          route: item.route,
-          icon: item.icon,
-          label: item.label,
-          children: item.children,
-          sort: item.meta.sort,
-        } as MenuItemProps
-      })
-  }, [])
+  const formatMenu = useCallback(
+    (data: TreeMenuItem[]) => {
+      return data
+        .filter((item) => {
+          if (!item?.meta?.label && !item?.label) {
+            return false
+          }
+          if (item?.children?.length > 0) {
+            item.children = formatMenu(item.children)
+          }
+          return check({ resource: item.name, action: 'list' })
+        })
+        .map((item) => {
+          return {
+            name: item.name,
+            key: item.key,
+            route: item.route || undefined,
+            icon: item.icon,
+            label: item.label,
+            children: item.children,
+            sort: item?.sort || item?.meta?.sort,
+          } as MenuItemProps
+        })
+    },
+    [check]
+  )
 
   const { data: identity } = useGetIdentity<{
     token: string
   }>()
 
-  // api menu
-  useMemo(() => {
+  const refineMenuData = useMemo(() => {
+    return formatMenu(menuItems)
+  }, [])
+
+  useEffect(() => {
     if (!config.apiPath.menu || !identity?.token) {
       return
     }
@@ -79,30 +83,23 @@ export const useMenu = (): UseMenuProps => {
         },
       })
       .then((res) => {
-        setApiMenuData(res.data?.data)
+        setApiMenuData(formatMenu(res.data?.data || []))
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config.apiPath.menu, identity?.token])
+  }, [identity?.token])
+
+  const menuData = useMemo(() => {
+    const data = [...refineMenuData, ...apiMenuData]
+    sortData(data)
+    return data
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [apiMenuData, refineMenuData])
 
   const openkeys = useMemo(() => {
-    const pathList = getPathByKey(
-      (name ? pathname?.replace(`/${name}/`, '') : pathname) || '',
-      menuData
-    )
-    console.log(
-      'path',
-      pathList.map((item) => item.key)
-    )
+    const pathList = getPathByKey(pathname || `/${name}`, menuData)
     return pathList.map((item) => item.key).reverse()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [menuData, config.apiPath.menu])
-
-  useMemo(() => {
-    const data = formatMenu([...menuItems, apiMenuData])
-    sortData(data)
-    setMenuData(data)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiMenuData, menuItems, config.apiPath.menu])
+  }, [menuData, pathname])
 
   return {
     menuData: menuData,

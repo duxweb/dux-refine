@@ -24,7 +24,7 @@ export const canCheck = ({ auth, resource, action }: CanCheck) => {
   if (!auth) {
     return false
   }
-  if (resource === undefined) {
+  if (!resource) {
     return true
   }
 
