@@ -19,11 +19,10 @@ import {
   EarthIcon,
 } from 'tdesign-icons-react'
 import { DuxLogo } from '../logo'
-import { MenuItemProps, useMenu } from './util'
-import { useModuleContext, userMenuItem } from '../../core'
+import { MenuItemProps, useMenu } from './menu'
+import { siderType, useModuleContext, userMenuItem } from '../../core'
 import { useCanHelper } from '../../provider'
 import { useAppStore } from '../../stores'
-import clsx from 'clsx'
 import './style.css'
 
 const Search = () => {
@@ -103,7 +102,11 @@ const Search = () => {
   )
 }
 
-export const SiderCollapse = () => {
+export interface SiderCollapseProps {
+  type: siderType
+}
+
+export const SiderCollapse = ({ type }: SiderCollapseProps) => {
   const go = useGo()
   const translate = useTranslate()
   const { defaultOpenKeys, menuData } = useMenu()
@@ -202,57 +205,70 @@ export const SiderCollapse = () => {
           >
             {translate(`${app.label}.name`, app?.label)}
           </MenuItem>
-        ) : (
+        ) : type == 'collapse' ? (
           <SubMenu
             key={app.key}
             title={translate(`${app.label}.name`, app?.label)}
             value={app.key}
             icon={app.icon ? <Icon name={app.icon} /> : undefined}
           >
-            {app?.children?.length > 0 &&
-              app?.children?.map((parent: MenuItemProps) => {
-                return parent?.children?.length > 0 ? (
-                  <SubMenu
-                    key={parent.key}
-                    title={translate(`${parent.label}.name`, parent?.label)}
-                    value={parent.key}
-                    icon={parent.icon ? <Icon name={parent.icon} /> : undefined}
-                  >
-                    {parent?.children?.map((sub: MenuItemProps) => (
-                      <MenuItem
-                        key={sub.key}
-                        value={sub.key}
-                        icon={sub.icon ? <Icon name={sub.icon} /> : undefined}
-                        onClick={() => {
-                          go({
-                            to: sub.route,
-                          })
-                        }}
-                      >
-                        {translate(`${sub.label}.name`, sub?.label)}
-                      </MenuItem>
-                    ))}
-                  </SubMenu>
-                ) : (
-                  <MenuItem
-                    key={parent.key}
-                    value={parent.key}
-                    icon={parent.icon ? <Icon name={parent.icon} /> : undefined}
-                    onClick={() => {
-                      go({
-                        to: parent.route,
-                      })
-                    }}
-                  >
-                    {translate(`${parent.label}.name`, parent?.label)}
-                  </MenuItem>
-                )
-              })}
+            {app?.children?.length > 0 && <SiderCollapseSub data={app?.children} />}
           </SubMenu>
+        ) : (
+          <Menu.MenuGroup title={translate(`${app.label}.name`, app?.label)} key={app.key}>
+            {app?.children?.length > 0 && <SiderCollapseSub data={app?.children} />}
+          </Menu.MenuGroup>
         )
       })}
     </Menu>
   )
+}
+
+export interface SiderCollapseSubProps {
+  data: MenuItemProps[]
+}
+
+export const SiderCollapseSub = ({ data }: SiderCollapseSubProps) => {
+  const go = useGo()
+  const translate = useTranslate()
+  return data?.map((parent: MenuItemProps) => {
+    return parent?.children?.length > 0 ? (
+      <SubMenu
+        key={parent.key}
+        title={translate(`${parent.label}.name`, parent?.label)}
+        value={parent.key}
+        icon={parent.icon ? <Icon name={parent.icon} /> : undefined}
+      >
+        {parent?.children?.map((sub: MenuItemProps) => (
+          <MenuItem
+            key={sub.key}
+            value={sub.key}
+            icon={sub.icon ? <Icon name={sub.icon} /> : undefined}
+            onClick={() => {
+              go({
+                to: sub.route,
+              })
+            }}
+          >
+            {translate(`${sub.label}.name`, sub?.label)}
+          </MenuItem>
+        ))}
+      </SubMenu>
+    ) : (
+      <MenuItem
+        key={parent.key}
+        value={parent.key}
+        icon={parent.icon ? <Icon name={parent.icon} /> : undefined}
+        onClick={() => {
+          go({
+            to: parent.route,
+          })
+        }}
+      >
+        {translate(`${parent.label}.name`, parent?.label)}
+      </MenuItem>
+    )
+  })
 }
 
 interface UserProps {

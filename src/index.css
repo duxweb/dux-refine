@@ -37,6 +37,10 @@ html:root, *:root[theme-mode="light"] {
   @apply w-full;
 }
 
+.t-input__extra, .t-input__help {
+  @apply mt-2 text-sm;
+}
+
 
 .app-code {
   @apply flex-grow rounded-lg p-2 bg-gray-12 text-white-1;

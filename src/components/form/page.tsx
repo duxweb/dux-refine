@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import { useTranslate, useBack, useResource } from '@refinedev/core'
 import {
   SubmitContext,
@@ -9,7 +9,7 @@ import {
   Drawer,
 } from 'tdesign-react/esm'
 import { ChevronLeftIcon, LoadIcon, SaveIcon, SettingIcon } from 'tdesign-icons-react'
-import { Form, FormProps, FormFef } from './form'
+import { Form, FormProps, FormRef } from './form'
 import { Main } from '../main'
 import clsx from 'clsx'
 
@@ -21,109 +21,121 @@ export interface FormPageProps extends FormProps {
   back?: boolean
   rest?: boolean
 }
-export const FormPage = ({
-  title,
-  children,
-  onSubmit,
-  back,
-  rest,
-  headerRender,
-  actionRender,
-  settingRender,
-  formProps,
-  ...props
-}: FormPageProps) => {
-  const formRef = useRef<FormFef>(null)
-  const backFn = useBack()
-  const t = useTranslate()
+export const FormPage = forwardRef(
+  (
+    {
+      title,
+      children,
+      onSubmit,
+      back,
+      rest,
+      headerRender,
+      actionRender,
+      settingRender,
+      formProps,
+      ...props
+    }: FormPageProps,
+    ref: React.ForwardedRef<FormRef>
+  ) => {
+    const formRef = useRef<FormRef>(null)
+    const backFn = useBack()
+    const t = useTranslate()
 
-  const onSubmitFun = async (e: SubmitContext) => {
-    await onSubmit?.(e)
-  }
+    const onSubmitFun = async (e: SubmitContext) => {
+      await onSubmit?.(e)
+    }
 
-  const { resource } = useResource()
-  const translate = useTranslate()
-  const [visibleDrawer, setVisibleDrawer] = useState(false)
+    const { resource } = useResource()
+    const translate = useTranslate()
+    const [visibleDrawer, setVisibleDrawer] = useState(false)
 
-  return (
-    <Main
-      title={title || translate(`${resource?.meta?.label}.name`)}
-      header={headerRender}
-      icon={resource?.meta?.icon}
-      actions={
-        <>
-          {back && (
-            <Button
-              onClick={() => {
-                backFn()
-              }}
-              variant='outline'
-              icon={<ChevronLeftIcon />}
-            >
-              {t('buttons.back')}
-            </Button>
-          )}
-          {rest && (
-            <Button
-              onClick={() => {
-                formRef.current?.form.reset()
-              }}
-              variant='outline'
-              icon={<LoadIcon />}
-            >
-              {t('buttons.rest')}
-            </Button>
-          )}
-          {actionRender}
-          {settingRender && (
-            <Button
-              variant='outline'
-              theme='primary'
-              icon={<SettingIcon />}
-              onClick={() => setVisibleDrawer(true)}
-            >
-              {t('buttons.setting')}
-            </Button>
-          )}
-          <Button
-            onClick={() => {
-              formRef.current?.form.submit()
-            }}
-            icon={<SaveIcon />}
-          >
-            {t('buttons.save')}
-          </Button>
-        </>
+    useImperativeHandle(ref, () => {
+      return {
+        form: formRef.current?.form,
       }
-    >
-      <Card>
-        <Form
-          ref={formRef}
-          onSubmit={onSubmitFun}
-          formProps={{
-            labelAlign: 'left',
-            className: 'divide-y divide-gray-2 dark:divide-gray-10 py-2',
-            ...formProps,
-          }}
-          {...props}
-        >
-          {children}
-          {settingRender && (
-            <Drawer
-              confirmBtn={t('buttons.save')}
-              onConfirm={() => formRef.current?.form.submit()}
-              header={t('buttons.setting')}
-              visible={visibleDrawer}
-              onClose={() => setVisibleDrawer(false)}
+    })
+
+    return (
+      <Main
+        title={title || translate(`${resource?.meta?.label}.name`)}
+        header={headerRender}
+        icon={resource?.meta?.icon}
+        actions={
+          <>
+            {back && (
+              <Button
+                onClick={() => {
+                  backFn()
+                }}
+                variant='outline'
+                icon={<ChevronLeftIcon />}
+              >
+                {t('buttons.back')}
+              </Button>
+            )}
+            {rest && (
+              <Button
+                onClick={() => {
+                  formRef.current?.form?.reset()
+                }}
+                variant='outline'
+                icon={<LoadIcon />}
+              >
+                {t('buttons.rest')}
+              </Button>
+            )}
+            {actionRender}
+            {settingRender && (
+              <Button
+                variant='outline'
+                theme='primary'
+                icon={<SettingIcon />}
+                onClick={() => setVisibleDrawer(true)}
+              >
+                {t('buttons.setting')}
+              </Button>
+            )}
+            <Button
+              onClick={() => {
+                formRef.current?.form?.submit()
+              }}
+              icon={<SaveIcon />}
             >
-              {settingRender}
-            </Drawer>
-          )}
-        </Form>
-      </Card>
-    </Main>
-  )
-}
+              {t('buttons.save')}
+            </Button>
+          </>
+        }
+      >
+        <Card>
+          <Form
+            ref={formRef}
+            onSubmit={onSubmitFun}
+            formProps={{
+              labelAlign: 'left',
+              className: 'divide-y divide-gray-2 dark:divide-gray-10 py-2',
+              ...formProps,
+            }}
+            {...props}
+          >
+            {children}
+            {settingRender && (
+              <Drawer
+                confirmBtn={t('buttons.save')}
+                onConfirm={() => formRef.current?.form?.submit()}
+                header={t('buttons.setting')}
+                visible={visibleDrawer}
+                onClose={() => setVisibleDrawer(false)}
+              >
+                {settingRender}
+              </Drawer>
+            )}
+          </Form>
+        </Card>
+      </Main>
+    )
+  }
+)
+FormPage.displayName = 'FormPage'
 
 export const FormPageItem = ({ label, help, requiredMark, ...props }: FormItemProps) => {
   return (

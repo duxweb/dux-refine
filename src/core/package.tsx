@@ -114,7 +114,7 @@ export const createRefine = ({
       {
         element: (
           <Authenticated fallback={<CatchAllNavigate to='login' />}>
-            <Layout>
+            <Layout siderType={config.sideType}>
               <CanAccess fallback={<Unauthorized />}>
                 <Outlet />
               </CanAccess>

@@ -10,7 +10,7 @@ interface MainProps extends PropsWithChildren {
 export const Main = ({ title, icon, header, actions, children }: MainProps) => {
   return (
     <>
-      <Header title={title} icon={icon} actions={actions}>
+      <Header title={title} icon={typeof icon == 'string' ? icon : undefined} actions={actions}>
         {header}
       </Header>
       <div className='flex-1 overflow-auto'>

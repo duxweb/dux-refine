@@ -24,8 +24,8 @@ export interface FormProps {
   redirect?: RedirectAction
 }
 
-export interface FormFef {
-  form: FormInstanceFunctions
+export interface FormRef {
+  form?: FormInstanceFunctions
 }
 
 export const Form = forwardRef(
@@ -45,7 +45,7 @@ export const Form = forwardRef(
       initData,
       redirect,
     }: FormProps,
-    ref: React.ForwardedRef<FormFef>
+    ref: React.ForwardedRef<FormRef>
   ) => {
     const [form] = TdForm.useForm()
     useImperativeHandle(ref, () => {
