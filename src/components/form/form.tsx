@@ -58,6 +58,7 @@ export const Form = forwardRef(
       form: form,
       action: action || id ? 'edit' : 'create',
       id: id,
+      liveMode: 'manual',
       redirect: redirect,
       queryMeta: {
         params: params,
@@ -68,7 +69,7 @@ export const Form = forwardRef(
       ...useFormProps,
     })
 
-    const { formData, formLoading, onFinish } = formResult
+    const { formData, formLoading } = formResult
 
     useEffect(() => {
       let isUnmounted = false

@@ -149,8 +149,8 @@ export const FormPageItem = ({ label, help, requiredMark, ...props }: FormItemPr
           <div className='mt-1 text-sm text-placeholder'>{help}</div>
         </div>
       )}
-      <div className={clsx([label ? 'col-span-3 xl:col-span-4' : 'col-span-5'])}>
-        <TdForm.FormItem {...props} />
+      <div className={clsx([label ? 'flex items-center col-span-3 xl:col-span-4' : 'col-span-5'])}>
+        <TdForm.FormItem {...props} className='w-full' />
       </div>
     </div>
   )

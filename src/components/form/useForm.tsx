@@ -35,6 +35,7 @@ export const useForm = (props: useFormProps): useFormReturnProps => {
         type: 'success',
       }
     },
+    invalidates: [],
     ...props,
   })
 
