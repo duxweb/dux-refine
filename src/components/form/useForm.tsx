@@ -35,7 +35,7 @@ export const useForm = (props: useFormProps): useFormReturnProps => {
         type: 'success',
       }
     },
-    invalidates: [],
+    invalidates: ['list', 'many'],
     ...props,
   })
 

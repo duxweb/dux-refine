@@ -15,21 +15,25 @@ html:root, *:root[theme-mode="light"] {
   --td-gray-color-14: #1d252f;
 }
 
-.t-dialog .t-dialog__body {
+.app-modal.t-dialog--default {
   padding: 0;
 }
 
-.t-dialog .t-dialog__header {
+.app-modal .t-dialog__body {
+  padding: 0;
+}
+
+.app-modal .t-dialog__header {
   padding: var(--td-comp-paddingTB-m) var(--td-comp-paddingTB-l);
   @apply border-b border-component;
 }
 
-.t-dialog .t-dialog__footer {
+.app-modal .t-dialog__footer {
   padding: var(--td-comp-paddingTB-m) var(--td-comp-paddingTB-l);
   @apply border-t border-component;
 }
 
-.t-dialog__body .t-upload__dragger {
+.app-modal .t-dialog__body .t-upload__dragger {
   @apply w-full;
 }
 

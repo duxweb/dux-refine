@@ -7,7 +7,11 @@ import { useModuleContext } from '../../core/module'
 const { BreadcrumbItem } = TdBreadcrumb
 
 export const Breadcrumb = () => {
-  const { breadcrumbs } = useBreadcrumb()
+  const { breadcrumbs } = useBreadcrumb({
+    meta: {
+      xxx: 'xxx',
+    },
+  })
   const { name } = useModuleContext()
   const t = useTranslate()
 

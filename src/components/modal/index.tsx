@@ -68,6 +68,7 @@ const ModalComp = forwardRef<ModalContextProps, ModalProps>(
             closeOnOverlayClick={false}
             closeOnEscKeydown={false}
             draggable={true}
+            className='app-modal'
           >
             {component ? (
               <Suspense>

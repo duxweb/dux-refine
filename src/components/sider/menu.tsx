@@ -89,9 +89,12 @@ export const useMenu = (): UseMenuProps => {
   }, [identity?.token])
 
   const menuData = useMemo(() => {
-    const data = [...refineMenuData, ...apiMenuData]
-    sortData(data)
-    return data
+    const array1 = [...apiMenuData] // your first array
+    const array2 = [...refineMenuData]
+    mergeByProperty(array1, array2)
+    console.log(array1)
+    sortData(array1)
+    return array1
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiMenuData, refineMenuData])
 
@@ -128,4 +131,22 @@ const getPathByKey = (curKey: string, data: MenuItemProps[]) => {
   }
   traverse(curKey, [], data)
   return result
+}
+
+const mergeByProperty = (targetArray: MenuItemProps[], sourceArray: MenuItemProps[]) => {
+  sourceArray.forEach((sourceElement) => {
+    const targetElement = targetArray.find(
+      (targetElement) => targetElement.name === sourceElement.name
+    )
+
+    if (!targetElement) {
+      // Element doesn't exist in target array. Push it.
+      targetArray.push(sourceElement)
+    } else {
+      // If element exists, merge their children (if any)
+      if (Array.isArray(sourceElement.children) && sourceElement.children.length > 0) {
+        mergeByProperty(targetElement.children, sourceElement.children)
+      }
+    }
+  })
 }

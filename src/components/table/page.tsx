@@ -8,14 +8,15 @@ import {
   Radio,
 } from 'tdesign-react/esm'
 import { useWindowSize } from '../../core/helper'
-import { TableRef, TableTab, useTable } from './table'
+import { TableRef, TableTab, useTable, useTableProps } from './table'
 import { Main } from '../main'
-import { useResource, useTranslate } from '@refinedev/core'
+import { useResource, useTranslate, BaseRecord, HttpError } from '@refinedev/core'
 
 export interface PageTableProps {
   title?: React.ReactNode
   tabs?: Array<TableTab>
   table?: EnhancedTableProps
+  tableHook?: useTableProps<BaseRecord, HttpError, BaseRecord>
   columns?: PrimaryTableCol[]
   headerRender?: () => React.ReactElement
   footerRender?: () => React.ReactElement
@@ -36,6 +37,7 @@ export const PageTable = forwardRef(
       filterRender,
       actionRender,
       batchRender,
+      tableHook,
     }: PageTableProps,
     ref: React.ForwardedRef<TableRef>
   ) => {
@@ -61,6 +63,7 @@ export const PageTable = forwardRef(
       },
       columns: columns,
       rowKey: table?.rowKey,
+      ...tableHook,
     })
 
     const [size, sizeMap] = useWindowSize()
@@ -77,7 +80,7 @@ export const PageTable = forwardRef(
     const translate = useTranslate()
     return (
       <Main
-        title={title || translate(`${resource?.meta?.label}.name`)}
+        title={title || translate(`${resource?.meta?.label}.name`, resource?.meta?.label)}
         icon={resource?.meta?.icon}
         header={
           tabs && (

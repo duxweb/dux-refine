@@ -13,7 +13,7 @@ export interface FormProps {
   resource?: string
   action?: FormAction
   id?: BaseKey
-  params?: MetaQuery
+  queryParams?: MetaQuery
   initFormat?: (data: Record<string, any>) => Record<string, any>
   saveFormat?: (data: Record<string, any>) => Record<string, any>
   onSubmit?: (e: SubmitContext) => void
@@ -33,7 +33,7 @@ export const Form = forwardRef(
     {
       children,
       id,
-      params,
+      queryParams,
       action,
       initFormat,
       saveFormat,
@@ -53,20 +53,24 @@ export const Form = forwardRef(
         form,
       }
     })
+
+    const { meta, ...formParams } = useFormProps || {}
+
     const formResult = useForm({
       resource: resource,
       form: form,
       action: action || id ? 'edit' : 'create',
       id: id,
-      liveMode: 'manual',
+      //liveMode: 'manual',
       redirect: redirect,
-      queryMeta: {
-        params: params,
+      meta: {
+        ...(meta || {}),
+        params: queryParams,
       },
       initData: initData,
       initFormat: initFormat,
       saveFormat: saveFormat,
-      ...useFormProps,
+      ...formParams,
     })
 
     const { formData, formLoading } = formResult

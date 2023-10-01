@@ -42,7 +42,7 @@ const Search = () => {
       })
       .map((item) => {
         return {
-          label: translate(`${item.meta?.label}.name`),
+          label: translate(`${item.meta?.label}.name`, item.meta?.label),
           route: item.list as string,
         }
       })
