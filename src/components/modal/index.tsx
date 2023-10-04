@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React, {
   ComponentType,
   Suspense,
@@ -37,7 +38,20 @@ interface TriggerProps {
 }
 
 const ModalComp = forwardRef<ModalContextProps, ModalProps>(
-  ({ title, trigger, children, component, componentProps, onClose, defaultOpen = false }, ref) => {
+  (
+    {
+      title,
+      trigger,
+      children,
+      component,
+      componentProps,
+      onClose,
+      className,
+      width,
+      defaultOpen = false,
+    },
+    ref
+  ) => {
     const [open, setOpen] = useState(defaultOpen)
     const AsyncContent = component ? lazy(component) : undefined
 
@@ -68,7 +82,10 @@ const ModalComp = forwardRef<ModalContextProps, ModalProps>(
             closeOnOverlayClick={false}
             closeOnEscKeydown={false}
             draggable={true}
-            className='app-modal'
+            className={clsx(['app-modal', className])}
+            style={{
+              width: width,
+            }}
           >
             {component ? (
               <Suspense>

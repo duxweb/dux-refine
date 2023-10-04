@@ -57,7 +57,12 @@ export const FormPage = forwardRef(
 
     return (
       <Main
-        title={title || translate(`${resource?.meta?.label}.name`, resource?.meta?.label)}
+        title={
+          title ||
+          (resource?.meta?.label
+            ? translate(`${resource?.meta?.label}.name`, resource?.meta?.label)
+            : '')
+        }
         header={headerRender}
         icon={resource?.meta?.icon}
         actions={

@@ -7,6 +7,7 @@
 - Add `ImageError` component for image error status
 - Enhanced `addResources` method to add automatic route creation
 - Add `apiPath` menu params
+- Enhanced `useMenu` Support api menu
 
 ### Fix
 - fix `editor` edit data update

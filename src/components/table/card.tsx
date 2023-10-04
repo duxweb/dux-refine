@@ -119,7 +119,7 @@ export const CardTable = React.forwardRef(
               <Form
                 initialData={filters}
                 labelWidth={0}
-                className='flex flex-col gap-2 md:flex-row'
+                className='app-filter flex-wrap'
                 onValuesChange={setFilters}
               >
                 {filterRender?.()}

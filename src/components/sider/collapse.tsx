@@ -152,7 +152,7 @@ export const SiderCollapse = ({ type }: SiderCollapseProps) => {
             </div>
           ) : (
             <>
-              <div className='flex items-center px-4'>
+              <div className='w-full flex items-center px-4'>
                 {module.config?.sideLogo ? (
                   <img
                     src={
@@ -166,14 +166,14 @@ export const SiderCollapse = ({ type }: SiderCollapseProps) => {
                   <DuxLogo className='h-6' />
                 )}
               </div>
-              <Button
-                size='small'
-                className='absolute -right-3 z-1'
-                shape='circle'
-                variant='outline'
-                icon={<ViewListIcon />}
-                onClick={() => setCollapse(!collapse)}
-              />
+              <div className='absolute -right-3 z-1'>
+                <Button
+                  size='small'
+                  shape='circle'
+                  icon={<ViewListIcon />}
+                  onClick={() => setCollapse(!collapse)}
+                />
+              </div>
             </>
           )}
         </div>

@@ -1,6 +1,15 @@
 import { Config } from '../core/config'
-import { DataProvider, HttpError, CrudOperators, CrudFilters, MetaQuery } from '@refinedev/core'
-import axios, { AxiosHeaderValue } from 'axios'
+import {
+  DataProvider,
+  HttpError,
+  CrudOperators,
+  CrudFilters,
+  MetaQuery,
+  useGetIdentity,
+} from '@refinedev/core'
+import axios, { AxiosHeaderValue, AxiosRequestConfig } from 'axios'
+import { useCallback, useState } from 'react'
+import { useModuleContext } from '../core'
 
 export const client = axios.create({
   timeout: 10000,
@@ -28,6 +37,45 @@ client.interceptors.response.use(
     return Promise.reject(customError)
   }
 )
+
+export interface UseClientResult {
+  request: (url: string, method?: string, axConfig?: AxiosRequestConfig) => Promise<any>
+  isLoading: boolean
+}
+
+export const useClient = (): UseClientResult => {
+  const [isLoading, setIsLoading] = useState(false)
+  const { name, config } = useModuleContext()
+  const { data: identity } = useGetIdentity<{
+    token: string
+  }>()
+  const request = useCallback((url: string, method = 'get', axConfig = {}) => {
+    setIsLoading(true)
+    return client
+      .request({
+        url: `${config.apiUrl}/${config.resourcesPrefix ? name + '/' : ''}${url}`,
+        method: method,
+        headers: {
+          Authorization: identity?.token,
+        },
+        ...axConfig,
+      })
+      .then((res) => {
+        setIsLoading(false)
+        return res.data
+      })
+      .catch((res) => {
+        setIsLoading(false)
+        return res
+      })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  return {
+    request,
+    isLoading,
+  }
+}
 
 export const dataProvider = (app: string, config: Config): DataProvider => ({
   getApiUrl: () => config.apiUrl,

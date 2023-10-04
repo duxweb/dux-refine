@@ -80,7 +80,12 @@ export const PageTable = forwardRef(
     const translate = useTranslate()
     return (
       <Main
-        title={title || translate(`${resource?.meta?.label}.name`, resource?.meta?.label)}
+        title={
+          title ||
+          (resource?.meta?.label
+            ? translate(`${resource?.meta?.label}.name`, resource?.meta?.label)
+            : '')
+        }
         icon={resource?.meta?.icon}
         header={
           tabs && (
@@ -136,12 +141,12 @@ export const PageTable = forwardRef(
                 <Form
                   initialData={filters}
                   labelWidth={0}
-                  className='flex flex-col gap-2 md:flex-row'
+                  className='app-filter flex-wrap'
                   onValuesChange={setFilters}
                 >
                   {filterRender?.()}
                 </Form>
-                <div>{selecteds && selecteds.length > 0 && batchRender?.()}</div>
+                {selecteds && selecteds.length > 0 && <div>{batchRender?.()}</div>}
               </div>
             )
           }

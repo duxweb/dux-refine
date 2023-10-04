@@ -28,13 +28,14 @@ export const useUpload = (): TdUploadProps => {
       } else {
         res.url = res?.data?.[0]?.url
         res.name = res?.data?.[0]?.name
+        res.size = res?.data?.[0]?.size
       }
       return res
     },
   }
 }
 
-export const formatUploadSingle = (file: any): UploadFile => {
+export const formatUploadSingle = (file: any): UploadFile[] => {
   if (!file) {
     return []
   }

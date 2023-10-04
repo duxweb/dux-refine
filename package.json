@@ -1,6 +1,6 @@
 {
   "name": "@duxweb/dux-refine",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "🌲 Integrated UI based on refine and tdesign",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -38,6 +38,7 @@
     "@tiptap/pm": "^2.1.10",
     "@tiptap/react": "^2.1.10",
     "@tiptap/starter-kit": "^2.1.10",
+    "ahooks": "^3.7.8",
     "axios": "^1.4.0",
     "clsx": "^2.0.0",
     "deepmerge": "^4.3.1",

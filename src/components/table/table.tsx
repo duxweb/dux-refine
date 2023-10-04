@@ -250,9 +250,5 @@ export interface FilterItemProps {
 }
 
 export const FilterItem = ({ name, children }: FilterItemProps) => {
-  return (
-    <Form.FormItem name={name} className='m-0 min-w-50 p-0'>
-      {children}
-    </Form.FormItem>
-  )
+  return <Form.FormItem name={name}>{children}</Form.FormItem>
 }
