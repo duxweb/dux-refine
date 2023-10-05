@@ -120,8 +120,7 @@ export const SiderCollapse = ({ type }: SiderCollapseProps) => {
       return
     }
     setValue(defaultOpenKeys[0])
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultOpenKeys])
+  }, [defaultOpenKeys, value])
 
   return (
     <Menu

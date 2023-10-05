@@ -70,7 +70,7 @@ export const useMenu = (): UseMenuProps => {
 
   const refineMenuData = useMemo(() => {
     return formatMenu(menuItems)
-  }, [])
+  }, [formatMenu, menuItems])
 
   useEffect(() => {
     if (!config.apiPath.menu || !identity?.token) {
@@ -86,23 +86,20 @@ export const useMenu = (): UseMenuProps => {
         setApiMenuData(formatMenu(res.data?.data || []))
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [identity?.token])
+  }, [identity?.token, formatMenu, config])
 
   const menuData = useMemo(() => {
     const array1 = [...apiMenuData] // your first array
     const array2 = [...refineMenuData]
     mergeByProperty(array1, array2)
-    console.log(array1)
     sortData(array1)
     return array1
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiMenuData, refineMenuData])
+  }, [apiMenuData, refineMenuData, sortData])
 
   const openkeys = useMemo(() => {
     const pathList = getPathByKey(pathname || `/${name}`, menuData)
     return pathList.map((item) => item.key).reverse()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [menuData, pathname])
+  }, [menuData, name, pathname])
 
   return {
     menuData: menuData,
@@ -140,10 +137,8 @@ const mergeByProperty = (targetArray: MenuItemProps[], sourceArray: MenuItemProp
     )
 
     if (!targetElement) {
-      // Element doesn't exist in target array. Push it.
       targetArray.push(sourceElement)
     } else {
-      // If element exists, merge their children (if any)
       if (Array.isArray(sourceElement.children) && sourceElement.children.length > 0) {
         mergeByProperty(targetElement.children, sourceElement.children)
       }
