@@ -23,6 +23,7 @@ export interface moduleApp {
 
 export type siderType = 'app' | 'collapse'
 
+export type lang = 'zh' | 'en'
 export interface Config {
   projectId: string
   apiUrl: string
@@ -36,4 +37,5 @@ export interface Config {
   sideLogo?: string
   sideDarkLogo?: string
   loginBanner?: string
+  lang?: lang
 }

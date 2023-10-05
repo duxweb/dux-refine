@@ -284,6 +284,7 @@ const User = ({ collapse, menu = [] }: UserProps) => {
   const switchDark = useAppStore((state) => state.switchDark)
   const dark = useAppStore((state) => state.dark)
   const changeLanguage = useSetLocale()
+  const { config } = useModuleContext()
 
   const switchLang = useCallback(
     (data: DropdownOption) => {
@@ -312,24 +313,27 @@ const User = ({ collapse, menu = [] }: UserProps) => {
       },
     })
 
-    optionData.push({
-      content: translate('common.lang'),
-      prefixIcon: <EarthIcon />,
-      children: [
-        {
-          value: 'en',
-          content: 'English',
-          prefixIcon: <div>🇬🇧</div>,
-          onClick: switchLang,
-        },
-        {
-          value: 'zh',
-          content: '中文',
-          prefixIcon: <div>🇨🇳</div>,
-          onClick: switchLang,
-        },
-      ],
-    })
+    if (!config.lang) {
+      optionData.push({
+        content: translate('common.lang'),
+        prefixIcon: <EarthIcon />,
+        children: [
+          {
+            value: 'en',
+            content: 'English',
+            prefixIcon: <div>🇬🇧</div>,
+            onClick: switchLang,
+          },
+          {
+            value: 'zh',
+            content: '中文',
+            prefixIcon: <div>🇨🇳</div>,
+            onClick: switchLang,
+          },
+        ],
+      })
+    }
+
     optionData.push({
       content: translate('common.logout'),
       prefixIcon: <div className='i-tabler:logout h-4 w-4 text-primary'></div>,

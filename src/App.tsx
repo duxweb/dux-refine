@@ -1,5 +1,5 @@
 // refine
-import React from 'react'
+import React, { useEffect } from 'react'
 import './index.css'
 
 // tdesign
@@ -26,6 +26,14 @@ export const DuxApp = (props: AppProviderProps) => {
   document.documentElement.setAttribute('theme-mode', dark ? 'dark' : '')
 
   const { i18n } = useTranslation()
+
+  useEffect(() => {
+    if (props.config.lang) {
+      i18n.changeLanguage(props.config.lang)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.config.lang])
+
   const langs: Record<string, any> = {
     en: R.clone(enConfig),
     zh: R.clone(zhConfig),
