@@ -12,7 +12,7 @@ import { TableRef, TableTab, useTable, useTableProps } from './table'
 import { Main } from '../main'
 import { useResource, BaseRecord, HttpError } from '@refinedev/core'
 
-export interface PageTableProps {
+export interface PageListProps {
   title?: React.ReactNode
   tabs?: Array<TableTab>
   table?: EnhancedTableProps
@@ -25,7 +25,7 @@ export interface PageTableProps {
   batchRender?: () => React.ReactElement
 }
 
-export const PageTable = forwardRef(
+export const PageList = forwardRef(
   (
     {
       title,
@@ -38,7 +38,7 @@ export const PageTable = forwardRef(
       actionRender,
       batchRender,
       tableHook,
-    }: PageTableProps,
+    }: PageListProps,
     ref: React.ForwardedRef<TableRef>
   ) => {
     const {
@@ -179,4 +179,4 @@ export const PageTable = forwardRef(
   }
 )
 
-PageTable.displayName = 'PageTable'
+PageList.displayName = 'PageList'

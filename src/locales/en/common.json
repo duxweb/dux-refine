@@ -120,5 +120,9 @@
   "pagination": {
     "go": "Go to Page",
     "show": "Show"
+  },
+  "empty": {
+    "title": "No data",
+    "desc": "No data for now, try refreshing the page"
   }
 }

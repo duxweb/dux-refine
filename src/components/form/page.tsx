@@ -46,7 +46,6 @@ export const FormPage = forwardRef(
     }
 
     const { resource } = useResource()
-    const translate = useTranslate()
     const [visibleDrawer, setVisibleDrawer] = useState(false)
 
     useImperativeHandle(ref, () => {
@@ -57,12 +56,7 @@ export const FormPage = forwardRef(
 
     return (
       <Main
-        title={
-          title ||
-          (resource?.meta?.label
-            ? translate(`${resource?.meta?.label}.name`, resource?.meta?.label)
-            : '')
-        }
+        title={title}
         header={headerRender}
         icon={resource?.meta?.icon}
         actions={
