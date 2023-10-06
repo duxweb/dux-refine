@@ -51,6 +51,7 @@ export const FormPage = forwardRef(
     useImperativeHandle(ref, () => {
       return {
         form: formRef.current?.form,
+        result: formRef.current?.result,
       }
     })
 

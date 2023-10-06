@@ -1,12 +1,12 @@
 import React, { forwardRef, useEffect, useImperativeHandle } from 'react'
-import { FormAction, MetaQuery, BaseKey, UseFormReturnType, RedirectAction } from '@refinedev/core'
+import { FormAction, MetaQuery, BaseKey, RedirectAction } from '@refinedev/core'
 import {
   Form as TdForm,
   SubmitContext,
   FormProps as TdFormProps,
   FormInstanceFunctions,
 } from 'tdesign-react/esm'
-import { useForm, useFormProps } from './useForm'
+import { useForm, useFormProps, useFormReturnProps } from './useForm'
 
 export interface FormProps {
   children?: React.ReactNode
@@ -19,13 +19,14 @@ export interface FormProps {
   onSubmit?: (e: SubmitContext) => void
   useFormProps?: useFormProps
   formProps?: TdFormProps
-  onData?: (form: UseFormReturnType) => void
   initData?: Record<string, any>
   redirect?: RedirectAction
+  handleData?: (data: FormRef) => void
 }
 
 export interface FormRef {
   form?: FormInstanceFunctions
+  result?: useFormReturnProps
 }
 
 export const Form = forwardRef(
@@ -41,18 +42,13 @@ export const Form = forwardRef(
       useFormProps,
       formProps,
       onSubmit,
-      onData,
       initData,
       redirect,
+      handleData,
     }: FormProps,
     ref: React.ForwardedRef<FormRef>
   ) => {
     const [form] = TdForm.useForm()
-    useImperativeHandle(ref, () => {
-      return {
-        form,
-      }
-    })
 
     const { meta, ...formParams } = useFormProps || {}
 
@@ -73,18 +69,33 @@ export const Form = forwardRef(
       ...formParams,
     })
 
-    const { formData, formLoading } = formResult
-
     useEffect(() => {
       let isUnmounted = false
       if (isUnmounted) {
         return
       }
-      onData?.(formResult)
+      handleData?.({
+        form,
+        result: formResult,
+      })
       return () => {
         isUnmounted = true
       }
-    }, [onData, formResult])
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [form, formResult])
+
+    useImperativeHandle(
+      ref,
+      () => {
+        return {
+          form,
+          result: formResult,
+        }
+      },
+      [form, formResult]
+    )
+
+    const { formData, formLoading } = formResult
 
     const onSubmitFun = async (e: SubmitContext) => {
       await formResult.onSubmit(e)
