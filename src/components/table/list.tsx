@@ -68,12 +68,16 @@ export const PageList = forwardRef(
 
     const [size, sizeMap] = useWindowSize()
 
+    const [form] = Form.useForm()
+
     useImperativeHandle(ref, () => {
       return {
         refetch: refetch,
         selecteds,
         selectOptions,
         filters,
+        setFilters,
+        form,
       }
     })
     const { resource } = useResource()
@@ -138,6 +142,7 @@ export const PageList = forwardRef(
                   labelWidth={0}
                   className='app-filter flex-wrap'
                   onValuesChange={setFilters}
+                  form={form}
                 >
                   {filterRender?.()}
                 </Form>

@@ -6,10 +6,9 @@ import {
   Card,
   PrimaryTableCol,
   Radio,
-  SelectOptions,
 } from 'tdesign-react/esm'
 import { useWindowSize } from '../../core/helper'
-import { useTable } from './table'
+import { TableRef, useTable } from './table'
 
 export interface CardTableTab {
   label: string
@@ -29,13 +28,6 @@ export interface CardTableProps {
   filterRender?: () => React.ReactNode
 }
 
-export interface CardTableRef {
-  refetch: () => void
-  selecteds?: Array<string | number>
-  selectOptions?: SelectOptions<any>
-  filters: Record<string, any>
-}
-
 export const CardTable = React.forwardRef(
   (
     {
@@ -48,7 +40,7 @@ export const CardTable = React.forwardRef(
       batchRender,
       filterRender,
     }: CardTableProps,
-    ref: React.ForwardedRef<CardTableRef>
+    ref: React.ForwardedRef<TableRef>
   ) => {
     const {
       data,
@@ -76,12 +68,16 @@ export const CardTable = React.forwardRef(
 
     const [size, sizeMap] = useWindowSize()
 
+    const [form] = Form.useForm()
+
     useImperativeHandle(ref, () => {
       return {
         refetch: refetch,
         selecteds,
         selectOptions,
         filters,
+        setFilters,
+        form,
       }
     })
 
@@ -121,6 +117,7 @@ export const CardTable = React.forwardRef(
                 labelWidth={0}
                 className='app-filter flex-wrap'
                 onValuesChange={setFilters}
+                form={form}
               >
                 {filterRender?.()}
               </Form>

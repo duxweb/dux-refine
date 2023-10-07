@@ -22,6 +22,7 @@ import {
   NamePath,
   Form,
 } from 'tdesign-react/esm'
+import { InternalFormInstance } from 'tdesign-react/esm/form/hooks/interface'
 
 export interface useTableProps<TQueryFnData, TError, TData>
   extends useRefineTableProps<TQueryFnData, TError, TData> {
@@ -236,6 +237,8 @@ export interface TableRef {
   selecteds?: Array<string | number>
   selectOptions?: SelectOptions<any>
   filters: Record<string, any>
+  setFilters: (values: Record<string, unknown>) => void
+  form?: InternalFormInstance
 }
 
 export interface TableTab {
@@ -245,8 +248,8 @@ export interface TableTab {
 }
 
 export interface FilterItemProps {
-  children: React.ReactNode
-  name: NamePath
+  children?: React.ReactNode
+  name?: NamePath
 }
 
 export const FilterItem = ({ name, children }: FilterItemProps) => {
