@@ -16,14 +16,15 @@ export interface apiPath {
 }
 
 export interface moduleApp {
+  index?: string
   register?: boolean
   forgotPassword?: boolean
   updatePassword?: boolean
 }
 
 export type siderType = 'app' | 'collapse'
-
 export type lang = 'zh' | 'en'
+
 export interface Config {
   projectId: string
   apiUrl: string
