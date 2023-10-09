@@ -4,8 +4,10 @@ import './index.css'
 
 // tdesign
 import { ConfigProvider } from 'tdesign-react/esm'
-import enConfig from 'tdesign-react/es/locale/en_US'
-import zhConfig from 'tdesign-react/es/locale/zh_CN'
+import enUSConfig from 'tdesign-react/esm/locale/en_US'
+import zhCNConfig from 'tdesign-react/esm/locale/zh_CN'
+import koKRConfig from 'tdesign-react/esm/locale/ko_KR'
+import jaJPConfig from 'tdesign-react/esm/locale/ja_JP'
 import 'tdesign-react/esm/style/index.js'
 
 // app
@@ -35,8 +37,10 @@ export const DuxApp = (props: AppProviderProps) => {
   }, [props.config.lang])
 
   const langs: Record<string, any> = {
-    en: R.clone(enConfig),
-    zh: R.clone(zhConfig),
+    'en-US': R.clone(enUSConfig),
+    'zh-CN': R.clone(zhCNConfig),
+    'ko-KR': R.clone(koKRConfig),
+    'ja-JP': R.clone(jaJPConfig),
   }
   return (
     <React.Suspense fallback='loading'>

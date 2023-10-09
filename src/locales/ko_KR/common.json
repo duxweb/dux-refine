@@ -1,0 +1,126 @@
+{
+  "common": {
+    "search": "검색",
+    "notMenu": "메뉴를 찾을 수 없음",
+    "menu": "메뉴",
+    "more": "더 보기",
+    "logout": "시스템 로그아웃",
+    "light": "밝은 모드",
+    "dark": "어두운 모드",
+    "lang": "언어 변경"
+  },
+  "pages": {
+    "login": {
+      "signin": "로그인",
+      "signup": "가입하기",
+      "divider": "또는",
+      "fields": {
+        "username": "사용자 이름",
+        "password": "비밀번호"
+      },
+      "buttons": {
+        "submit": "로그인",
+        "forgotPassword": "비밀번호를 잊으셨나요?",
+        "noAccount": "계정이 없으신가요?"
+      }
+    },
+    "register": {
+      "title": "계정 등록",
+      "fields": {
+        "username": "사용자 이름",
+        "password": "비밀번호"
+      },
+      "buttons": {
+        "submit": "가입하기",
+        "haveAccount": "계정이 이미 있으신가요?"
+      }
+    },
+    "forgotPassword": {
+      "title": "비밀번호를 잊으셨나요?",
+      "fields": {
+        "username": "사용자 이름",
+        "password": "비밀번호",
+        "code": "인증 코드"
+      },
+      "buttons": {
+        "send": "인증 코드 전송",
+        "rest": "비밀번호 재설정",
+        "back": "로그인으로 돌아가기",
+        "code": "이미 인증 코드를 가지고 계신가요?"
+      }
+    },
+    
+    "updatePassword": {
+      "title": "비밀번호 업데이트",
+      "fields": {
+        "password": "새 비밀번호",
+        "confirmPassword": "새 비밀번호 확인"
+      },
+      "errors": {
+        "confirmPasswordNotMatch": "비밀번호가 일치하지 않습니다"
+      },
+      "buttons": {
+        "submit": "업데이트"
+      }
+    },
+    "error": {
+      "info": "{{action}} 구성 요소를 {{resource}}에 추가하는 것을 잊으셨습니다",
+      "404": "페이지를 찾을 수 없음",
+      "404Desc": "죄송합니다. 요청하신 페이지를 찾을 수 없습니다"
+    },
+    "unauthorized": {
+      "title": "권한 없음",
+      "desc": "죄송합니다. 이 페이지에 접근할 수 있는 권한이 없습니다"
+    },
+    "boundary": {
+      "title": "시스템 오류",
+      "desc": "시스템이 충돌했을 수 있습니다. 구체적인 예외 정보를 확인하려면 디버깅 도구를 열어보세요"
+    }
+  },
+  "buttons": {
+    "list": "목록", 
+    "create": "생성",
+    "save": "저장",
+    "logout": "로그아웃",
+    "delete": "삭제",
+    "edit": "편집",
+    "cancel": "취소",
+    "confirm": "작업 실행 확인?",
+    "filter": "필터",
+    "clear": "지우기",
+    "refresh": "새로 고침",
+    "show": "보기",
+    "undo": "되돌리기",
+    "import": "가져오기",
+    "clone": "복제",
+    "back": "뒤로 가기",
+    "rest": "재설정",
+    "setting": "설정",
+    "notAccessTitle": "접근 권한 없음"
+  },
+  "warnWhenUnsavedChanges": "저장하지 않은 변경 사항은 유지되지 않습니다.",
+  "notifications": {
+    "success": "성공",
+    "error": "오류 (상태 코드:{{statusCode}})",
+    "undoable": "{{seconds}} 초 동안 되돌릴 수 있습니다.",
+    "createSuccess": "{{resource}} 생성 성공.",
+    "createError": "{{resource}} 생성 중 오류 발생 (상태 코드:{{statusCode}})",
+    "deleteSuccess": "{{resource}} 삭제 성공.",
+    "deleteError": "{{resource}} 삭제 중 오류 발생 (상태 코드:{{statusCode}})",
+    "editSuccess": "{{resource}} 편집 성공.",
+    "editError": "{{resource}} 편집 중 오류 발생 (상태 코드:{{statusCode}})",
+    "importProgress": "{{processed}}/{{total}} 가져옴"
+  },
+  "loading": "로딩 중",
+  "table": {
+    "actions": "작업" 
+  },
+  "pagination": {
+    "go": "페이지로 이동",
+    "show": "표시"
+  },
+  "empty": {
+    "title": "데이터 없음",
+    "desc": "현재 데이터가 없습니다. 페이지를 새로고침해보세요."
+  }
+}

@@ -23,7 +23,7 @@ export interface moduleApp {
 }
 
 export type siderType = 'app' | 'collapse'
-export type lang = 'zh' | 'en'
+export type lang = 'en-US' | 'zh-CN' | 'zh-TW' | 'ko-KR' | 'ja-JP' | 'ru-RU'
 
 export interface Config {
   projectId: string

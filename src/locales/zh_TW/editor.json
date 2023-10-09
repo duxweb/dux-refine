@@ -1,0 +1,118 @@
+{
+  "common": {
+    "confirm": "確定",
+    "cancel": "取消",
+    "insert": "插入",
+    "upload": {
+      "error": "上傳文件失敗，請重試",
+      "tip": "點擊上傳",
+      "drag": "或拖動文件到此處",
+      "complete": "上傳完成"
+    }
+  },
+  "redo": {
+    "name": "重做"
+  },
+  "undo": {
+    "name": "撤銷"
+  },
+  "bgColor": {
+    "name": "背景色",
+    "clear": "清除顏色"
+  },
+  "fontColor": {
+    "name": "文字顏色",
+    "clear": "清除顏色"
+  },
+  "bulletList": {
+    "name": "無需列表"
+  },
+  "orderedList": {
+    "name": "有序列表"
+  },
+  "image": {
+    "name": "圖片",
+    "local": "本地圖片",
+    "remote": "遠程圖片",
+    "url": "網址",
+    "width": "寬度",
+    "height": "高度",
+    "ratio": "等比例",
+    "error": "圖片加載失敗"
+  },
+  "video": {
+    "name": "視頻",
+    "local": "本地視頻",
+    "remote": "遠程視頻",
+    "url": "網址",
+    "bubble": {
+      "control": "控件",
+      "size": "大小",
+      "width": "寬度",
+      "height": "高度",
+      "ratio": "等比例"
+    }
+  },
+  "table": {
+    "name": "表格",
+    "row": "行",
+    "col": "列",
+    "bubble": {
+      "headerRow" : "表頭行",
+      "headerCol" : "表頭列",
+      "insertCol" : "插入列",
+      "deleteCol" : "刪除列",
+      "insertRow" : "插入行",
+      "deleteRow" : "刪除行",
+      "mergeOrSplit": "合併拆分",
+      "delete": "刪除表格"
+    }
+  },
+  "align": {
+    "name": "對齊",
+    "left": "左對齊",
+    "center": "居中對齊",
+    "right": "右對齊",
+    "justify": "兩端對齊",
+    "default": "默認",
+    "custom": "自定義"
+  },
+  "bold": {
+    "name": "加粗"
+  },
+  "clear": {
+    "name": "清除格式"
+  },
+  "code": {
+    "name": "代碼"
+  },
+  "fontSize": {
+    "name": "文字大小",
+    "default": "默認大小"
+  },
+  "italic": {
+    "name": "斜體"
+  },
+  "lineHeight": {
+    "name": "行高",
+    "default": "默認行高"
+  },
+  "strike": {
+    "name": "刪除線"
+  },
+  "title": {
+    "name": "標題",
+    "custom": "自定義",
+    "paragraph": "段落"
+  },
+  "link": {
+    "name": "鏈接",
+    "delete": "刪除"
+  },
+  "type": {
+    "name": "類型",
+    "web": "網頁",
+    "docs": "文檔",
+    "mobile": "手機"
+  }
+}
