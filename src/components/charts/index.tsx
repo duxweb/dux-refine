@@ -68,7 +68,6 @@ export interface ChartsDataProps {
 
 interface ChartBarProps extends ChartProps {
   legend?: boolean
-  single?: boolean
 }
 
 export const ChartBar = ({ labels, data, legend, min, options }: ChartBarProps) => {
@@ -85,6 +84,7 @@ export const ChartBar = ({ labels, data, legend, min, options }: ChartBarProps) 
         name: item.name,
         data: item.data,
         type: 'bar',
+        barMaxWidth: 40,
       })),
       tooltip: {
         trigger: 'axis',
@@ -101,17 +101,23 @@ export const ChartBar = ({ labels, data, legend, min, options }: ChartBarProps) 
   return <Charts options={[config, options || {}]} min={min} />
 }
 
-export const ChartLine = ({ labels, data, min, options }: ChartProps) => {
+interface ChartLineProps extends ChartProps {
+  legend?: boolean
+}
+
+export const ChartLine = ({ labels, data, min, legend, options }: ChartLineProps) => {
   const config = useMemo<EChartsOption>(() => {
-    return {
+    const defineConfig: EChartsOption = {
       xAxis: {
         type: 'category',
         data: labels,
+        boundaryGap: false,
       },
       yAxis: {
         type: 'value',
       },
       series: data?.map((item) => ({
+        name: item.name,
         data: item.data,
         type: 'line',
       })),
@@ -119,7 +125,13 @@ export const ChartLine = ({ labels, data, min, options }: ChartProps) => {
         trigger: 'axis',
       },
     }
-  }, [data, labels])
+    if (legend) {
+      defineConfig.legend = {
+        show: true,
+      }
+    }
+    return defineConfig
+  }, [data, labels, legend])
 
   return <Charts options={[config, options || {}]} min={min} />
 }
