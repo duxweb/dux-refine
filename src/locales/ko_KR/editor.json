@@ -1,0 +1,118 @@
+{
+  "common": {
+    "confirm": "확인",
+    "cancel": "취소",
+    "insert": "삽입",
+    "upload": {
+      "error": "파일 업로드 실패. 다시 시도해주세요.",
+      "tip": "클릭하여 업로드",
+      "drag": "또는 파일을 이곳으로 드래그",
+      "complete": "업로드 완료"
+    }
+  },
+  "redo": {
+    "name": "다시 실행"
+  },
+  "undo": {
+    "name": "실행 취소"
+  },
+  "bgColor": {
+    "name": "배경색",
+    "clear": "색상 지우기"
+  },
+  "fontColor": {
+    "name": "글자색",
+    "clear": "색상 지우기"
+  },
+  "bulletList": {
+    "name": "글머리 기호 목록"
+  },
+  "orderedList": {
+    "name": "순서 있는 목록"
+  },
+  "image": {
+    "name": "이미지",
+    "local": "로컬 이미지",
+    "remote": "원격 이미지",
+    "url": "URL",
+    "width": "너비",
+    "height": "높이",
+    "ratio": "비율",
+    "error": "이미지 로드 실패"
+  },
+  "video": {
+    "name": "비디오",
+    "local": "로컬 비디오",
+    "remote": "원격 비디오",
+    "url": "URL",
+    "bubble": {
+      "control": "컨트롤",
+      "size": "크기",
+      "width": "너비",
+      "height": "높이",
+      "ratio": "비율"
+    }
+  },
+  "table": {
+    "name": "표",
+    "row": "행",
+    "col": "열",
+    "bubble": {
+      "headerRow" : "머리글 행",
+      "headerCol" : "머리글 열",
+      "insertCol" : "열 삽입",
+      "deleteCol" : "열 삭제",
+      "insertRow" : "행 삽입",
+      "deleteRow" : "행 삭제",
+      "mergeOrSplit": "병합 또는 분할",
+      "delete": "표 삭제"
+    }
+  },
+  "align": {
+    "name": "정렬",
+    "left": "왼쪽 정렬",
+    "center": "가운데 정렬",
+    "right": "오른쪽 정렬",
+    "justify": "양쪽 맞춤",
+    "default": "기본",
+    "custom": "사용자 정의"
+  },
+  "bold": {
+    "name": "굵게"
+  },
+  "clear": {
+    "name": "서식 지우기"
+  },
+  "code": {
+    "name": "코드"
+  },
+  "fontSize": {
+    "name": "글꼴 크기",
+    "default": "기본 크기"
+  },
+  "italic": {
+    "name": "이탤릭"
+  },
+  "lineHeight": {
+    "name": "줄 높이",
+    "default": "기본 줄 높이"
+  },
+  "strike": {
+    "name": "취소선"
+  },
+  "title": {
+    "name": "제목",
+    "custom": "사용자 정의",
+    "paragraph": "문단"
+  },
+  "link": {
+    "name": "링크",
+    "delete": "삭제"
+  },
+  "type": {
+    "name": "유형",
+    "web": "웹",
+    "docs": "문서",
+    "mobile": "모바일"
+  }
+}

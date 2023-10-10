@@ -1,0 +1,126 @@
+{
+  "common": {
+    "search": "検索",
+    "notMenu": "メニューが見つかりません",
+    "menu": "メニュー",
+    "more": "詳細",
+    "logout": "ログアウト",
+    "light": "明るいモード",
+    "dark": "ダークモード",
+    "lang": "言語切り替え"
+  },
+  "pages": {
+    "login": {
+      "signin": "ログイン",
+      "signup": "サインアップ",
+      "divider": "または",
+      "fields": {
+        "username": "ユーザー名",
+        "password": "パスワード"
+      },
+      "buttons": {
+        "submit": "ログイン",
+        "forgotPassword": "パスワードを忘れましたか？",
+        "noAccount": "アカウントがありませんか？"
+      }
+    },
+    "register": {
+      "title": "アカウントを登録",
+      "fields": {
+        "username": "ユーザー名",
+        "password": "パスワード"
+      },
+      "buttons": {
+        "submit": "登録",
+        "haveAccount": "すでにアカウントをお持ちですか？"
+      }
+    },
+    "forgotPassword": {
+      "title": "パスワードを忘れましたか？",
+      "fields": {
+        "username": "ユーザー名",
+        "password": "パスワード",
+        "code": "確認コード"
+      },
+      "buttons": {
+        "send": "確認コードを送信",
+        "rest": "パスワードをリセット",
+        "back": "ログインに戻る",
+        "code": "確認コードをお持ちですか？"
+      }
+    },
+    
+    "updatePassword": {
+      "title": "パスワードを更新",
+      "fields": {
+        "password": "新しいパスワード",
+        "confirmPassword": "新しいパスワードを確認"
+      },
+      "errors": {
+        "confirmPasswordNotMatch": "パスワードが一致しません"
+      },
+      "buttons": {
+        "submit": "更新"
+      }
+    },
+    "error": {
+      "info": "{{action}}コンポーネントを{{resource}}に追加するのを忘れました",
+      "404": "ページが見つかりません",
+      "404Desc": "お探しのページは存在しません"
+    },
+    "unauthorized": {
+      "title": "アクセス権がありません",
+      "desc": "お探しのページへのアクセス権がありません"
+    },
+    "boundary": {
+      "title": "システムエラー",
+      "desc": "システムがクラッシュした可能性があります。詳細なエラーメッセージを表示するにはデバッグツールを開いてください"
+    }
+  },
+  "buttons": {
+    "list": "リスト", 
+    "create": "作成",
+    "save": "保存",
+    "logout": "ログアウト",
+    "delete": "削除",
+    "edit": "編集",
+    "cancel": "キャンセル",
+    "confirm": "操作を確認しますか？",
+    "filter": "フィルター",
+    "clear": "クリア",
+    "refresh": "リフレッシュ",
+    "show": "表示",
+    "undo": "元に戻す",
+    "import": "インポート",
+    "clone": "クローン",
+    "back": "戻る",
+    "rest": "リセット",
+    "setting": "設定",
+    "notAccessTitle": "アクセス権がありません"
+  },
+  "warnWhenUnsavedChanges": "未保存の変更は破棄されます。",
+  "notifications": {
+    "success": "成功",
+    "error": "エラー（ステータスコード：{{statusCode}}）",
+    "undoable": "{{seconds}}秒以内に元に戻すことができます。",
+    "createSuccess": "{{resource}}が作成されました。",
+    "createError": "{{resource}}の作成中にエラーが発生しました（ステータスコード：{{statusCode}}）",
+    "deleteSuccess": "{{resource}}が削除されました。",
+    "deleteError": "{{resource}}の削除中にエラーが発生しました（ステータスコード：{{statusCode}}）",
+    "editSuccess": "{{resource}}が編集されました。",
+    "editError": "{{resource}}の編集中にエラーが発生しました（ステータスコード：{{statusCode}}）",
+    "importProgress": "{{processed}}/{{total}}がインポートされました"
+  },
+  "loading": "読み込み中",
+  "table": {
+    "actions": "アクション" 
+  },
+  "pagination": {
+    "go": "ページに移動",
+    "show": "表示"
+  },
+  "empty": {
+    "title": "データがありません",
+    "desc": "現在データはありません。ページをリフレッシュしてみてください"
+  }
+}

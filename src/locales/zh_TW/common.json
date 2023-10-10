@@ -1,0 +1,126 @@
+{
+  "common": {
+    "search": "搜尋",
+    "notMenu": "沒有找到選單",
+    "menu": "選單",
+    "more": "更多",
+    "logout": "登出系統",
+    "light": "明亮模式",
+    "dark": "暗色模式",
+    "lang": "切換語言"
+  },
+  "pages": {
+    "login": {
+      "signin": "登入",
+      "signup": "註冊",
+      "divider": "或",
+      "fields": {
+        "username": "用戶名",
+        "password": "密碼"
+      },
+      "buttons": {
+        "submit": "登入",
+        "forgotPassword": "忘記密碼？",
+        "noAccount": "沒有帳號？"
+      }
+    },
+    "register": {
+      "title": "註冊您的帳戶",
+      "fields": {
+        "username": "用戶名",
+        "password": "密碼"
+      },
+      "buttons": {
+        "submit": "註冊",
+        "haveAccount": "已有帳號？"
+      }
+    },
+    "forgotPassword": {
+      "title": "忘記密碼了嗎？",
+      "fields": {
+        "username": "用戶名",
+        "password": "密碼",
+        "code": "驗證碼"
+      },
+      "buttons": {
+        "send": "發送驗證碼",
+        "rest": "重設密碼",
+        "back": "返回登入",
+        "code": "已有驗證碼？"
+      }
+    },
+    
+    "updatePassword": {
+      "title": "更新密碼",
+      "fields": {
+        "password": "新密碼",
+        "confirmPassword": "確認新密碼"
+      },
+      "errors": {
+        "confirmPasswordNotMatch": "密碼不符合"
+      },
+      "buttons": {
+        "submit": "更新"
+      }
+    },
+    "error": {
+      "info": "你忘記添加 {{action}} 組件到 {{resource}}",
+      "404": "頁面不存在",
+      "404Desc": "抱歉，您訪問的頁面不存在"
+    },
+    "unauthorized": {
+      "title": "沒有權限",
+      "desc": "抱歉，您沒有訪問該頁面的權限"
+    },
+    "boundary": {
+      "title": "系統出錯了",
+      "desc": "系統可能已經崩潰，請打開調試工具查看具體異常信息"
+    }
+  },
+  "buttons": {
+    "list": "清單", 
+    "create": "創建",
+    "save": "儲存",
+    "logout": "登出",
+    "delete": "刪除",
+    "edit": "編輯",
+    "cancel": "取消",
+    "confirm": "確認執行操作？",
+    "filter": "篩選",
+    "clear": "清空",
+    "refresh": "刷新",
+    "show": "查看",
+    "undo": "撤銷",
+    "import": "導入",
+    "clone": "複製",
+    "back": "返回",
+    "rest": "重置",
+    "setting": "設置",
+    "notAccessTitle": "您無權訪問"
+  },
+  "warnWhenUnsavedChanges": "未儲存的更改將不會保留。",
+  "notifications": {
+    "success": "成功",
+    "error": "錯誤（狀態碼：{{statusCode}}）",
+    "undoable": "您有 {{seconds}} 秒時間撤銷。",
+    "createSuccess": "{{resource}} 創建成功。",
+    "createError": "創建 {{resource}} 時出錯（狀態碼：{{statusCode}}）",
+    "deleteSuccess": "{{resource}} 刪除成功。",
+    "deleteError": "刪除 {{resource}} 時出錯（狀態碼：{{statusCode}}）",
+    "editSuccess": "{{resource}} 編輯成功。",
+    "editError": "編輯 {{resource}} 時出錯（狀態碼：{{statusCode}}）",
+    "importProgress": "已導入 {{processed}}/{{total}}"
+  },
+  "loading": "載入中",
+  "table": {
+    "actions": "操作" 
+  },
+  "pagination": {
+    "go": "跳至頁碼",
+    "show": "顯示"
+  },
+  "empty": {
+    "title": "暫無數據",
+    "desc": "暫時沒有數據，可嘗試刷新頁面"
+  }
+}
