@@ -1,5 +1,5 @@
 // refine
-import React, { useEffect } from 'react'
+import React, { ReactNode, useEffect } from 'react'
 import './index.css'
 
 // tdesign
@@ -12,7 +12,6 @@ import 'tdesign-react/esm/style/index.js'
 
 // app
 import { useAppStore } from './stores/app'
-import { AppProvider, AppProviderProps } from './core/app'
 
 // echarts
 import { registerCharts } from './theme/echarts'
@@ -22,19 +21,25 @@ registerCharts()
 import './provider/i18n'
 import { useTranslation } from 'react-i18next'
 import * as R from 'remeda'
+import { Config } from './core'
 
-export const DuxApp = (props: AppProviderProps) => {
+interface DuxAppProps {
+  children?: ReactNode
+  config: Config
+}
+
+export const DuxApp = ({ config, children }: DuxAppProps) => {
   const dark = useAppStore((state) => state.dark)
   document.documentElement.setAttribute('theme-mode', dark ? 'dark' : '')
 
   const { i18n } = useTranslation()
 
   useEffect(() => {
-    if (props.config.lang) {
-      i18n.changeLanguage(props.config.lang)
+    if (config.lang) {
+      i18n.changeLanguage(config.lang)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.config.lang])
+  }, [config.lang])
 
   const langs: Record<string, any> = {
     'en-US': R.clone(enUSConfig),
@@ -44,9 +49,7 @@ export const DuxApp = (props: AppProviderProps) => {
   }
   return (
     <React.Suspense fallback='loading'>
-      <ConfigProvider globalConfig={langs[i18n.language]}>
-        <AppProvider {...props} />
-      </ConfigProvider>
+      <ConfigProvider globalConfig={langs[i18n.language]}>{children}</ConfigProvider>
     </React.Suspense>
   )
 }
