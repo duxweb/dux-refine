@@ -21,7 +21,6 @@ export interface FormProps {
   formProps?: TdFormProps
   initData?: Record<string, any>
   redirect?: RedirectAction
-  handleData?: (data: FormRef) => void
 }
 
 export interface FormRef {
@@ -44,7 +43,6 @@ export const Form = forwardRef(
       onSubmit,
       initData,
       redirect,
-      handleData,
     }: FormProps,
     ref: React.ForwardedRef<FormRef>
   ) => {
@@ -74,10 +72,6 @@ export const Form = forwardRef(
       if (isUnmounted) {
         return
       }
-      handleData?.({
-        form,
-        result: formResult,
-      })
       return () => {
         isUnmounted = true
       }

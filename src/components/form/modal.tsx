@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { RefObject, useEffect, useRef } from 'react'
 import { useTranslate } from '@refinedev/core'
 import { Button, SubmitContext } from 'tdesign-react/esm'
 import { Modal, useModal } from '../modal'
@@ -8,20 +8,20 @@ import clsx from 'clsx'
 export interface FormModalProps extends FormProps {
   onClose?: () => void
   padding?: boolean
+  onRef?: (ref: RefObject<FormRef>) => void
 }
 
 export const FormModal = ({
   children,
   onClose,
   onSubmit,
-  handleData,
   padding = true,
+  onRef,
   ...props
 }: FormModalProps) => {
   const formRef = useRef<FormRef>(null)
   const modal = useModal()
   const translate = useTranslate()
-  const [loading, setLoading] = useState(false)
 
   const onSubmitFun = async (e: SubmitContext) => {
     await onSubmit?.(e)
@@ -31,16 +31,16 @@ export const FormModal = ({
     }
   }
 
+  useEffect(() => {
+    onRef?.(formRef)
+  }, [onRef])
+
   return (
     <Form
+      ref={formRef}
       onSubmit={onSubmitFun}
       formProps={{
         labelAlign: 'top',
-      }}
-      ref={formRef}
-      handleData={(data) => {
-        setLoading(data.result?.formLoading || false)
-        handleData?.(data)
       }}
       {...props}
     >
@@ -55,7 +55,7 @@ export const FormModal = ({
         >
           {translate('buttons.cancel')}
         </Button>
-        <Button type='submit' loading={loading}>
+        <Button type='submit' loading={formRef.current?.result?.formLoading || false}>
           {translate('buttons.save')}
         </Button>
       </Modal.Footer>
