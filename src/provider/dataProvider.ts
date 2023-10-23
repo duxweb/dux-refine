@@ -82,7 +82,7 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
   getList: async ({ resource, pagination, sorters, filters, meta }) => {
     const path = `${resource}`
     const url = getUrl(config, app, path, meta)
-    const { current = 1, pageSize = 10 } = pagination ?? {}
+    const { current = 1, pageSize = 10, mode } = pagination ?? {}
     const quertSorts: Record<string, any> = {}
     sorters?.map((item) => {
       quertSorts[item.field + '_sort'] = item.order
@@ -91,10 +91,12 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
 
     const { data } = await client.get(url, {
       params: {
-        ...{
-          page: current,
-          pageSize: pageSize,
-        },
+        ...(mode != 'off'
+          ? {
+              page: current,
+              pageSize: pageSize,
+            }
+          : {}),
         ...meta?.params,
         ...queryFilters,
         ...quertSorts,
