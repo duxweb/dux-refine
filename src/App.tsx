@@ -7,7 +7,8 @@ import { ConfigProvider } from 'tdesign-react/esm'
 import enUSConfig from 'tdesign-react/esm/locale/en_US'
 import zhCNConfig from 'tdesign-react/esm/locale/zh_CN'
 import koKRConfig from 'tdesign-react/esm/locale/ko_KR'
-import jaJPConfig from 'tdesign-react/esm/locale/ja_JP'
+import zhTWConfig from 'tdesign-react/esm/locale/zh_TW'
+import ruRUConfig from 'tdesign-react/esm/locale/ru_RU'
 import 'tdesign-react/esm/style/index.js'
 
 // app
@@ -42,10 +43,11 @@ export const DuxApp = ({ config, children }: DuxAppProps) => {
   }, [config.lang])
 
   const langs: Record<string, any> = {
-    'en-US': R.clone(enUSConfig),
-    'zh-CN': R.clone(zhCNConfig),
-    'ko-KR': R.clone(koKRConfig),
-    'ja-JP': R.clone(jaJPConfig),
+    'en-US': enUSConfig,
+    'zh-CN': zhCNConfig,
+    'zh-TW': zhTWConfig,
+    'ko-KR': koKRConfig,
+    'ru-RU': ruRUConfig,
   }
   return (
     <React.Suspense fallback='loading'>
