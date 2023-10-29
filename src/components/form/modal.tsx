@@ -55,9 +55,7 @@ export const FormModal = ({
         >
           {translate('buttons.cancel')}
         </Button>
-        <Button type='submit' loading={formRef.current?.result?.formLoading || false}>
-          {translate('buttons.save')}
-        </Button>
+        <Button type='submit'>{translate('buttons.save')}</Button>
       </Modal.Footer>
     </Form>
   )

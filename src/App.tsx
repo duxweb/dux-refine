@@ -21,7 +21,6 @@ registerCharts()
 //i18n
 import './provider/i18n'
 import { useTranslation } from 'react-i18next'
-import * as R from 'remeda'
 import { Config } from './core'
 
 interface DuxAppProps {
