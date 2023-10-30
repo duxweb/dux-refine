@@ -8,3 +8,7 @@
 
 .app-sider-collapse .t-menu__item {
 }
+
+.app-sider-collapse .t-menu__logo > * {
+  @apply ml-0;
+}
