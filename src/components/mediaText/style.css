@@ -3,7 +3,7 @@
 }
 
 .app-media-text-content {
-  @apply flex flex-col items-start;
+  @apply flex-1 w-0 flex items-start;
 }
 
 .app-media-text-title {

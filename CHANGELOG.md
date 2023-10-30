@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.4
+### Bug
+- MediaText Content Adaptive Width
+
 ## 0.3.3
 ### Feature
 - Update dependencies
