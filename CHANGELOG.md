@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.0
+### Feature
+- Add `SelectAsync` component
+- Add `CascaderAsync` component
+
 ## 0.3.4
 ### Bug
 - MediaText Content Adaptive Width
