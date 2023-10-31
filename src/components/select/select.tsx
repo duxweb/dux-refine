@@ -1,6 +1,7 @@
 import { Select, SelectProps } from 'tdesign-react/esm'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useClient } from '../../provider'
+import { useDeepCompareEffect } from 'ahooks'
 
 export interface SelectAsyncProps extends SelectProps {
   url: string
@@ -14,20 +15,22 @@ export const SelectAsync = ({ url, query, value, ...props }: SelectAsyncProps) =
   const [select, setSelect] = useState([])
 
   const { request, isLoading } = useClient()
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     if (!hasExecuted || value != undefined) {
       setHasExecuted(true)
       request(url, 'get', {
         params: {
+          ...query,
           ids: Array.isArray(value) ? value.join(',') : value,
         },
       }).then((res) => {
         setSelect(res?.data || [])
       })
     }
-  }, [hasExecuted, request, url, value])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [url, query, value])
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     request(url, 'get', {
       params: {
         ...query,
@@ -36,7 +39,8 @@ export const SelectAsync = ({ url, query, value, ...props }: SelectAsyncProps) =
     }).then((res) => {
       setOptions(res?.data || [])
     })
-  }, [query, request, url, keyword])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query, url, keyword])
 
   const getOptions = useMemo(() => {
     const mergedArray = [...options, ...select]

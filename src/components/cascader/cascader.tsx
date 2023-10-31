@@ -1,6 +1,7 @@
 import { CascaderProps, Cascader } from 'tdesign-react/esm'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useClient } from '../../provider'
+import { useDeepCompareEffect } from 'ahooks'
 
 export interface CascaderAsyncProps extends CascaderProps {
   url: string
@@ -17,7 +18,7 @@ export const CascaderAsync = ({
   const [options, setOptions] = useState([])
 
   const { request, isLoading } = useClient()
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     request(url, 'get', {
       params: {
         ...query,
@@ -25,7 +26,8 @@ export const CascaderAsync = ({
     }).then((res) => {
       setOptions(res?.data || [])
     })
-  }, [query, request, url])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query, url])
 
   return (
     <Cascader
