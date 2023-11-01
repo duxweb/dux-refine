@@ -1,6 +1,6 @@
 import { RefObject, useEffect, useRef } from 'react'
 import { useTranslate } from '@refinedev/core'
-import { Button, SubmitContext } from 'tdesign-react/esm'
+import { Form as TdForm, Button, SubmitContext } from 'tdesign-react/esm'
 import { Modal, useModal } from '../modal'
 import { Form, FormProps, FormRef } from './form'
 import clsx from 'clsx'
@@ -17,11 +17,13 @@ export const FormModal = ({
   onSubmit,
   padding = true,
   onRef,
+  form: tdForm,
   ...props
 }: FormModalProps) => {
   const formRef = useRef<FormRef>(null)
   const modal = useModal()
   const translate = useTranslate()
+  const [form] = TdForm.useForm(tdForm)
 
   const onSubmitFun = async (e: SubmitContext) => {
     await onSubmit?.(e)
@@ -38,6 +40,7 @@ export const FormModal = ({
   return (
     <Form
       ref={formRef}
+      form={form}
       onSubmit={onSubmitFun}
       formProps={{
         labelAlign: 'top',
@@ -48,6 +51,7 @@ export const FormModal = ({
       <Modal.Footer>
         <Button
           variant='outline'
+          type='button'
           onClick={() => {
             onClose?.()
             modal.onClose?.()

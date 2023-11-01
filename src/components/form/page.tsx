@@ -1,12 +1,4 @@
-import React, {
-  Ref,
-  RefObject,
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react'
+import React, { RefObject, useEffect, useRef, useState } from 'react'
 import { useTranslate, useBack, useResource } from '@refinedev/core'
 import {
   SubmitContext,
@@ -41,6 +33,7 @@ export const FormPage = ({
   settingRender,
   formProps,
   onRef,
+  form: tdForm,
   ...props
 }: FormPageProps) => {
   const formRef = useRef<FormRef>(null)
@@ -57,6 +50,7 @@ export const FormPage = ({
 
   const { resource } = useResource()
   const [visibleDrawer, setVisibleDrawer] = useState(false)
+  const [form] = TdForm.useForm(tdForm)
 
   return (
     <Main
@@ -79,7 +73,7 @@ export const FormPage = ({
           {rest && (
             <Button
               onClick={() => {
-                formRef.current?.form?.reset()
+                form.reset()
               }}
               variant='outline'
               icon={<LoadIcon />}
@@ -100,7 +94,7 @@ export const FormPage = ({
           )}
           <Button
             onClick={() => {
-              formRef.current?.form?.submit()
+              form.submit()
             }}
             icon={<SaveIcon />}
           >
@@ -111,6 +105,7 @@ export const FormPage = ({
     >
       <Card>
         <Form
+          form={form}
           ref={formRef}
           onSubmit={onSubmitFun}
           formProps={{
@@ -124,7 +119,7 @@ export const FormPage = ({
           {settingRender && (
             <Drawer
               confirmBtn={t('buttons.save')}
-              onConfirm={() => formRef.current?.form?.submit()}
+              onConfirm={() => form?.submit()}
               header={t('buttons.setting')}
               visible={visibleDrawer}
               onClose={() => setVisibleDrawer(false)}

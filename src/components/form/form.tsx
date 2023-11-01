@@ -21,10 +21,10 @@ export interface FormProps {
   formProps?: TdFormProps
   initData?: Record<string, any>
   redirect?: RedirectAction
+  form?: FormInstanceFunctions
 }
 
 export interface FormRef {
-  form?: FormInstanceFunctions
   result?: useFormReturnProps
 }
 
@@ -43,11 +43,10 @@ export const Form = forwardRef(
       onSubmit,
       initData,
       redirect,
+      form,
     }: FormProps,
     ref: React.ForwardedRef<FormRef>
   ) => {
-    const [form] = TdForm.useForm()
-
     const { meta, ...formParams } = useFormProps || {}
 
     const formResult = useForm({
@@ -82,11 +81,10 @@ export const Form = forwardRef(
       ref,
       () => {
         return {
-          form,
           result: formResult,
         }
       },
-      [form, formResult]
+      [formResult]
     )
 
     const { formData, formLoading } = formResult
