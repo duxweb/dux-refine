@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.2
+### Feature
+- Optimize `Form` the form parameters can be passed in succession.
+
 ## 0.4.0
 ### Feature
 - Add `SelectAsync` component
