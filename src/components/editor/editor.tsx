@@ -144,7 +144,6 @@ export const Editor = ({ toolsBar, className, defaultValue, value, onChange }: E
 
         <BubbleMenu
           editor={editor}
-          className='tiptap-bubble'
           tippyOptions={{
             placement: 'bottom-start',
           }}
@@ -152,7 +151,9 @@ export const Editor = ({ toolsBar, className, defaultValue, value, onChange }: E
             return editor.isActive('table')
           }}
         >
-          <TableBubble />
+          <div className='tiptap-bubble'>
+            <TableBubble />
+          </div>
         </BubbleMenu>
         <BubbleMenu
           editor={editor}

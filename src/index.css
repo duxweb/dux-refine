@@ -68,3 +68,7 @@ html:root, *:root[theme-mode="light"] {
 .app-filter .t-form__item {
   @apply m-0 min-w-50 p-0 mb-0;
 }
+
+.app-menu-drawer .t-drawer__body {
+  @apply p-0;
+}

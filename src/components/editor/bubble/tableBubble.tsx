@@ -24,12 +24,12 @@ export const TableBubble = () => {
       />
       <UIMenuItem
         label={t('table.bubble.insertCol', { ns: 'editor' })}
-        icon='i-tabler:table-column-insert-right'
+        icon='i-tabler:column-insert-right'
         onClick={() => editor.chain().focus().addColumnAfter().run()}
       />
       <UIMenuItem
         label={t('table.bubble.deleteCol', { ns: 'editor' })}
-        icon='i-tabler:table-column-remove'
+        icon='i-tabler:column-remove'
         onClick={() => editor.chain().focus().deleteColumn().run()}
       />
       <UIMenuItem

@@ -104,9 +104,10 @@ const Search = () => {
 
 export interface SiderCollapseProps {
   type: siderType
+  col: boolean
 }
 
-export const SiderCollapse = ({ type }: SiderCollapseProps) => {
+export const SiderCollapse = ({ type, col }: SiderCollapseProps) => {
   const go = useGo()
   const translate = useTranslate()
   const { defaultOpenKeys, menuData } = useMenu()
@@ -124,7 +125,7 @@ export const SiderCollapse = ({ type }: SiderCollapseProps) => {
 
   return (
     <Menu
-      className='app-sider-collapse hidden md:block'
+      className='h-full'
       width='210px'
       value={value}
       onChange={(value) => setValue(value as string)}
@@ -165,14 +166,16 @@ export const SiderCollapse = ({ type }: SiderCollapseProps) => {
                   <DuxLogo className='h-6' />
                 )}
               </div>
-              <div className='absolute -right-3 z-1'>
-                <Button
-                  size='small'
-                  shape='circle'
-                  icon={<ViewListIcon />}
-                  onClick={() => setCollapse(!collapse)}
-                />
-              </div>
+              {col && (
+                <div className='absolute -right-3 z-1'>
+                  <Button
+                    size='small'
+                    shape='circle'
+                    icon={<ViewListIcon />}
+                    onClick={() => setCollapse(!collapse)}
+                  />
+                </div>
+              )}
             </>
           )}
         </div>

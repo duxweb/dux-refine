@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { DuxLogo } from '../logo'
 import { useWindowSize } from '../../core'
-import { Button, Menu } from 'tdesign-react/esm'
+import { Button, Drawer, Menu } from 'tdesign-react/esm'
 import { MoreIcon, Icon } from 'tdesign-icons-react'
 import { TabMenu } from './menu'
 const { HeadMenu } = Menu
