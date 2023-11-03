@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo } from 'react'
+import React, { createContext, useContext, useMemo, useState } from 'react'
 import { RouteObject, RouterProvider, createHashRouter, Navigate } from 'react-router-dom'
 import { ResourceRouteComposition } from '@refinedev/core/dist/interfaces/bindings/resource'
 
@@ -13,6 +13,7 @@ export interface appContext {
   getApp: (name: string) => App
   getApps: () => App[]
   addI18n: (lng: string, ns: string, resources: any) => void
+  addListener: (name: string, callback: any) => void
 }
 
 export interface appConfig {
@@ -23,10 +24,12 @@ export interface appConfig {
 
 export interface AppContext {
   config: Config
+  event: Record<string, any>
 }
 
 const appContext = createContext<AppContext>({
   config: {} as Config,
+  event: {},
 })
 
 export const useAppContext = (): AppContext => {
@@ -40,6 +43,7 @@ export interface AppProviderProps {
 
 export const AppProvider = ({ appsData, config }: AppProviderProps) => {
   const { i18nProvider, i18n } = useI18nProvider()
+  const [event, setEvent] = useState<Record<string, any>>({})
 
   const router = useMemo(() => {
     const apps: Record<string, App> = {}
@@ -60,16 +64,22 @@ export const AppProvider = ({ appsData, config }: AppProviderProps) => {
       i18n.addResourceBundle(lng, ns, resources)
     }
 
+    const addListener = (name: string, callback: any) => {
+      setEvent((e) => {
+        return { ...e, callback }
+      })
+    }
+
     appsData.map((item) => {
-      item?.init?.({ createApp, getApp, getApps, addI18n })
+      item?.init?.({ createApp, getApp, getApps, addI18n, addListener })
     })
 
     appsData.map((item) => {
-      item?.register?.({ createApp, getApp, getApps, addI18n })
+      item?.register?.({ createApp, getApp, getApps, addI18n, addListener })
     })
 
     appsData.map((item) => {
-      item?.run?.({ createApp, getApp, getApps, addI18n })
+      item?.run?.({ createApp, getApp, getApps, addI18n, addListener })
     })
 
     const routes: RouteObject[] = [
@@ -126,6 +136,7 @@ export const AppProvider = ({ appsData, config }: AppProviderProps) => {
     <appContext.Provider
       value={{
         config: config,
+        event: event,
       }}
     >
       <RouterProvider router={router} />
