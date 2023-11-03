@@ -111,7 +111,7 @@ const MenuPanelTitle = ({ item, collapse, setCollapse }: MenuPanelTitleProps) =>
       }}
     >
       <div className='flex items-center gap-2'>
-        <div className={item.icon}></div>
+        <div className={(item.icon as string) || ''}></div>
         {translate(`${item.label}.name`)}
       </div>
       {item.children?.length > 0 && (

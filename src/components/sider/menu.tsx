@@ -57,7 +57,7 @@ export const useMenu = (): UseMenuProps => {
             icon: item.icon,
             label: item.label,
             children: item.children,
-            sort: item?.sort || item?.meta?.sort || 0,
+            sort: item?.meta?.sort || 0,
           } as MenuItemProps
         })
     },
