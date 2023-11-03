@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.4
+### Bug
+- Fix `editor` popup width
+
 ## 0.4.3
 ### Bug
 - MediaText content permutation
