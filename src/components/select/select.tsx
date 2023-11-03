@@ -1,5 +1,5 @@
 import { PaginationMini, Select, SelectProps } from 'tdesign-react/esm'
-import { useMemo, useState } from 'react'
+import { ReactNode, useMemo, useState } from 'react'
 import { useClient } from '../../provider'
 import { useDeepCompareEffect } from 'ahooks'
 
@@ -7,9 +7,21 @@ export interface SelectAsyncProps extends SelectProps {
   url: string
   query?: Record<string, any>
   pagination?: boolean
+  optionValue?: string
+  optionLabel?: string
+  optionRender?: (item: Record<string, any>) => ReactNode
 }
 
-export const SelectAsync = ({ url, query, value, pagination, ...props }: SelectAsyncProps) => {
+export const SelectAsync = ({
+  url,
+  query,
+  value,
+  pagination,
+  optionValue,
+  optionLabel,
+  optionRender,
+  ...props
+}: SelectAsyncProps) => {
   const [hasExecuted, setHasExecuted] = useState(false)
   const [keyword, setKeyword] = useState<string>()
   const [options, setOptions] = useState([])
@@ -54,8 +66,15 @@ export const SelectAsync = ({ url, query, value, pagination, ...props }: SelectA
 
   const getOptions = useMemo(() => {
     const mergedArray = [...options, ...select]
-    return Array.from(new Set(mergedArray))
-  }, [options, select])
+    return Array.from(new Set(mergedArray)).map((item) => {
+      return {
+        content: optionRender?.(item),
+        label: item[optionLabel || 'label'],
+        value: item[optionValue || 'value'],
+        row: item,
+      }
+    })
+  }, [optionLabel, optionRender, optionValue, options, select])
 
   return (
     <Select
