@@ -143,23 +143,24 @@ export const Editor = ({ toolsBar, className, defaultValue, value, onChange }: E
         </EditorConsumer>
 
         <BubbleMenu
+          className='tiptap-bubble'
           editor={editor}
           tippyOptions={{
             placement: 'bottom-start',
+            maxWidth: '',
           }}
           shouldShow={({ editor }) => {
             return editor.isActive('table')
           }}
         >
-          <div className='tiptap-bubble'>
-            <TableBubble />
-          </div>
+          <TableBubble />
         </BubbleMenu>
         <BubbleMenu
           editor={editor}
           className='tiptap-bubble'
           tippyOptions={{
             placement: 'bottom',
+            maxWidth: '',
           }}
           shouldShow={({ editor }) => {
             return editor.isActive('imageResize')
@@ -172,6 +173,7 @@ export const Editor = ({ toolsBar, className, defaultValue, value, onChange }: E
           className='tiptap-bubble'
           tippyOptions={{
             placement: 'bottom',
+            maxWidth: '',
           }}
           shouldShow={({ editor }) => {
             return editor.isActive('video')
