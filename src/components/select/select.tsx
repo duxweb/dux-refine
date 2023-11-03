@@ -1,4 +1,4 @@
-import { Select, SelectProps } from 'tdesign-react/esm'
+import { PaginationMini, Select, SelectProps } from 'tdesign-react/esm'
 import { useMemo, useState } from 'react'
 import { useClient } from '../../provider'
 import { useDeepCompareEffect } from 'ahooks'
@@ -6,13 +6,16 @@ import { useDeepCompareEffect } from 'ahooks'
 export interface SelectAsyncProps extends SelectProps {
   url: string
   query?: Record<string, any>
+  pagination?: boolean
 }
 
-export const SelectAsync = ({ url, query, value, ...props }: SelectAsyncProps) => {
+export const SelectAsync = ({ url, query, value, pagination, ...props }: SelectAsyncProps) => {
   const [hasExecuted, setHasExecuted] = useState(false)
   const [keyword, setKeyword] = useState<string>()
   const [options, setOptions] = useState([])
   const [select, setSelect] = useState([])
+  const [page, setPage] = useState(1)
+  const [pages, setPages] = useState(1)
 
   const { request, isLoading } = useClient()
   useDeepCompareEffect(() => {
@@ -35,12 +38,19 @@ export const SelectAsync = ({ url, query, value, ...props }: SelectAsyncProps) =
       params: {
         ...query,
         keyword,
+        limit: 20,
+        page,
       },
     }).then((res) => {
       setOptions(res?.data || [])
+      if (pagination) {
+        setPage(res?.meta?.page || 1)
+        const totalPages = Math.ceil(res?.meta?.total / 20)
+        setPages(totalPages)
+      }
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, url, keyword])
+  }, [query, url, keyword, page])
 
   const getOptions = useMemo(() => {
     const mergedArray = [...options, ...select]
@@ -53,6 +63,30 @@ export const SelectAsync = ({ url, query, value, ...props }: SelectAsyncProps) =
       onSearch={(k) => setKeyword(k)}
       value={value}
       loading={isLoading}
+      panelBottomContent={
+        pagination ? (
+          <div className='flex justify-center pb-2'>
+            <PaginationMini
+              size='small'
+              onChange={({ trigger }) => {
+                if (trigger == 'next') {
+                  if (page < pages) {
+                    setPage((e) => e + 1)
+                  }
+                }
+                if (trigger == 'prev') {
+                  if (page > 1) {
+                    setPage((e) => e - 1)
+                  }
+                }
+                if (trigger == 'current') {
+                  setPage((e) => e)
+                }
+              }}
+            />
+          </div>
+        ) : undefined
+      }
       {...props}
     />
   )
