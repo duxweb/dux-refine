@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.5
+### Feature
+- Optimize `SelectAsync` add data paging
+
 ## 0.4.4
 ### Bug
 - Fix `editor` popup width
