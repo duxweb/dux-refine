@@ -10,16 +10,19 @@ export interface SelectAsyncProps extends SelectProps {
   optionValue?: string
   optionLabel?: string
   optionRender?: (item: Record<string, any>) => ReactNode
+  format?: (value: any) => any
 }
 
 export const SelectAsync = ({
   url,
   query,
   value,
+  defaultValue,
   pagination,
   optionValue,
   optionLabel,
   optionRender,
+  format,
   ...props
 }: SelectAsyncProps) => {
   const [hasExecuted, setHasExecuted] = useState(false)
@@ -80,7 +83,8 @@ export const SelectAsync = ({
     <Select
       options={getOptions}
       onSearch={(k) => setKeyword(k)}
-      value={value}
+      defaultValue={format?.(defaultValue) || defaultValue}
+      value={format?.(value) || value}
       loading={isLoading}
       panelBottomContent={
         pagination ? (

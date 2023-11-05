@@ -6,6 +6,7 @@ import { useDeepCompareEffect } from 'ahooks'
 export interface CascaderAsyncProps extends CascaderProps {
   url: string
   query?: Record<string, any>
+  format?: (value: any) => any
 }
 
 export const CascaderAsync = ({
@@ -13,6 +14,7 @@ export const CascaderAsync = ({
   query,
   defaultValue,
   value,
+  format,
   ...props
 }: CascaderAsyncProps) => {
   const [options, setOptions] = useState([])
@@ -32,8 +34,8 @@ export const CascaderAsync = ({
   return (
     <Cascader
       options={options}
-      defaultValue={defaultValue}
-      value={value}
+      defaultValue={format?.(defaultValue) || defaultValue}
+      value={format?.(value) || value}
       loading={isLoading}
       {...props}
     />

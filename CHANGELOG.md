@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.7
+### Feature
+- Optimize `SelectAsync` add format value
+- Optimize `CascaderAsync` add format value
+
 ## 0.4.5
 ### Feature
 - Optimize `SelectAsync` add data paging
