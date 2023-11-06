@@ -12,7 +12,7 @@ import { useCallback, useState } from 'react'
 import { useModuleContext } from '../core'
 
 export const client = axios.create({
-  timeout: 10000,
+  timeout: 60 * 1000,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',

@@ -23,6 +23,9 @@ export const useForm = (props: useFormProps): useFormReturnProps => {
   const t = useTranslate()
   const result = useRefineForm({
     onMutationError: (error, variables, context, isAutoSave) => {
+      if (result?.formLoading) {
+        result.formLoading = false
+      }
       if (error.statusCode == 422) {
         props?.form?.setValidateMessage(convertErrorFormat(error?.data))
       }
