@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef } from 'react'
+import { RefObject, useEffect, useRef, useState } from 'react'
 import { useTranslate } from '@refinedev/core'
 import { Form as TdForm, Button, SubmitContext } from 'tdesign-react/esm'
 import { Modal, useModal } from '../modal'
@@ -24,13 +24,16 @@ export const FormModal = ({
   const modal = useModal()
   const translate = useTranslate()
   const [form] = TdForm.useForm(tdForm)
+  const [loading, setLoading] = useState(false)
 
   const onSubmitFun = async (e: SubmitContext) => {
+    setLoading(true)
     await onSubmit?.(e)
     if (e.validateResult === true) {
       await onClose?.()
       await modal.onClose?.()
     }
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -59,7 +62,9 @@ export const FormModal = ({
         >
           {translate('buttons.cancel')}
         </Button>
-        <Button type='submit'>{translate('buttons.save')}</Button>
+        <Button type='submit' loading={loading}>
+          {translate('buttons.save')}
+        </Button>
       </Modal.Footer>
     </Form>
   )

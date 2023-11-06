@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle } from 'react'
+import React, { forwardRef, useEffect, useImperativeHandle } from 'react'
 import {
   EnhancedTable as TdTable,
   EnhancedTableProps,
@@ -69,6 +69,14 @@ export const PageTable = forwardRef(
     const [size, sizeMap] = useWindowSize()
 
     const [form] = Form.useForm()
+
+    useEffect(() => {
+      setSelecteds([], {
+        selectedRowData: [],
+        type: 'check',
+      })
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data])
 
     useImperativeHandle(ref, () => {
       return {

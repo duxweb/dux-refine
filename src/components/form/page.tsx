@@ -39,8 +39,10 @@ export const FormPage = ({
   const formRef = useRef<FormRef>(null)
   const backFn = useBack()
   const t = useTranslate()
+  const [loading, setLoading] = useState(false)
 
   const onSubmitFun = async (e: SubmitContext) => {
+    setLoading(false)
     await onSubmit?.(e)
   }
 
@@ -77,6 +79,7 @@ export const FormPage = ({
               }}
               variant='outline'
               icon={<LoadIcon />}
+              loading={loading}
             >
               {t('buttons.rest')}
             </Button>
@@ -94,8 +97,10 @@ export const FormPage = ({
           )}
           <Button
             onClick={() => {
+              setLoading(true)
               form.submit()
             }}
+            loading={loading}
             icon={<SaveIcon />}
           >
             {t('buttons.save')}
@@ -119,7 +124,11 @@ export const FormPage = ({
           {settingRender && (
             <Drawer
               confirmBtn={t('buttons.save')}
-              onConfirm={() => form?.submit()}
+              onConfirm={() => {
+                setVisibleDrawer(false)
+                setLoading(true)
+                form.submit()
+              }}
               header={t('buttons.setting')}
               visible={visibleDrawer}
               onClose={() => setVisibleDrawer(false)}

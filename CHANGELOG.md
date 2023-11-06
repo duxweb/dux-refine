@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.8
+### Feature
+- Optimize `Table` add loading status
+
+### Bug
+- Fix `Table` deselect overloaded data
+
 ## 0.4.7
 ### Feature
 - Optimize `SelectAsync` add format value
