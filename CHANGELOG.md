@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0
+### Feature
+- Change `Editor` Customize tinymce if batch uploads and word uploads 
+### Bug
+- Fix `Table` deselect overloaded data
+
 ## 0.4.8
 ### Feature
 - Optimize `Table` add loading status

@@ -1,8 +1,6 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { Editor as TinyMce, IAllProps } from '@tinymce/tinymce-react'
 
-// TinyMCE so the global var exists
-// eslint-disable-next-line no-unused-vars
 import 'tinymce/tinymce'
 // DOM model
 import 'tinymce/models/dom/model'
@@ -10,8 +8,6 @@ import 'tinymce/models/dom/model'
 import 'tinymce/themes/silver'
 // Toolbar icons
 import 'tinymce/icons/default'
-// Editor styles
-import 'tinymce/skins/ui/oxide/skin.min.css'
 
 // importing the plugin js.
 // if you use a plugin that is not listed here the editor will fail to load
@@ -53,9 +49,14 @@ import './plugins/uploads'
 import { useGetIdentity, useGetLocale, useApiUrl } from '@refinedev/core'
 
 // Content styles, including inline UI like fake cursors
-import contentCss from 'tinymce/skins/content/default/content.min.css?raw'
-import contentDarkCss from 'tinymce/skins/content/dark/content.min.css?raw'
-import contentUiCss from 'tinymce/skins/ui/oxide/content.min.css?raw'
+import contentCss from './skins/content/default/content.min.css?raw'
+import contentDarkCss from './skins/content/dark/content.min.css?raw'
+import contentUiCss from './skins/ui/default/content.min.css?raw'
+import contentUiDarkCss from './skins/ui/dark/content.min.css?raw'
+
+// Editor styles
+import uiCss from './skins/ui/default/skin.min.css?raw'
+import uiDarkCss from './skins/ui/dark/skin.min.css?raw'
 
 import './langs/zh-Hans'
 import './langs/zh-Hant'
@@ -82,20 +83,23 @@ const BaseEditor = ({ init, ...rest }: IAllProps) => {
   const dark = useAppStore((state) => state.dark)
 
   return (
-    <TinyMce
-      init={{
-        ...init,
-        language: lang,
-        skin: false,
-        content_css: false,
-        content_style: [
-          dark ? contentDarkCss : contentCss,
-          contentUiCss,
-          init?.content_style || '',
-        ].join('\n'),
-      }}
-      {...rest}
-    />
+    <>
+      <TinyMce
+        init={{
+          ...init,
+          language: lang,
+          skin: false,
+          content_css: false,
+          content_style: [
+            dark ? contentDarkCss : contentCss,
+            dark ? contentUiDarkCss : contentUiCss,
+            init?.content_style || '',
+          ].join('\n'),
+        }}
+        {...rest}
+      />
+      <style>{dark ? uiDarkCss : uiCss}</style>
+    </>
   )
 }
 
@@ -183,7 +187,7 @@ export const Editor = ({ config, value, onChange, defaultValue, disabled }: Edit
           ...initData,
         }}
         disabled={disabled}
-        initialValue={value}
+        value={value}
         onEditorChange={(value) => {
           setTimeout(() => {
             onChange?.(value)

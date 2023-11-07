@@ -70,15 +70,6 @@ export const PageTable = forwardRef(
 
     const [form] = Form.useForm()
 
-    useEffect(() => {
-      setSelecteds([], {
-        selectedRowData: [],
-        type: 'check',
-      })
-      console.log('setSelecteds')
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data])
-
     useImperativeHandle(ref, () => {
       return {
         refetch: refetch,

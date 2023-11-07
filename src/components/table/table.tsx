@@ -169,6 +169,14 @@ export const useTable = <
   // Data
   const data = tableQueryResult?.data
 
+  useEffect(() => {
+    setOnSelecteds([], {
+      selectedRowData: [],
+      type: 'check',
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tableQueryResult?.data])
+
   // Pagination
   const pagination: PaginationProps = useMemo(() => {
     return {
