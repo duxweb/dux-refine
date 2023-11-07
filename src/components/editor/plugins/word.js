@@ -1,10 +1,5 @@
 import mammoth from 'mammoth'
 
-tinymce.addI18n('zh-Hans', {
-  word: 'word 上传',
-  wordExtension: '仅支持 docx 格式文件',
-})
-
 tinymce.PluginManager.add('customWord', function (editor) {
   function handleFileSelect(event) {
     var file = event.target.files[0]
@@ -62,4 +57,29 @@ tinymce.PluginManager.add('customWord', function (editor) {
     name: 'customWord',
     url: 'https://www.dux.plus',
   }
+})
+
+tinymce.addI18n('zh-Hans', {
+  word: 'word 上传',
+  wordExtension: '仅支持 docx 格式文件',
+})
+
+tinymce.addI18n('zh-Hant', {
+  word: 'word 上傳',
+  wordExtension: '僅支持 docx 格式文件',
+})
+
+tinymce.addI18n('ja', {
+  word: 'word アップロード',
+  wordExtension: 'docx 形式のファイルのみサポートしています',
+})
+
+tinymce.addI18n('ko_KR', {
+  word: 'word 업로드',
+  wordExtension: 'docx 형식 파일만 지원합니다',
+})
+
+tinymce.addI18n('ru', {
+  word: 'загрузка word',
+  wordExtension: 'поддерживаются только файлы формата docx',
 })

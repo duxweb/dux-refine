@@ -1,9 +1,4 @@
-import { client } from '@duxweb/dux-refine'
 import { formatHtml, uploadFile } from './handler'
-
-tinymce.addI18n('zh-Hans', {
-  customImages: '批量上传图片',
-})
 
 tinymce.PluginManager.add('customImages', function (editor) {
   editor.ui.registry.addIcon(
@@ -54,4 +49,24 @@ tinymce.PluginManager.add('customImages', function (editor) {
     name: 'customImages',
     url: 'https://www.dux.plus',
   }
+})
+
+tinymce.addI18n('zh-Hans', {
+  customImages: '批量上传图片',
+})
+
+tinymce.addI18n('zh-Hant', {
+  customImages: '批量上傳圖片',
+})
+
+tinymce.addI18n('ja', {
+  customImages: '画像の一括アップロード',
+})
+
+tinymce.addI18n('ko_KR', {
+  customImages: '이미지 일괄 업로드',
+})
+
+tinymce.addI18n('ru', {
+  customImages: 'Массовая загрузка изображений',
 })
