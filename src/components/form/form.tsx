@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useImperativeHandle } from 'react'
+import React, { forwardRef, useImperativeHandle } from 'react'
 import { FormAction, MetaQuery, BaseKey, RedirectAction } from '@refinedev/core'
 import {
   Form as TdForm,
@@ -66,17 +66,6 @@ export const Form = forwardRef(
       ...formParams,
     })
 
-    useEffect(() => {
-      let isUnmounted = false
-      if (isUnmounted) {
-        return
-      }
-      return () => {
-        isUnmounted = true
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [form, formResult])
-
     useImperativeHandle(
       ref,
       () => {
@@ -100,6 +89,7 @@ export const Form = forwardRef(
         disabled={formLoading}
         initialData={formData}
         form={form}
+        preventSubmitDefault={true}
         {...formProps}
       >
         {children}

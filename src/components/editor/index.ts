@@ -1,2 +1,1 @@
-export * from './editor'
-export * from './ui/menu'
+export * from './tinymce'

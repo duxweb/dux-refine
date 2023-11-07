@@ -2,6 +2,7 @@ import { TdUploadProps, Upload as TdUpload, UploadFile as TdUploadFile } from 't
 import { useUpload } from './useUpload'
 import { useControllableValue } from 'ahooks'
 import { useMemo } from 'react'
+import React from 'react'
 
 type UploadValue = TdUploadFile | TdUploadFile[] | undefined
 

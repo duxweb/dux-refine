@@ -75,6 +75,7 @@ export const PageTable = forwardRef(
         selectedRowData: [],
         type: 'check',
       })
+      console.log('setSelecteds')
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data])
 
