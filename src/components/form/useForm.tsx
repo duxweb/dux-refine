@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from 'react'
+import { useMemo, useEffect, useCallback, useState } from 'react'
 import {
   useForm as useRefineForm,
   UseFormProps as UseRefineFormProps,
@@ -6,6 +6,7 @@ import {
   UseFormReturnType,
 } from '@refinedev/core'
 import { SubmitContext, FormInstanceFunctions, FormValidateMessage } from 'tdesign-react/esm'
+import { useDeepCompareEffect } from 'ahooks'
 
 export interface useFormProps extends UseRefineFormProps {
   form?: FormInstanceFunctions
@@ -42,37 +43,40 @@ export const useForm = (props: useFormProps): useFormReturnProps => {
     ...props,
   })
 
-  const getData = useMemo(() => {
+  const [data, setData] = useState<Record<string, any>>({})
+
+  useDeepCompareEffect(() => {
     const info = props?.initData || result.queryResult?.data?.data
     if (!info) {
-      return {}
+      return
     }
-    return props?.initFormat?.(info) || info
+    setData(props?.initFormat?.(info) || info)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result.queryResult?.data?.data])
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     let isUnmounted = false
     if (isUnmounted) {
       return
     }
-    props?.form?.setFieldsValue(getData)
+    props?.form?.setFieldsValue(data)
     return () => {
       isUnmounted = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getData])
+  }, [data])
 
-  const onSubmit = async (e: SubmitContext) => {
+  const onSubmit = useCallback(async (e: SubmitContext) => {
     if (e.validateResult === true) {
       await result?.onFinish(props?.saveFormat?.(e.fields) || e.fields)
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return {
     ...result,
     onSubmit,
-    formData: getData,
+    formData: data,
   }
 }
 

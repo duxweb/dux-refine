@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { FormAction, MetaQuery, BaseKey, RedirectAction } from '@refinedev/core'
 import {
   Form as TdForm,
@@ -6,8 +6,13 @@ import {
   FormProps as TdFormProps,
   FormInstanceFunctions,
 } from 'tdesign-react/esm'
-import { useForm, useFormProps, useFormReturnProps } from './useForm'
+import { useForm, useFormProps } from './useForm'
+import { useDeepCompareEffect } from 'ahooks'
 
+export interface FormResult {
+  formData?: Record<string, any>
+  formLoading?: boolean
+}
 export interface FormProps {
   children?: React.ReactNode
   resource?: string
@@ -21,7 +26,7 @@ export interface FormProps {
   formProps?: TdFormProps
   initData?: Record<string, any>
   redirect?: RedirectAction
-  onResult?: (data: useFormReturnProps) => void
+  onResult?: (data: FormResult) => void
   form?: FormInstanceFunctions
 }
 
@@ -60,16 +65,20 @@ export const Form = ({
     ...formParams,
   })
 
-  useEffect(() => {
-    onResult?.(formResult)
-  }, [formResult, onResult])
-
   const { formData, formLoading } = formResult
 
-  const onSubmitFun = async (e: SubmitContext) => {
+  useEffect(() => {
+    onResult?.({
+      formData: formData,
+      formLoading: formLoading,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData, formLoading])
+
+  const onSubmitFun = useCallback(async (e: SubmitContext) => {
     await formResult.onSubmit(e)
     await onSubmit?.(e)
-  }
+  }, [])
 
   return (
     <TdForm

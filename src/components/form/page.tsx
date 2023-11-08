@@ -9,10 +9,9 @@ import {
   Drawer,
 } from 'tdesign-react/esm'
 import { ChevronLeftIcon, LoadIcon, SaveIcon, SettingIcon } from 'tdesign-icons-react'
-import { Form, FormProps } from './form'
+import { Form, FormProps, FormResult } from './form'
 import { Main } from '../main'
 import clsx from 'clsx'
-import { useFormReturnProps } from './useForm'
 
 export interface FormPageProps extends FormProps {
   title?: React.ReactNode
@@ -36,21 +35,9 @@ export const FormPage = ({
   form: tdForm,
   ...props
 }: FormPageProps) => {
-  const [result, setResult] = useState<useFormReturnProps>()
+  const [result, setResult] = useState<FormResult>()
   const backFn = useBack()
   const t = useTranslate()
-
-  const onSubmitFun = async (e: SubmitContext) => {
-    await onSubmit?.(e)
-  }
-
-  const onResultCallback = useCallback(
-    (data: useFormReturnProps) => {
-      onResult?.(data)
-      setResult(data)
-    },
-    [onResult]
-  )
 
   const { resource } = useResource()
   const [visibleDrawer, setVisibleDrawer] = useState(false)
@@ -112,8 +99,13 @@ export const FormPage = ({
       <Card>
         <Form
           form={form}
-          onResult={onResultCallback}
-          onSubmit={onSubmitFun}
+          onResult={(data: FormResult) => {
+            onResult?.(data)
+            setResult(data)
+          }}
+          onSubmit={async (e: SubmitContext) => {
+            await onSubmit?.(e)
+          }}
           formProps={{
             labelAlign: 'left',
             className: 'divide-y divide-gray-2 dark:divide-gray-10 py-2',

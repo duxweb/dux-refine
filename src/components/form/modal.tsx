@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 import { useTranslate } from '@refinedev/core'
 import { Form as TdForm, Button, SubmitContext } from 'tdesign-react/esm'
 import { Modal, useModal } from '../modal'
-import { Form, FormProps } from './form'
+import { Form, FormProps, FormResult } from './form'
 import clsx from 'clsx'
 import { useFormReturnProps } from './useForm'
 
@@ -23,7 +23,7 @@ export const FormModal = ({
   const modal = useModal()
   const translate = useTranslate()
   const [form] = TdForm.useForm(tdForm)
-  const [result, setResult] = useState<useFormReturnProps>()
+  const [result, setResult] = useState<FormResult>()
 
   const onSubmitFun = async (e: SubmitContext) => {
     await onSubmit?.(e)
@@ -34,7 +34,7 @@ export const FormModal = ({
   }
 
   const onResultCallback = useCallback(
-    (data: useFormReturnProps) => {
+    (data: FormResult) => {
       onResult?.(data)
       setResult(data)
     },
