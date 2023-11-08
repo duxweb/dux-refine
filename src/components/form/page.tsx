@@ -93,11 +93,12 @@ export const FormPage = ({
               {t('buttons.setting')}
             </Button>
           )}
+          {console.log(formRef.current?.result, formRef.current?.result?.formLoading)}
           <Button
             onClick={() => {
               form.submit()
             }}
-            loading={formRef.current?.result?.formLoading}
+            loading={!!formRef.current?.result?.formLoading}
             icon={<SaveIcon />}
           >
             {t('buttons.save')}
