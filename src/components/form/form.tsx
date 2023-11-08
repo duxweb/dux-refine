@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle } from 'react'
+import React, { useEffect } from 'react'
 import { FormAction, MetaQuery, BaseKey, RedirectAction } from '@refinedev/core'
 import {
   Form as TdForm,
@@ -21,81 +21,68 @@ export interface FormProps {
   formProps?: TdFormProps
   initData?: Record<string, any>
   redirect?: RedirectAction
+  onResult?: (data: useFormReturnProps) => void
   form?: FormInstanceFunctions
 }
 
-export interface FormRef {
-  result?: useFormReturnProps
-}
+export const Form = ({
+  children,
+  id,
+  queryParams,
+  action,
+  initFormat,
+  saveFormat,
+  resource,
+  useFormProps,
+  formProps,
+  onSubmit,
+  initData,
+  redirect,
+  form,
+  onResult,
+}: FormProps) => {
+  const { meta, ...formParams } = useFormProps || {}
 
-export const Form = forwardRef(
-  (
-    {
-      children,
-      id,
-      queryParams,
-      action,
-      initFormat,
-      saveFormat,
-      resource,
-      useFormProps,
-      formProps,
-      onSubmit,
-      initData,
-      redirect,
-      form,
-    }: FormProps,
-    ref: React.ForwardedRef<FormRef>
-  ) => {
-    const { meta, ...formParams } = useFormProps || {}
+  const formResult = useForm({
+    resource: resource,
+    form: form,
+    action: action || id ? 'edit' : 'create',
+    id: id,
+    //liveMode: 'manual',
+    redirect: redirect,
+    meta: {
+      ...(meta || {}),
+      params: queryParams,
+    },
+    initData: initData,
+    initFormat: initFormat,
+    saveFormat: saveFormat,
+    ...formParams,
+  })
 
-    const formResult = useForm({
-      resource: resource,
-      form: form,
-      action: action || id ? 'edit' : 'create',
-      id: id,
-      //liveMode: 'manual',
-      redirect: redirect,
-      meta: {
-        ...(meta || {}),
-        params: queryParams,
-      },
-      initData: initData,
-      initFormat: initFormat,
-      saveFormat: saveFormat,
-      ...formParams,
-    })
+  useEffect(() => {
+    onResult?.(formResult)
+  }, [formResult, onResult])
 
-    useImperativeHandle(
-      ref,
-      () => {
-        return {
-          result: formResult,
-        }
-      },
-      [formResult]
-    )
+  const { formData, formLoading } = formResult
 
-    const { formData, formLoading } = formResult
-
-    const onSubmitFun = async (e: SubmitContext) => {
-      await formResult.onSubmit(e)
-      await onSubmit?.(e)
-    }
-
-    return (
-      <TdForm
-        onSubmit={onSubmitFun}
-        disabled={formLoading}
-        initialData={formData}
-        form={form}
-        preventSubmitDefault={true}
-        {...formProps}
-      >
-        {children}
-      </TdForm>
-    )
+  const onSubmitFun = async (e: SubmitContext) => {
+    await formResult.onSubmit(e)
+    await onSubmit?.(e)
   }
-)
+
+  return (
+    <TdForm
+      onSubmit={onSubmitFun}
+      disabled={formLoading}
+      initialData={formData}
+      form={form}
+      preventSubmitDefault={true}
+      {...formProps}
+    >
+      {children}
+    </TdForm>
+  )
+}
 
 Form.displayName = 'Form'

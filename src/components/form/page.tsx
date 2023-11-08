@@ -1,4 +1,4 @@
-import React, { RefObject, useEffect, useRef, useState } from 'react'
+import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslate, useBack, useResource } from '@refinedev/core'
 import {
   SubmitContext,
@@ -9,9 +9,10 @@ import {
   Drawer,
 } from 'tdesign-react/esm'
 import { ChevronLeftIcon, LoadIcon, SaveIcon, SettingIcon } from 'tdesign-icons-react'
-import { Form, FormProps, FormRef } from './form'
+import { Form, FormProps } from './form'
 import { Main } from '../main'
 import clsx from 'clsx'
+import { useFormReturnProps } from './useForm'
 
 export interface FormPageProps extends FormProps {
   title?: React.ReactNode
@@ -20,23 +21,22 @@ export interface FormPageProps extends FormProps {
   settingRender?: React.ReactNode
   back?: boolean
   rest?: boolean
-  onRef?: (ref: RefObject<FormRef>) => void
 }
 export const FormPage = ({
   title,
   children,
   onSubmit,
+  onResult,
   back,
   rest,
   headerRender,
   actionRender,
   settingRender,
   formProps,
-  onRef,
   form: tdForm,
   ...props
 }: FormPageProps) => {
-  const formRef = useRef<FormRef>(null)
+  const [result, setResult] = useState<useFormReturnProps>()
   const backFn = useBack()
   const t = useTranslate()
 
@@ -44,9 +44,13 @@ export const FormPage = ({
     await onSubmit?.(e)
   }
 
-  useEffect(() => {
-    onRef?.(formRef)
-  }, [onRef])
+  const onResultCallback = useCallback(
+    (data: useFormReturnProps) => {
+      onResult?.(data)
+      setResult(data)
+    },
+    [onResult]
+  )
 
   const { resource } = useResource()
   const [visibleDrawer, setVisibleDrawer] = useState(false)
@@ -77,7 +81,7 @@ export const FormPage = ({
               }}
               variant='outline'
               icon={<LoadIcon />}
-              loading={formRef.current?.result?.formLoading}
+              loading={!!result?.formLoading}
             >
               {t('buttons.rest')}
             </Button>
@@ -93,12 +97,11 @@ export const FormPage = ({
               {t('buttons.setting')}
             </Button>
           )}
-          {console.log(formRef.current?.result, formRef.current?.result?.formLoading)}
           <Button
             onClick={() => {
               form.submit()
             }}
-            loading={!!formRef.current?.result?.formLoading}
+            loading={!!result?.formLoading}
             icon={<SaveIcon />}
           >
             {t('buttons.save')}
@@ -109,7 +112,7 @@ export const FormPage = ({
       <Card>
         <Form
           form={form}
-          ref={formRef}
+          onResult={onResultCallback}
           onSubmit={onSubmitFun}
           formProps={{
             labelAlign: 'left',
