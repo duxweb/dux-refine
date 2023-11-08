@@ -2,33 +2,32 @@ import { AccessControlProvider, CanParams, CanReturnType } from '@refinedev/core
 import { useCallback } from 'react'
 
 interface CanHelper {
-  check: ({ resource, action }: CanParams) => boolean
+  check: ({ resource, action }: CanCheck) => boolean
 }
 
 export const useCanHelper = (app: string): CanHelper => {
   const auth = localStorage.getItem(app + ':auth')
+  const { permission } = JSON.parse(auth || '')
   const check = useCallback(
-    ({ resource, action }: CanParams) => {
-      return canCheck({ auth, resource, action })
+    ({ resource, action }: CanCheck) => {
+      return canCheck({ permission, resource, action })
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [auth]
   )
   return { check }
 }
 
-interface CanCheck extends CanParams {
-  auth: string | null
+interface CanCheck {
+  permission?: Record<string, any> | null
+  resource?: string
+  action?: string | string[]
 }
 
-export const canCheck = ({ auth, resource, action }: CanCheck) => {
-  if (!auth) {
-    return false
-  }
+export const canCheck = ({ permission, resource, action }: CanCheck) => {
   if (!resource) {
     return true
   }
-
-  const { permission } = JSON.parse(auth)
 
   if (!permission) {
     return false
@@ -38,8 +37,16 @@ export const canCheck = ({ auth, resource, action }: CanCheck) => {
     return true
   }
 
-  if (permission[resource + '.' + action] !== undefined) {
+  if (!Array.isArray(action) && permission[resource + '.' + action] !== undefined) {
     return !!permission[resource + '.' + action]
+  }
+
+  if (Array.isArray(action)) {
+    for (const item of action) {
+      if (permission[resource + '.' + item] !== undefined) {
+        return !!permission[resource + '.' + item]
+      }
+    }
   }
 
   if (permission[resource] !== undefined) {
@@ -52,8 +59,9 @@ export const canProvider = (app: string): AccessControlProvider => {
   return {
     can: async ({ resource, action }: CanParams): Promise<CanReturnType> => {
       const auth = localStorage.getItem(app + ':auth')
+      const { permission } = JSON.parse(auth || '')
       return {
-        can: canCheck({ auth, resource, action }),
+        can: canCheck({ permission, resource, action }),
       }
     },
     options: {

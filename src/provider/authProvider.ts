@@ -50,7 +50,9 @@ export const authProvider = (app: string, config: Config): AuthBindings => {
             token: token,
           }
         )
-        .then(() => {
+        .then((res) => {
+          console.log('getAuth')
+          localStorage.setItem(app + ':auth', JSON.stringify(res?.data?.data))
           return {
             authenticated: true,
           }

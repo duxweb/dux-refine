@@ -28,13 +28,14 @@ export const useMenu = (): UseMenuProps => {
   const { pathname } = useParsed()
   const [apiMenuData, setApiMenuData] = useState<MenuItemProps[]>([])
 
-  const sortData = useCallback((arr: MenuItemProps[]) => {
+  const sortData = useCallback((arr: MenuItemProps[]): MenuItemProps[] => {
     arr.sort((a, b) => a.sort - b.sort)
-    for (const item of arr) {
-      if (Array.isArray(item.children)) {
-        sortData(item.children)
-      }
-    }
+    return arr
+      .map((item) => ({
+        ...item,
+        children: item.children ? sortData(item.children) : [],
+      }))
+      .filter((item) => item.route || (item.children && item.children.length > 0))
   }, [])
 
   const formatMenu = useCallback(
@@ -47,7 +48,7 @@ export const useMenu = (): UseMenuProps => {
           if (item?.children?.length > 0) {
             item.children = formatMenu(item.children)
           }
-          return check({ resource: item.name, action: 'list' })
+          return check({ resource: item.name, action: ['list', 'index', 'info'] })
         })
         .map((item) => {
           return {
@@ -92,8 +93,8 @@ export const useMenu = (): UseMenuProps => {
     const array1 = [...apiMenuData] // your first array
     const array2 = [...refineMenuData]
     mergeByProperty(array1, array2)
-    sortData(array1)
-    return array1
+    const data = sortData(array1)
+    return data
   }, [apiMenuData, refineMenuData, sortData])
 
   const openkeys = useMemo(() => {
