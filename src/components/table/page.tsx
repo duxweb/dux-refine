@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useImperativeHandle } from 'react'
+import React, { forwardRef, useImperativeHandle } from 'react'
 import {
   EnhancedTable as TdTable,
   EnhancedTableProps,
@@ -11,6 +11,8 @@ import { useWindowSize } from '../../core/helper'
 import { TableRef, TableTab, useTable, useTableProps } from './table'
 import { Main } from '../main'
 import { useResource, BaseRecord, HttpError } from '@refinedev/core'
+import { appHook } from '../../utils/hook'
+import { useModuleContext } from '../../core'
 
 export interface PageTableProps {
   title?: React.ReactNode
@@ -67,7 +69,6 @@ export const PageTable = forwardRef(
     })
 
     const [size, sizeMap] = useWindowSize()
-
     const [form] = Form.useForm()
 
     useImperativeHandle(ref, () => {
@@ -81,6 +82,7 @@ export const PageTable = forwardRef(
       }
     })
     const { resource } = useResource()
+    const { name: moduleName } = useModuleContext()
 
     return (
       <Main
@@ -105,9 +107,16 @@ export const PageTable = forwardRef(
             </Radio.Group>
           )
         }
-        actions={actionRender?.()}
+        actions={
+          <>
+            <appHook.Render mark={[moduleName, resource?.name as string, 'table', 'action']} />
+            {actionRender?.()}
+          </>
+        }
       >
         {headerRender?.()}
+
+        <appHook.Render mark={[moduleName, resource?.name as string, 'table', 'header']} />
 
         {size <= sizeMap.md && (
           <div className='md:hidden flex flex-col gap-2 mb-2 app-mobile-header'>
@@ -145,8 +154,18 @@ export const PageTable = forwardRef(
                   form={form}
                 >
                   {filterRender?.()}
+                  <appHook.Render
+                    mark={[moduleName, resource?.name as string, 'table', 'filter']}
+                  />
                 </Form>
-                {selecteds && selecteds.length > 0 && <div>{batchRender?.()}</div>}
+                {selecteds && selecteds.length > 0 && (
+                  <div>
+                    {batchRender?.()}{' '}
+                    <appHook.Render
+                      mark={[moduleName, resource?.name as string, 'table', 'batch']}
+                    />
+                  </div>
+                )}
               </div>
             )
           }
@@ -179,6 +198,7 @@ export const PageTable = forwardRef(
           />
         </Card>
         {footerRender?.()}
+        <appHook.Render mark={[moduleName, resource?.name as string, 'table', 'footer']} />
       </Main>
     )
   }

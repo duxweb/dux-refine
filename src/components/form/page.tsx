@@ -12,6 +12,8 @@ import { ChevronLeftIcon, LoadIcon, SaveIcon, SettingIcon } from 'tdesign-icons-
 import { Form, FormProps, FormResult } from './form'
 import { Main } from '../main'
 import clsx from 'clsx'
+import { appHook } from '../../utils/hook'
+import { useModuleContext } from '../../core'
 
 export interface FormPageProps extends FormProps {
   title?: React.ReactNode
@@ -40,6 +42,7 @@ export const FormPage = ({
   const t = useTranslate()
 
   const { resource } = useResource()
+  const { name: moduleName } = useModuleContext()
   const [visibleDrawer, setVisibleDrawer] = useState(false)
   const [form] = TdForm.useForm(tdForm)
 
@@ -114,6 +117,9 @@ export const FormPage = ({
           {...props}
         >
           {children}
+
+          <appHook.Render mark={[moduleName, resource?.name as string, 'form']} />
+
           {settingRender && (
             <Drawer
               confirmBtn={t('buttons.save')}
@@ -126,6 +132,7 @@ export const FormPage = ({
               onClose={() => setVisibleDrawer(false)}
             >
               {settingRender}
+              <appHook.Render mark={[moduleName, resource?.name as string, 'form', 'setting']} />
             </Drawer>
           )}
         </Form>

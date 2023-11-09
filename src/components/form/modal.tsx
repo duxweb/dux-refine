@@ -1,10 +1,11 @@
 import { useCallback, useState } from 'react'
-import { useTranslate } from '@refinedev/core'
+import { useResource, useTranslate } from '@refinedev/core'
 import { Form as TdForm, Button, SubmitContext } from 'tdesign-react/esm'
 import { Modal, useModal } from '../modal'
 import { Form, FormProps, FormResult } from './form'
 import clsx from 'clsx'
-import { useFormReturnProps } from './useForm'
+import { appHook } from '../../utils'
+import { useModuleContext } from '../../core'
 
 export interface FormModalProps extends FormProps {
   onClose?: () => void
@@ -24,6 +25,8 @@ export const FormModal = ({
   const translate = useTranslate()
   const [form] = TdForm.useForm(tdForm)
   const [result, setResult] = useState<FormResult>()
+  const { resource } = useResource()
+  const { name: moduleName } = useModuleContext()
 
   const onSubmitFun = async (e: SubmitContext) => {
     await onSubmit?.(e)
@@ -51,7 +54,10 @@ export const FormModal = ({
       }}
       {...props}
     >
-      <div className={clsx([padding ? 'p-5' : ''])}>{children}</div>
+      <div className={clsx([padding ? 'p-5' : ''])}>
+        {children}
+        <appHook.Render mark={[moduleName, resource?.name as string, 'form']} />
+      </div>
       <Modal.Footer>
         <Button
           variant='outline'

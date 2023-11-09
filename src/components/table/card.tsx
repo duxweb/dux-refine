@@ -8,7 +8,8 @@ import {
   Radio,
 } from 'tdesign-react/esm'
 import { useWindowSize } from '../../core/helper'
-import { TableRef, useTable } from './table'
+import { TableRef, useTable, useTableProps } from './table'
+import { BaseRecord, HttpError } from '@refinedev/core'
 
 export interface CardTableTab {
   label: string
@@ -22,6 +23,7 @@ export interface CardTableProps {
   table?: EnhancedTableProps
   columns?: PrimaryTableCol[]
   onFilterChange?: (values: Record<string, any>) => void
+  tableHook?: useTableProps<BaseRecord, HttpError, BaseRecord>
   headerRender?: () => React.ReactNode
   footerRender?: () => React.ReactNode
   batchRender?: () => React.ReactNode
@@ -35,6 +37,7 @@ export const CardTable = React.forwardRef(
       table,
       columns,
       tabs,
+      tableHook,
       headerRender,
       footerRender,
       batchRender,
@@ -64,6 +67,7 @@ export const CardTable = React.forwardRef(
       },
       columns: columns,
       rowKey: table?.rowKey,
+      ...tableHook,
     })
 
     const [size, sizeMap] = useWindowSize()

@@ -1,18 +1,20 @@
 import { Fragment, cloneElement, isValidElement, useMemo } from 'react'
 
 interface RenderProps {
-  mark: string
+  mark: string | string[]
   option?: Record<string, any[]>
 }
 
 class AppHook {
   elements: Record<string, any> = {}
 
-  add = (mark: string, ...element: any) => {
-    if (!this.elements[mark]) {
-      this.elements[mark] = []
+  add = (mark: string | string[], ...element: any) => {
+    const name = Array.isArray(mark) ? mark.join('.') : mark
+
+    if (!this.elements[name]) {
+      this.elements[name] = []
     }
-    this.elements[mark].push(...element)
+    this.elements[name].push(...element)
   }
 
   useMark = (mark: string) => {
@@ -22,7 +24,14 @@ class AppHook {
   }
 
   Render = ({ mark, option }: RenderProps) => {
-    const element: any[] = this.elements[mark]
+    const name = useMemo(() => {
+      if (Array.isArray(mark)) {
+        return mark.join('.')
+      }
+      return mark
+    }, [mark])
+
+    const element: any[] = this.elements[name]
     if (!element?.length) {
       return null
     }
