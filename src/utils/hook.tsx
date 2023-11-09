@@ -10,16 +10,17 @@ class AppHook {
 
   add = (mark: string | string[], ...element: any) => {
     const name = Array.isArray(mark) ? mark.join('.') : mark
-
     if (!this.elements[name]) {
       this.elements[name] = []
     }
     this.elements[name].push(...element)
   }
 
-  useMark = (mark: string) => {
-    const res = useMemo(() => this.elements[mark] || [], [mark])
-
+  useMark = (mark: string | string[]): any[] => {
+    const name = Array.isArray(mark) ? mark.join('.') : mark
+    const res = useMemo(() => {
+      return this.elements[name] || []
+    }, [name])
     return res
   }
 
@@ -40,7 +41,6 @@ class AppHook {
         const [Item, props] = item
         return <Item key={index} {...props} {...option} />
       } else {
-        console.log(item)
         return <Fragment key={index}>{cloneElement(item)}</Fragment>
       }
     })

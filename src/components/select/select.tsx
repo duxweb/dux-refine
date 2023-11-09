@@ -34,7 +34,7 @@ export const SelectAsync = ({
 
   const { request, isLoading } = useClient()
   useDeepCompareEffect(() => {
-    if (!hasExecuted || value != undefined) {
+    if (!hasExecuted && value) {
       setHasExecuted(true)
       request(url, 'get', {
         params: {

@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle } from 'react'
+import React, { forwardRef, useEffect, useImperativeHandle, useMemo } from 'react'
 import {
   EnhancedTable as TdTable,
   EnhancedTableProps,
@@ -43,6 +43,23 @@ export const PageTable = forwardRef(
     }: PageTableProps,
     ref: React.ForwardedRef<TableRef>
   ) => {
+    const [size, sizeMap] = useWindowSize()
+    const [form] = Form.useForm()
+    const { resource } = useResource()
+    const { name: moduleName } = useModuleContext()
+
+    const hookColumns = appHook.useMark([moduleName, resource?.name as string, 'table', 'columns'])
+
+    const getColumns = useMemo(() => {
+      if (!columns) {
+        return []
+      }
+      const insertIndex = columns.length - 1
+      columns.splice(insertIndex, 0, ...[].concat(...hookColumns))
+      return columns
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [columns])
+
     const {
       data,
       pagination,
@@ -63,13 +80,10 @@ export const PageTable = forwardRef(
         current: 0,
         pageSize: 10,
       },
-      columns: columns,
+      columns: getColumns,
       rowKey: table?.rowKey,
       ...tableHook,
     })
-
-    const [size, sizeMap] = useWindowSize()
-    const [form] = Form.useForm()
 
     useImperativeHandle(ref, () => {
       return {
@@ -81,8 +95,6 @@ export const PageTable = forwardRef(
         form,
       }
     })
-    const { resource } = useResource()
-    const { name: moduleName } = useModuleContext()
 
     return (
       <Main
@@ -172,7 +184,7 @@ export const PageTable = forwardRef(
         >
           <TdTable
             rowKey={table?.rowKey || 'id'}
-            columns={columns}
+            columns={getColumns}
             data={data}
             cellEmptyContent={'-'}
             stripe
