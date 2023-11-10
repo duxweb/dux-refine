@@ -28,7 +28,7 @@
 }
 
 .app-descriptions-horizontal {
-  
+  @apply flex-row;
 }
 
 .app-descriptions-horizontal .app-descriptions-item {
@@ -50,7 +50,7 @@
 }
 
 .app-descriptions-vertical {
-  @apply gap-6;
+  @apply gap-6 flex-col;
 }
 
 .app-descriptions-vertical .app-descriptions-item {

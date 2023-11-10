@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import React, { forwardRef, useMemo, ReactNode, ForwardedRef, ReactElement } from 'react'
+import React, { forwardRef, ReactNode, ForwardedRef } from 'react'
 import { Skeleton } from 'tdesign-react/esm'
 import './style.css'
 
@@ -34,7 +34,6 @@ const DescriptionsComp = (
     title,
     children,
     border,
-    column = 1,
     loading = false,
     direction = 'horizontal',
     className = '',
@@ -42,35 +41,14 @@ const DescriptionsComp = (
   }: DescriptionsProps,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
-  const data = useMemo(() => {
-    const childArray = React.Children.toArray(children) as ReactElement[]
-    const groupedChildren = childArray.reduce((grouped: ReactElement[][], child, i) => {
-      const isDescriptionsItem =
-        React.isValidElement(child) &&
-        (child.type as React.FunctionComponent).displayName === 'DescriptionsItem'
-      if (!isDescriptionsItem) {
-        return grouped
-      }
-      if (i % column === 0) {
-        grouped.push([])
-      }
-      grouped[grouped.length - 1].push(child)
-      return grouped
-    }, [])
-    return groupedChildren
-  }, [children, column])
-
   return (
     <div className={className} ref={ref}>
       {title && <div className='text-lg'>{title}</div>}
-
       <Skeleton theme='paragraph' loading={loading}>
         <div className={clsx(['app-descriptions', border ? 'app-descriptions-border' : ''])}>
-          {data?.map((col, i) => (
-            <DescriptionsLayout key={i} border={border} direction={direction} align={align}>
-              {col}
-            </DescriptionsLayout>
-          ))}
+          <DescriptionsLayout border={border} direction={direction} align={align}>
+            {children}
+          </DescriptionsLayout>
         </div>
       </Skeleton>
     </div>
