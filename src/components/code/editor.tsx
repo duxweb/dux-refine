@@ -43,12 +43,5 @@ export const CodeEditor = ({
         {...props}
       />
     </div>
-    // <CodeEditorText
-    //   onChange={(evn) => {
-    //     onChange?.(evn.target.value)
-    //   }}
-    //   data-color-mode={dark ? 'dark' : 'light'}
-    //   {...props}
-    // />
   )
 }
