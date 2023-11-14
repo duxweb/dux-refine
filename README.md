@@ -40,7 +40,7 @@ npx @duxweb/dux-cli
 
 👤 **duxweb**
 
-* Website: https://ui.dux.plus
+* Website: https://ui.docs.dux.plus/
 * Github: [@duxweb](https://github.com/duxweb)
 
 ## 🤝 Contributing
