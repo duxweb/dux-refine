@@ -1,13 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import {
-  useTranslate,
-  useGo,
-  useResource,
-  useGetIdentity,
-  useLogout,
-  useSetLocale,
-} from '@refinedev/core'
-import { Menu, Button, Dropdown, SelectInput, Avatar, DropdownOption } from 'tdesign-react/esm'
+import { useTranslate, useGo, useGetIdentity, useLogout, useSetLocale } from '@refinedev/core'
+import { Menu, Button, Dropdown, Avatar, DropdownOption, Input } from 'tdesign-react/esm'
+import { useKBar } from 'kbar'
+
 const { MenuItem, SubMenu } = Menu
 import {
   Icon,
@@ -19,85 +14,29 @@ import {
   EarthIcon,
 } from 'tdesign-icons-react'
 import { DuxLogo } from '../logo'
-import { MenuItemProps, useMenu } from './menu'
+import { MenuItemProps } from './menu'
 import { siderType, useModuleContext, userMenuItem } from '../../core'
-import { useCanHelper } from '../../provider'
 import { useAppStore } from '../../stores'
 import './style.css'
 
+const getShortcutKey = () => {
+  const userAgent = navigator.userAgent
+  const isMac = /Mac|iPod|iPhone|iPad/.test(userAgent)
+  return isMac ? '⌘ + R' : 'Ctrl + R'
+}
+
 const Search = () => {
   const translate = useTranslate()
-  const { resources } = useResource()
-
-  const { name } = useModuleContext()
-  const { check } = useCanHelper(name)
-
-  const data = useMemo(() => {
-    return resources
-      .filter((item) => {
-        if (!item.list || !check({ resource: item.name, action: 'list' })) {
-          return false
-        }
-        return true
-      })
-      .map((item) => {
-        return {
-          label: translate(`${item.meta?.label}.name`, item.meta?.label),
-          route: item.list as string,
-        }
-      })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resources, translate])
-
-  const go = useGo()
-  const [popupVisible, setPopupVisible] = useState(false)
-  const [inputValue, setInputValue] = useState('')
-  const [options, setOptions] = useState(data)
-
-  const onInputChange = (value: string) => {
-    setInputValue(value)
-    if (value) {
-      setOptions(
-        data.filter((item) => {
-          return item.label.includes(value)
-        })
-      )
-    } else {
-      setOptions(data)
-    }
-  }
+  const { query } = useKBar()
   return (
-    <SelectInput
+    <Input
       placeholder={translate('common.search')}
-      allowInput
-      clearable
-      inputValue={inputValue}
-      onInputChange={onInputChange}
-      suffixIcon={<SearchIcon />}
-      popupVisible={popupVisible}
-      onPopupVisibleChange={setPopupVisible}
-      panel={
-        <ul className='flex flex-col gap-2 py-1'>
-          {options.length > 0 ? (
-            options.map((item, index) => (
-              <li
-                key={index}
-                className='px-4 py-1 text-primary hover:bg-brand hover:text-white-1 rounded cursor-pointer'
-                onClick={() => {
-                  setPopupVisible(false)
-                  go({
-                    to: item.route,
-                  })
-                }}
-              >
-                {item.label}
-              </li>
-            ))
-          ) : (
-            <li className='p-4 py-1'>{translate('common.notMenu')}</li>
-          )}
-        </ul>
-      }
+      prefixIcon={<SearchIcon />}
+      suffix={getShortcutKey()}
+      readonly
+      onClick={() => {
+        query.toggle()
+      }}
     />
   )
 }
@@ -105,12 +44,13 @@ const Search = () => {
 export interface SiderCollapseProps {
   type: siderType
   col: boolean
+  menuData: MenuItemProps[]
+  defaultOpenKeys: string[]
 }
 
-export const SiderCollapse = ({ type, col }: SiderCollapseProps) => {
+export const SiderCollapse = ({ defaultOpenKeys, menuData, type, col }: SiderCollapseProps) => {
   const go = useGo()
   const translate = useTranslate()
-  const { defaultOpenKeys, menuData } = useMenu()
   const [collapse, setCollapse] = useState<boolean>(false)
   const [value, setValue] = useState<string | undefined>()
   const module = useModuleContext()

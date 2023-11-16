@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.0
+### Feature
+- Add `Kbar` component
+- Remove `Side Search` component
+
 ## 0.5.0
 ### Feature
 - Change `Editor` Customize tinymce if batch uploads and word uploads 

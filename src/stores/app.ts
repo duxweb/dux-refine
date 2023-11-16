@@ -4,6 +4,8 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 interface ThemeState {
   dark: boolean
   switchDark: () => void
+  setLight: () => void
+  setDark: () => void
 }
 
 const useAppStore = create<ThemeState>()(
@@ -13,6 +15,14 @@ const useAppStore = create<ThemeState>()(
       switchDark: () => {
         document.documentElement.setAttribute('theme-mode', !get().dark ? 'dark' : '')
         set({ dark: !get().dark })
+      },
+      setLight: () => {
+        document.documentElement.setAttribute('theme-mode', '')
+        set({ dark: false })
+      },
+      setDark: () => {
+        document.documentElement.setAttribute('theme-mode', 'dark')
+        set({ dark: true })
       },
     }),
     {

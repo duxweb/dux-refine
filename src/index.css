@@ -15,6 +15,30 @@ html:root, *:root[theme-mode="light"] {
   --td-gray-color-14: #1d252f;
 }
 
+:root {
+  --scrollbar-background: #f5f5f5;
+  --scrollbar-thumb: #888;
+}
+
+[theme-mode='dark'] {
+  --scrollbar-background: #333;
+  --scrollbar-thumb: #aaa;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 6px;
+  border: 3px solid var(--scrollbar-background);
+}
+
 .app-modal.t-dialog--default {
   padding: 0;
 }

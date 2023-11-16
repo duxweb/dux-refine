@@ -19,6 +19,7 @@ interface ModuleProps {
   config: Config
   userMenu?: userMenuItem[]
 }
+
 export const Module = (props: ModuleProps) => {
   return (
     <moduleContext.Provider
