@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { Editor as TinyMce, IAllProps } from '@tinymce/tinymce-react'
 
 import 'tinymce/tinymce'
@@ -46,7 +46,7 @@ import './plugins/paste'
 import './plugins/word'
 import './plugins/uploads'
 
-import { useGetIdentity, useGetLocale, useApiUrl } from '@refinedev/core'
+import { useGetIdentity, useGetLocale, useApiUrl, useTranslate } from '@refinedev/core'
 
 // Content styles, including inline UI like fake cursors
 import contentCss from './skins/content/default/content.min.css?raw'
@@ -65,7 +65,10 @@ import './langs/ru'
 import './langs/ja'
 import { useAppStore } from '../../stores'
 import { useModuleContext } from '../../core'
-import { uploadFile } from './plugins/handler'
+import { formatHtml, uploadFile } from './plugins/handler'
+import { Dialog } from 'tdesign-react/esm'
+import FileManage from '../upload/manage'
+import { Editor as TypeEditor } from 'tinymce/tinymce'
 
 const BaseEditor = ({ init, ...rest }: IAllProps) => {
   const locale = useGetLocale()
@@ -106,17 +109,19 @@ const BaseEditor = ({ init, ...rest }: IAllProps) => {
 interface EditorProps {
   config?: IAllProps
   value?: string
-  defaultValue?: string
   disabled?: boolean
   onChange?: (value: unknown) => void
 }
 
-export const Editor = ({ config, value, onChange, defaultValue, disabled }: EditorProps) => {
+export const Editor = ({ config, value, onChange, disabled }: EditorProps) => {
   const { name, config: moduleConfig } = useModuleContext()
   const { data } = useGetIdentity<{
     token?: string
   }>()
   const apiUrl = useApiUrl()
+  const translate = useTranslate()
+  const [visible, setVisible] = useState(false)
+  const [editor, setEditor] = useState<TypeEditor>()
 
   const uploadConfig = {
     remoteUrl: `${apiUrl}/${name}/${moduleConfig.apiPath.upload}/remote`,
@@ -143,7 +148,7 @@ export const Editor = ({ config, value, onChange, defaultValue, disabled }: Edit
     ],
     toolbar:
       'code preview | blocks fontsize lineheight | forecolor backcolor bold italic underline strikethrough  subscript superscript  removeformat | \
-      alignleft aligncenter alignright alignjustify outdent indent | bullist numlist | pagebreak link table  |  image media customWord customImages',
+      alignleft aligncenter alignright alignjustify outdent indent | bullist numlist | pagebreak link table  |  image media customWord customImages fileManage',
 
     promotion: false,
     width: '100%',
@@ -178,6 +183,19 @@ export const Editor = ({ config, value, onChange, defaultValue, disabled }: Edit
       return uploadFile(blobInfo, uploadConfig, progress).then((res) => res?.url)
     },
     upload_manage: uploadConfig,
+    setup(editor) {
+      editor.ui.registry.addIcon(
+        'fileManage',
+        '<svg t="1700383415316" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5314" width="20" height="20"><path d="M841.6 238.4c-9.6-9.6-21.6-14.4-33.6-14.4H432L326.4 118.4c-4-4-9.6-8-15.2-10.4-6.4-2.4-12-4-18.4-4H80c-12 0-24.8 4.8-33.6 14.4S32 140 32 152v712c0 12 4.8 24.8 14.4 33.6S68 912 80 912h728c12 0 24.8-4.8 33.6-14.4 9.6-9.6 14.4-21.6 14.4-33.6V272c0-12-4.8-24.8-14.4-33.6z" fill="#FFD766" p-id="5315"></path><path d="M858.4 877.6c-3.2 9.6-8.8 18.4-17.6 24.8-8.8 6.4-18.4 9.6-28.8 9.6H88.8c-14.4 0-28.8-6.4-38.4-19.2s-12-28.8-7.2-42.4l139.2-464c3.2-9.6 8.8-18.4 17.6-24.8 8.8-6.4 18.4-9.6 28.8-9.6h724c14.4 0 28.8 6.4 38.4 19.2 9.6 12.8 12 28.8 7.2 42.4l-140 464z" fill="#FFAC33" p-id="5316"></path></svg>'
+      )
+      editor.ui.registry.addButton('fileManage', {
+        icon: 'fileManage',
+        onAction: function () {
+          setVisible(true)
+          setEditor(editor)
+        },
+      })
+    },
   }
 
   return (
@@ -195,6 +213,26 @@ export const Editor = ({ config, value, onChange, defaultValue, disabled }: Edit
         }}
         {...config}
       />
+      <Dialog
+        className='app-modal w-800px'
+        header={translate('fields.manage', {
+          ns: 'file',
+        })}
+        visible={visible}
+        destroyOnClose
+        footer={false}
+        onClose={() => setVisible(false)}
+      >
+        <FileManage
+          mode='multi'
+          onClose={() => setVisible(false)}
+          onChange={(data: Record<string, any>[]) => {
+            data?.map((item) => {
+              editor?.insertContent(formatHtml(item))
+            })
+          }}
+        />
+      </Dialog>
     </div>
   )
 }
