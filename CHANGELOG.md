@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.7.0
+### Feature
+- Add `FileManage` component
+- Optimize `Form Page` side width
+
 ## 0.6.0
 ### Feature
 - Add `Kbar` component

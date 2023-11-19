@@ -11,6 +11,7 @@ interface UploadProps extends Omit<TdUploadProps, 'onChange' | 'files' | 'defaul
   value?: UploadValue
   defaultValue?: UploadValue
   onChange?: (value?: UploadValue) => void
+  hookProps?: TdUploadProps
 }
 
 export const UploadFile = ({
@@ -19,9 +20,10 @@ export const UploadFile = ({
   defaultValue,
   onChange,
   multiple,
+  hookProps,
   ...props
 }: UploadProps) => {
-  const uploadParams = useUpload()
+  const uploadParams = useUpload(hookProps)
   const [state, setState] = useControllableValue<UploadValue>({ value, defaultValue, onChange })
 
   const files = useMemo(() => {

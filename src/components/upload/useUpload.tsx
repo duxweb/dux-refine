@@ -2,7 +2,7 @@ import { useApiUrl, useGetIdentity } from '@refinedev/core'
 import { TdUploadProps, UploadFile } from 'tdesign-react/esm'
 import { useModuleContext } from '../../core'
 
-export const useUpload = (): TdUploadProps => {
+export const useUpload = (props?: TdUploadProps): TdUploadProps => {
   const { name, config } = useModuleContext()
   const { data } = useGetIdentity<{
     token?: string
@@ -32,6 +32,7 @@ export const useUpload = (): TdUploadProps => {
       }
       return res
     },
+    ...props,
   }
 }
 

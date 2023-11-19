@@ -12,6 +12,7 @@ export interface apiPath {
   updatePassword?: string
   updateProfile?: string
   upload?: string
+  uploadManage?: string
   menu?: string
 }
 

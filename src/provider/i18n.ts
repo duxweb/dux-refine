@@ -7,12 +7,12 @@ import zhTWTranslation from '../locales/zh_TW/common.json'
 import koKRTranslation from '../locales/ko_KR/common.json'
 import jaJPTranslation from '../locales/ja_JP/common.json'
 import ruRUTranslation from '../locales/ru_RU/common.json'
-import enUSEditor from '../locales/en_US/editor.json'
-import zhCNEditor from '../locales/zh_CN/editor.json'
-import zhTWEditor from '../locales/zh_TW/editor.json'
-import koKREditor from '../locales/ko_KR/editor.json'
-import jaJPEditor from '../locales/ja_JP/editor.json'
-import ruRUEditor from '../locales/ru_RU/editor.json'
+import enUSFileManage from '../locales/en_US/file.json'
+import zhCNFileManage from '../locales/zh_CN/file.json'
+import zhTWFileManage from '../locales/zh_TW/file.json'
+import koKRFileManage from '../locales/ko_KR/file.json'
+import jaJPFileManage from '../locales/ja_JP/file.json'
+import ruRUFileManage from '../locales/ru_RU/file.json'
 
 let storedLang = localStorage.getItem('i18nextLng')
 
@@ -30,27 +30,27 @@ i18n
     resources: {
       'en-US': {
         common: enUSTranslation,
-        editor: enUSEditor,
+        file: enUSFileManage,
       },
       'zh-CN': {
         common: zhCNTranslation,
-        editor: zhCNEditor,
+        file: zhCNFileManage,
       },
       'zh-TW': {
         common: zhTWTranslation,
-        editor: zhTWEditor,
+        file: zhTWFileManage,
       },
       'ko-KR': {
         common: koKRTranslation,
-        editor: koKREditor,
+        file: koKRFileManage,
       },
       'ja-JP': {
         common: jaJPTranslation,
-        editor: jaJPEditor,
+        file: jaJPFileManage,
       },
       'ru-RU': {
         common: ruRUTranslation,
-        editor: ruRUEditor,
+        file: ruRUFileManage,
       },
     },
     ns: ['common'],

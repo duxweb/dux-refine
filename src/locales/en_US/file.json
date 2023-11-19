@@ -1,0 +1,15 @@
+{
+  "fields": {
+    "upload": "上传",
+    "all": "全部",
+    "create": "创建",
+    "cancel": "取消",
+    "confirm": "确认"
+  },
+  "placeholder": {
+    "dirName": "请输入目录名",
+    "noData": "暂无文件",
+    "noDataDesc": "暂无上传文件，请先上传",
+    "delete": "确认删除文件吗？"
+  }
+}

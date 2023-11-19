@@ -122,6 +122,8 @@ export const FormPage = ({
 
           {settingRender && (
             <Drawer
+              sizeDraggable
+              size='450px'
               confirmBtn={t('buttons.save')}
               onConfirm={() => {
                 setVisibleDrawer(false)

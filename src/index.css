@@ -96,3 +96,7 @@ html:root, *:root[theme-mode="light"] {
 .app-menu-drawer .t-drawer__body {
   @apply p-0;
 }
+
+.app-file-manage .t-upload .t-upload__trigger {
+  @apply block;
+}

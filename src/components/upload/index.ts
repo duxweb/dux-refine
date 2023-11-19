@@ -1,3 +1,5 @@
 export * from './useUpload'
 export * from './uploadFile'
 export * from './uploadImage'
+export * from './uploadFileManage'
+export * from './uploadImageManage'
