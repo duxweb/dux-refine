@@ -16,12 +16,13 @@ import { useUpload } from './useUpload'
 import { useModuleContext } from '../../core'
 
 interface PageProps {
+  accept?: string
   mode?: 'single' | 'multi'
   onChange?: (data: Record<string, any>[]) => void
   onClose?: () => void
 }
 
-const FileManage = ({ mode = 'single', onChange, onClose }: PageProps) => {
+const FileManage = ({ mode = 'single', accept, onChange, onClose }: PageProps) => {
   const [select, setSelect] = useState<unknown[]>([])
   const [folder, setFolder] = useState(0)
   const [page, setPage] = useState(1)
@@ -44,6 +45,7 @@ const FileManage = ({ mode = 'single', onChange, onClose }: PageProps) => {
         type: 'files',
         id: folder,
         page: page,
+        accept: accept,
       },
     },
   })
@@ -67,6 +69,7 @@ const FileManage = ({ mode = 'single', onChange, onClose }: PageProps) => {
         <div className='flex-none p-3'>
           <Upload
             {...uploadParams}
+            accept={accept}
             theme='file'
             fileListDisplay={<></>}
             trigger={

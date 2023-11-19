@@ -21,6 +21,7 @@ export interface UploadFileManageProps {
   defaultValue?: UploadValue
   onChange?: (value?: UploadValue) => void
   multiple?: boolean
+  accept?: string
 }
 
 export const UploadFileManage = ({
@@ -29,6 +30,7 @@ export const UploadFileManage = ({
   defaultValue,
   onChange,
   multiple,
+  accept,
 }: UploadFileManageProps) => {
   const [state, setState] = useControllableValue<UploadValue>({ value, defaultValue, onChange })
   const translate = useTranslate()
@@ -89,6 +91,7 @@ export const UploadFileManage = ({
         onClose={() => setVisible(false)}
       >
         <FileManage
+          accept={accept}
           mode={multiple ? 'multi' : 'single'}
           onClose={() => setVisible(false)}
           onChange={(data: Record<string, any>[]) => {
