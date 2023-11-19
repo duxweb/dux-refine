@@ -1,15 +1,18 @@
 {
   "fields": {
-    "upload": "上传",
-    "all": "全部",
-    "create": "创建",
-    "cancel": "取消",
-    "confirm": "确认"
+    "file": "파일 업로드",
+    "manage": "첨부 파일 관리",
+    "upload": "업로드",
+    "all": "전체",
+    "create": "생성",
+    "cancel": "취소",
+    "confirm": "확인"
   },
   "placeholder": {
-    "dirName": "请输入目录名",
-    "noData": "暂无文件",
-    "noDataDesc": "暂无上传文件，请先上传",
-    "delete": "确认删除文件吗？"
+    "image": "이미지를 선택하세요",
+    "dirName": "디렉토리 이름을 입력하세요",
+    "noData": "파일 없음",
+    "noDataDesc": "업로드된 파일이 없습니다, 먼저 업로드하세요",
+    "delete": "파일을 삭제하시겠습니까?"
   }
 }

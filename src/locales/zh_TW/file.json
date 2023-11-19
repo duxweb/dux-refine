@@ -1,15 +1,18 @@
 {
   "fields": {
-    "upload": "上传",
+    "file": "上傳檔案",
+    "manage": "附件管理",
+    "upload": "上傳",
     "all": "全部",
-    "create": "创建",
+    "create": "創建",
     "cancel": "取消",
-    "confirm": "确认"
+    "confirm": "確認"
   },
   "placeholder": {
-    "dirName": "请输入目录名",
-    "noData": "暂无文件",
-    "noDataDesc": "暂无上传文件，请先上传",
-    "delete": "确认删除文件吗？"
+    "image": "請選擇圖片",
+    "dirName": "請輸入目錄名稱",
+    "noData": "暫無檔案",
+    "noDataDesc": "暫無上傳檔案，請先上傳",
+    "delete": "確認刪除檔案嗎？"
   }
 }
