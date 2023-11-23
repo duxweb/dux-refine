@@ -53,7 +53,7 @@ export const SelectAsync = ({
       params: {
         ...query,
         keyword,
-        limit: 20,
+        pageSize: 20,
         page,
       },
     }).then((res) => {
