@@ -74,7 +74,7 @@ export const SiderCollapse = ({ defaultOpenKeys, menuData, type, col }: SiderCol
         <div className='relative w-full h-full flex items-center'>
           {collapse ? (
             <div
-              className='w-full h-full flex items-center justify-center cursor-pointer'
+              className='w-full h-15 flex items-center justify-center cursor-pointer'
               onClick={() => setCollapse(!collapse)}
             >
               {module.config?.sideLogo ? (
@@ -84,10 +84,10 @@ export const SiderCollapse = ({ defaultOpenKeys, menuData, type, col }: SiderCol
                       ? module.config?.appDarkLogo || module.config.appLogo
                       : module.config.appLogo
                   }
-                  className='h-3'
+                  className='h-4'
                 />
               ) : (
-                <DuxLogo className='h-3' />
+                <DuxLogo className='h-4' />
               )}
             </div>
           ) : (
