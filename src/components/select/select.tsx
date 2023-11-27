@@ -34,12 +34,13 @@ export const SelectAsync = ({
 
   const { request, isLoading } = useClient()
   useDeepCompareEffect(() => {
-    if (!hasExecuted && value) {
+    const data = value ? (Array.isArray(value) ? value : [value]) : []
+    if (!hasExecuted && data.length > 0) {
       setHasExecuted(true)
       request(url, 'get', {
         params: {
           ...query,
-          ids: Array.isArray(value) ? value.join(',') : value,
+          ids: data.join(','),
         },
       }).then((res) => {
         setSelect(res?.data || [])
@@ -49,13 +50,22 @@ export const SelectAsync = ({
   }, [url, query, value])
 
   useDeepCompareEffect(() => {
+    let params = {
+      ...query,
+      keyword,
+    }
+    if (pagination) {
+      params = {
+        ...params,
+        ...{
+          pageSize: 20,
+          page,
+        },
+      }
+    }
+
     request(url, 'get', {
-      params: {
-        ...query,
-        keyword,
-        pageSize: 20,
-        page,
-      },
+      params: params,
     }).then((res) => {
       setOptions(res?.data || [])
       if (pagination) {
