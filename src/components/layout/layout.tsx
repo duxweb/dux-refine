@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
-import { SiderCollapse } from '../sider'
+import { SiderCollapse, SiderApp } from '../sider'
 import { siderType } from '../../core/config'
 import { KBarProvider, Action } from 'kbar'
 import { Kbar } from './kbar'
@@ -95,12 +95,17 @@ export const Layout = ({ children, siderType = 'collapse' }: LayoutProps) => {
     <KBarProvider actions={actions}>
       <div className='inset-0 h-screen w-screen flex flex-row overflow-hidden'>
         <div className='app-sider-collapse   hidden md:block'>
-          <SiderCollapse
-            type={siderType}
-            col={true}
-            defaultOpenKeys={defaultOpenKeys}
-            menuData={menuData}
-          />
+          {siderType === 'collapse' && (
+            <SiderCollapse
+              type={siderType}
+              col={true}
+              defaultOpenKeys={defaultOpenKeys}
+              menuData={menuData}
+            />
+          )}
+          {siderType === 'app' && (
+            <SiderApp defaultOpenKeys={defaultOpenKeys} menuData={menuData} />
+          )}
         </div>
         <div className='w-1 flex flex-1 flex-col'>{children}</div>
       </div>
