@@ -95,7 +95,7 @@ export const Layout = ({ children, siderType = 'collapse' }: LayoutProps) => {
     <KBarProvider actions={actions}>
       <div className='inset-0 h-screen w-screen flex flex-row overflow-hidden'>
         <div className='app-sider-collapse   hidden md:block'>
-          {siderType === 'collapse' && (
+          {(siderType === 'collapse' || siderType === 'level') && (
             <SiderCollapse
               type={siderType}
               col={true}

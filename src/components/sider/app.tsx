@@ -2,14 +2,12 @@ import {
   Dispatch,
   SetStateAction,
   createContext,
-  useCallback,
   useContext,
   useEffect,
   useMemo,
   useState,
 } from 'react'
-import { useTranslate, useGo, useGetIdentity, useLogout, useSetLocale } from '@refinedev/core'
-import { Menu, Button, Dropdown, Avatar, DropdownOption, Input, Popup } from 'tdesign-react/esm'
+import { useTranslate, useGo } from '@refinedev/core'
 import { useKBar } from 'kbar'
 import { useModuleContext } from '../../core/module'
 import { useAppStore } from '../../stores'
@@ -88,12 +86,12 @@ export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
           </div>
         </div>
 
-        <div className='flex-1 h-1 flex flex-col overflow-y-auto gap-3 px-1'>
+        <div className='flex-1 h-1 flex flex-col overflow-y-auto gap-4 px-1'>
           {menuData.map((item, key) => (
             <div
               key={key}
               className={clsx([
-                'flex flex-col gap-0.5 justify-center items-center cursor-pointer',
+                'flex flex-col gap-1 justify-center items-center cursor-pointer hover:text-brand',
                 value?.[0] == item.key ? 'text-brand' : 'text-secondary',
               ])}
               onClick={() => {
@@ -141,7 +139,7 @@ export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
                 <SiderGroup menuData={sub} key={subIndex} />
               ) : (
                 <div className='py-2' key={subIndex}>
-                  <SiderItem menuData={sub} active={value?.[1]} />
+                  <SiderItem menuData={sub} active={value?.[1]} icon={sub.icon} />
                 </div>
               )
             })}
@@ -165,7 +163,8 @@ const SiderGroup = ({ menuData }: SiderGroupProps) => {
   const { value } = useContext(siderContext)
   return (
     <div className='pb-2 pt-2'>
-      <div className='text-sm text-placeholder pt-2 pb-4 px-4'>
+      <div className='text-sm text-secondary pt-2 pb-4 px-4 flex gap-2'>
+        {menuData.icon && <Icon name={menuData.icon} size='20px' />}
         {translate(`${menuData.label}.name`, menuData?.label)}
       </div>
       <div className='flex flex-col gap-1'>
@@ -180,9 +179,10 @@ const SiderGroup = ({ menuData }: SiderGroupProps) => {
 interface SiderItemProps {
   menuData: MenuItemProps
   active?: string
+  icon?: string
 }
 
-const SiderItem = ({ menuData, active }: SiderItemProps) => {
+const SiderItem = ({ menuData, active, icon }: SiderItemProps) => {
   const go = useGo()
   const translate = useTranslate()
 
@@ -200,7 +200,8 @@ const SiderItem = ({ menuData, active }: SiderItemProps) => {
         })
       }}
     >
-      <Icon name={menuData.icon} size='20px' />
+      <div className='w-[20px]'>{icon && <Icon name={icon} size='20px' />}</div>
+
       {translate(`${menuData.label}.name`, menuData?.label)}
     </div>
   )

@@ -23,7 +23,7 @@ export interface moduleApp {
   updatePassword?: boolean
 }
 
-export type siderType = 'app' | 'collapse'
+export type siderType = 'app' | 'collapse' | 'level'
 export type lang = 'en-US' | 'zh-CN' | 'zh-TW' | 'ko-KR' | 'ja-JP' | 'ru-RU'
 
 export interface Config {
