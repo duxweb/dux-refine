@@ -77,7 +77,7 @@ export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
         </div>
 
         <div className='flex-none  mb-6 flex justify-center items-center'>
-          <div className='w-8 h-8 shadow-sm hover:shadow rounded-full flex justify-center items-center bg-white cursor-pointer'>
+          <div className='w-8 h-8 shadow-sm hover:shadow rounded-full flex justify-center items-center bg-container cursor-pointer'>
             <Icon
               size='16px'
               name='search'
@@ -135,7 +135,7 @@ export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
         }}
       >
         {!collapse && panelData?.children?.length && panelData?.children.length > 0 ? (
-          <div className='flex flex-col w-[190px] bg-white divide-y divide-gray-3 px-3 text-sm '>
+          <div className='flex flex-col w-[190px] bg-container divide-y divide-gray-3 dark:divide-gray-11 px-3 text-sm '>
             {panelData?.children?.map((sub, subIndex) => {
               return sub.children && sub.children.length > 0 ? (
                 <SiderGroup menuData={sub} key={subIndex} />
@@ -191,7 +191,7 @@ const SiderItem = ({ menuData, active }: SiderItemProps) => {
     <div
       className={clsx([
         'flex gap-2 py-2.5 px-4 items-center rounded hover:text-brand-7 cursor-pointer',
-        active && active == menuData.key ? 'bg-brand-1 text-brand-7' : 'text-primary',
+        active && active == menuData.key ? 'bg-brand-1 text-brand-7' : 'text-secondary',
       ])}
       onClick={() => {
         setValue(getPathValue(menus, menuData.key))
