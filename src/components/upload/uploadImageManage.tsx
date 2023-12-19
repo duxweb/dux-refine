@@ -69,7 +69,8 @@ export const UploadImageManage = ({
       </div>
 
       <Dialog
-        className='app-modal w-800px'
+        className='app-modal'
+        width={'800px'}
         header={translate('fields.manage', {
           ns: 'file',
         })}

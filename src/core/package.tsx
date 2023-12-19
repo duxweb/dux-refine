@@ -113,7 +113,7 @@ export const createRefine = ({
     children: [
       {
         element: (
-          <Authenticated fallback={<CatchAllNavigate to='login' />}>
+          <Authenticated key={name} fallback={<CatchAllNavigate to='login' />}>
             <Layout siderType={config.sideType}>
               <CanAccess fallback={<Unauthorized />}>
                 <Outlet />
@@ -131,7 +131,7 @@ export const createRefine = ({
       },
       {
         element: (
-          <Authenticated fallback={<Outlet />}>
+          <Authenticated key={name} fallback={<Outlet />}>
             <NavigateToResource />
           </Authenticated>
         ),

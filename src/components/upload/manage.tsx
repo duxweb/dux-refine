@@ -257,7 +257,7 @@ const FileManage = ({ mode = 'single', accept, onChange, onClose }: PageProps) =
               {result?.data?.length > 0 ? (
                 <>
                   <div className='h-450px'>
-                    <div className='grid grid-cols-4 gap-3'>
+                    <div className='grid lg:grid-cols-4 grid-cols-2 gap-3'>
                       {result?.data?.map((item: Record<string, any>, key: number) => (
                         <FileItem
                           key={key}
