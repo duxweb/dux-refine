@@ -123,7 +123,7 @@ export const SiderCollapse = ({ defaultOpenKeys, menuData, type, col }: SiderCol
       operations={
         <>
           <div>
-            <User collapse={collapse} menu={module.userMenu} />
+            <SideUser collapse={collapse} menu={module.userMenu} />
           </div>
         </>
       }
@@ -215,9 +215,10 @@ export const SiderCollapseSub = ({ data }: SiderCollapseSubProps) => {
 
 interface UserProps {
   menu?: userMenuItem[]
+  size?: string
   collapse: boolean
 }
-const User = ({ collapse, menu = [] }: UserProps) => {
+export const SideUser = ({ collapse, menu = [], size = 'medium' }: UserProps) => {
   const { data } = useGetIdentity<{
     userInfo: Record<string, any>
   }>()
@@ -290,7 +291,11 @@ const User = ({ collapse, menu = [] }: UserProps) => {
 
   return (
     <div className='flex items-center gap-2 leading-5'>
-      <Avatar image={data?.userInfo?.avatar}>{data?.userInfo?.nickname[0]}</Avatar>
+      <Dropdown options={options} minColumnWidth={150} trigger='click'>
+        <Avatar className='cursor-pointer' image={data?.userInfo?.avatar} size={size}>
+          {data?.userInfo?.nickname[0]}
+        </Avatar>
+      </Dropdown>
       {!collapse && (
         <>
           <div className='flex-1 w-1 flex flex-col text-xs truncate'>
