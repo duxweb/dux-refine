@@ -1,13 +1,14 @@
-import Editor from 'react-simple-code-editor'
-import { highlight, languages } from 'prismjs'
-import 'prismjs/components/prism-clike'
-import 'prismjs/components/prism-json'
-import 'prismjs/components/prism-javascript'
-import 'prismjs/components/prism-bash'
+import AceEditor from 'react-ace'
+
+import 'ace-builds/src-noconflict/mode-html'
+import 'ace-builds/src-noconflict/mode-json'
+import 'ace-builds/src-noconflict/mode-json5'
+import 'ace-builds/src-noconflict/mode-latte'
+import 'ace-builds/src-noconflict/theme-tomorrow_night'
+import 'ace-builds/src-noconflict/theme-tomorrow'
+import 'ace-builds/src-noconflict/ext-language_tools'
 import { useAppStore } from '../../stores'
 import clsx from 'clsx'
-import './prism.scss'
-import './prism-dark.scss'
 
 export interface CodeEditorProps {
   onChange?: (value: string) => void
@@ -28,18 +29,16 @@ export const CodeEditor = ({
 }: CodeEditorProps) => {
   const dark = useAppStore((state) => state.dark)
   return (
-    <div
-      className={clsx([
-        'border border-component p-2 w-full rounded-sm',
-        className,
-        dark ? 'app-code-dark' : 'app-code-light',
-      ])}
-    >
-      <Editor
+    <div className={clsx(['border border-component w-full rounded-sm', className])}>
+      <AceEditor
         defaultValue={defaultValue}
         value={value || ''}
-        onValueChange={(code) => onChange?.(code)}
-        highlight={(code) => highlight(code, languages.js, type)}
+        width='100%'
+        fontSize='14px'
+        theme={dark ? 'tomorrow_night' : 'tomorrow'}
+        mode={type}
+        onChange={(code) => onChange?.(code)}
+        className='rounded-sm'
         {...props}
       />
     </div>
