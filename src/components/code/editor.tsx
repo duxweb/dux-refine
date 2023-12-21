@@ -39,6 +39,9 @@ export const CodeEditor = ({
         mode={type}
         onChange={(code) => onChange?.(code)}
         className='rounded-sm'
+        setOptions={{
+          useWorker: false,
+        }}
         {...props}
       />
     </div>
