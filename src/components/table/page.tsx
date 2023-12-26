@@ -6,6 +6,7 @@ import {
   Card,
   PrimaryTableCol,
   Radio,
+  FormInstanceFunctions,
 } from 'tdesign-react/esm'
 import { useWindowSize } from '../../core/helper'
 import { TableRef, TableTab, useTable, useTableProps } from './table'
@@ -25,6 +26,7 @@ export interface PageTableProps {
   actionRender?: () => React.ReactElement
   filterRender?: () => React.ReactElement
   batchRender?: () => React.ReactElement
+  filterForm?: FormInstanceFunctions
 }
 
 export const PageTable = forwardRef(
@@ -40,11 +42,12 @@ export const PageTable = forwardRef(
       actionRender,
       batchRender,
       tableHook,
+      filterForm,
     }: PageTableProps,
     ref: React.ForwardedRef<TableRef>
   ) => {
     const [size, sizeMap] = useWindowSize()
-    const [form] = Form.useForm()
+    const [form] = Form.useForm(filterForm)
     const { resource } = useResource()
     const { name: moduleName } = useModuleContext()
 
@@ -162,7 +165,9 @@ export const PageTable = forwardRef(
                   initialData={filters}
                   labelWidth={0}
                   className='app-filter flex-wrap'
-                  onValuesChange={setFilters}
+                  onValuesChange={(values) => {
+                    setFilters(values)
+                  }}
                   form={form}
                 >
                   {filterRender?.()}

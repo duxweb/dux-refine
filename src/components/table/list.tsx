@@ -1,5 +1,12 @@
 import React, { forwardRef, useImperativeHandle } from 'react'
-import { Form, Card, PrimaryTableCol, Radio, Pagination } from 'tdesign-react/esm'
+import {
+  Form,
+  Card,
+  PrimaryTableCol,
+  Radio,
+  Pagination,
+  FormInstanceFunctions,
+} from 'tdesign-react/esm'
 import { useWindowSize } from '../../core/helper'
 import { TableRef, TableTab, useTable, useTableProps, useTableReturnType } from './table'
 import { Main } from '../main'
@@ -19,6 +26,7 @@ export interface PageListProps {
   filterRender?: () => React.ReactElement
   batchRender?: () => React.ReactElement
   children?: (data: useTableReturnType<BaseRecord>) => React.ReactNode
+  filterForm?: FormInstanceFunctions
 }
 
 export const PageList = forwardRef(
@@ -34,6 +42,7 @@ export const PageList = forwardRef(
       batchRender,
       tableHook,
       children,
+      filterForm,
     }: PageListProps,
     ref: React.ForwardedRef<TableRef>
   ) => {
@@ -49,7 +58,7 @@ export const PageList = forwardRef(
     const { data, pagination, selecteds, selectOptions, filters, setFilters, refetch } = tableResult
 
     const [size, sizeMap] = useWindowSize()
-    const [form] = Form.useForm()
+    const [form] = Form.useForm(filterForm)
 
     useImperativeHandle(ref, () => {
       return {
