@@ -114,7 +114,11 @@ export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
               }}
             >
               <div>
-                <Icon size={'22px'} name={item.icon} />
+                {item.icon?.includes('i-') ? (
+                  <div className={clsx(['h-6 w-6', item.icon])}></div>
+                ) : (
+                  <Icon size={'22px'} name={item.icon} />
+                )}
               </div>
               <div className='text-sm'>{translate(`${item.label}.name`, item?.label)}</div>
             </div>
@@ -164,7 +168,12 @@ const SiderGroup = ({ menuData }: SiderGroupProps) => {
   return (
     <div className='pb-2 pt-2'>
       <div className='text-sm text-secondary pt-2 pb-4 px-4 flex gap-2'>
-        {menuData.icon && <Icon name={menuData.icon} size='20px' />}
+        {menuData.icon &&
+          (menuData.icon?.includes('i-') ? (
+            <div className={clsx(['h-5 w-5', menuData.icon])}></div>
+          ) : (
+            <Icon size={'20px'} name={menuData.icon} />
+          ))}
         {translate(`${menuData.label}.name`, menuData?.label)}
       </div>
       <div className='flex flex-col gap-1'>
@@ -200,7 +209,14 @@ const SiderItem = ({ menuData, active, icon }: SiderItemProps) => {
         })
       }}
     >
-      <div className='w-[20px]'>{icon && <Icon name={icon} size='20px' />}</div>
+      <div className='w-[20px]'>
+        {icon &&
+          (icon?.includes('i-') ? (
+            <div className={clsx(['h-5 w-5', icon])}></div>
+          ) : (
+            <Icon size={'20px'} name={icon} />
+          ))}
+      </div>
 
       {translate(`${menuData.label}.name`, menuData?.label)}
     </div>

@@ -18,6 +18,7 @@ import { MenuItemProps } from './menu'
 import { siderType, useModuleContext, userMenuItem } from '../../core'
 import { useAppStore } from '../../stores'
 import './style.css'
+import clsx from 'clsx'
 
 const getShortcutKey = () => {
   const userAgent = navigator.userAgent
@@ -138,7 +139,13 @@ export const SiderCollapse = ({ defaultOpenKeys, menuData, type, col }: SiderCol
           <MenuItem
             key={app.key}
             value={app.key}
-            icon={<Icon name={app.icon} />}
+            icon={
+              app.icon?.includes('i-') ? (
+                <div className={clsx(['h-6 w-6', app.icon])}></div>
+              ) : (
+                <Icon size={'22px'} name={app.icon} />
+              )
+            }
             onClick={() => {
               go({
                 to: app.route,
@@ -152,7 +159,15 @@ export const SiderCollapse = ({ defaultOpenKeys, menuData, type, col }: SiderCol
             key={app.key}
             title={translate(`${app.label}.name`, app?.label)}
             value={app.key}
-            icon={app.icon ? <Icon name={app.icon} /> : undefined}
+            icon={
+              app.icon ? (
+                app.icon?.includes('i-') ? (
+                  <div className={clsx(['h-6 w-6', app.icon])}></div>
+                ) : (
+                  <Icon size={'22px'} name={app.icon} />
+                )
+              ) : undefined
+            }
           >
             {app?.children?.length > 0 && <SiderCollapseSub data={app?.children} />}
           </SubMenu>
@@ -179,13 +194,29 @@ export const SiderCollapseSub = ({ data }: SiderCollapseSubProps) => {
         key={parent.key}
         title={translate(`${parent.label}.name`, parent?.label)}
         value={parent.key}
-        icon={parent.icon ? <Icon name={parent.icon} /> : undefined}
+        icon={
+          parent.icon ? (
+            parent.icon?.includes('i-') ? (
+              <div className={clsx(['h-6 w-6', parent.icon])}></div>
+            ) : (
+              <Icon size={'22px'} name={parent.icon} />
+            )
+          ) : undefined
+        }
       >
         {parent?.children?.map((sub: MenuItemProps) => (
           <MenuItem
             key={sub.key}
             value={sub.key}
-            icon={sub.icon ? <Icon name={sub.icon} /> : undefined}
+            icon={
+              sub.icon ? (
+                sub.icon?.includes('i-') ? (
+                  <div className={clsx(['h-6 w-6', sub.icon])}></div>
+                ) : (
+                  <Icon size={'22px'} name={sub.icon} />
+                )
+              ) : undefined
+            }
             onClick={() => {
               go({
                 to: sub.route,
@@ -200,7 +231,15 @@ export const SiderCollapseSub = ({ data }: SiderCollapseSubProps) => {
       <MenuItem
         key={parent.key}
         value={parent.key}
-        icon={parent.icon ? <Icon name={parent.icon} /> : undefined}
+        icon={
+          parent.icon ? (
+            parent.icon?.includes('i-') ? (
+              <div className={clsx(['h-6 w-6', parent.icon])}></div>
+            ) : (
+              <Icon size={'22px'} name={parent.icon} />
+            )
+          ) : undefined
+        }
         onClick={() => {
           go({
             to: parent.route,
