@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "clean": "rimraf dist",
-    "copy-files": "copyfiles -u 1 src/**/*.{css,scss,js} dist/",
+    "copy-files": "copyfiles -u 1 src/**/*.{css,scss,js,png,jpg,svg} dist/",
     "build": "yarn clean && tsc && yarn copy-files",
     "local": "yarn build && yalc push",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
@@ -28,6 +28,7 @@
     "@refinedev/core": "4.46.0",
     "@refinedev/react-router-v6": "4.5.4",
     "@tinymce/tinymce-react": "^4.3.2",
+    "@uiw/react-baidu-map": "^2.7.0",
     "ace-builds": "^1.32.2",
     "ahooks": "^3.7.8",
     "axios": "^1.6.2",
