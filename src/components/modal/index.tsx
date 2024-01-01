@@ -85,6 +85,7 @@ const ModalComp = forwardRef<ModalContextProps, ModalProps>(
             className={clsx(['app-modal', className])}
             style={{
               width: width,
+              maxWidth: '100%',
             }}
           >
             {component ? (

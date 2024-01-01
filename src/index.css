@@ -100,3 +100,7 @@ html:root, *:root[theme-mode="light"] {
 .app-file-manage .t-upload .t-upload__trigger {
   @apply block;
 }
+
+.app-card-tabs .t-card__body {
+  @apply pt-0;
+}

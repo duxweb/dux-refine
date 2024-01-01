@@ -5,6 +5,7 @@ import { Map, APILoader, Provider, Marker } from '@uiw/react-baidu-map'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import pointImg from './point.png'
 import { useTranslate } from '@refinedev/core'
+import { useAppContext } from '../../core'
 
 const PI = Math.PI
 const x_pi = (PI * 3000.0) / 180.0
@@ -50,9 +51,11 @@ export interface MapSelectProps {
 }
 
 export const MapSelect = ({ value, defaultValue, onChange, onSelect }: MapSelectProps) => {
+  const { config } = useAppContext()
+
   return (
     <div className='relative h-150 w-full'>
-      <APILoader akay='eYpCTECSntZmw0WyoQ7zFpCRR9cpgHFG'>
+      <APILoader akay={config?.baiduMap}>
         <Provider>
           <MapMarker
             value={value}

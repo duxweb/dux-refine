@@ -16,6 +16,7 @@ import { appHook } from '../../utils/hook'
 import { useModuleContext } from '../../core'
 
 export interface FormPageProps extends FormProps {
+  className?: string
   title?: React.ReactNode
   headerRender?: React.ReactNode
   actionRender?: React.ReactNode
@@ -24,6 +25,7 @@ export interface FormPageProps extends FormProps {
   rest?: boolean
 }
 export const FormPage = ({
+  className,
   title,
   children,
   onSubmit,
@@ -99,7 +101,7 @@ export const FormPage = ({
         </>
       }
     >
-      <Card>
+      <Card className={className}>
         <Form
           form={form}
           onResult={(data: FormResult) => {
