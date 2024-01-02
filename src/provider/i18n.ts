@@ -13,6 +13,12 @@ import zhTWFileManage from '../locales/zh_TW/file.json'
 import koKRFileManage from '../locales/ko_KR/file.json'
 import jaJPFileManage from '../locales/ja_JP/file.json'
 import ruRUFileManage from '../locales/ru_RU/file.json'
+import enUSImportManage from '../locales/en_US/import.json'
+import zhCNImportManage from '../locales/zh_CN/import.json'
+import zhTWImportManage from '../locales/zh_TW/import.json'
+import koKRImportManage from '../locales/ko_KR/import.json'
+import jaJPImportManage from '../locales/ja_JP/import.json'
+import ruRUImportManage from '../locales/ru_RU/import.json'
 
 let storedLang = localStorage.getItem('i18nextLng')
 
@@ -31,26 +37,32 @@ i18n
       'en-US': {
         common: enUSTranslation,
         file: enUSFileManage,
+        import: enUSImportManage,
       },
       'zh-CN': {
         common: zhCNTranslation,
         file: zhCNFileManage,
+        import: zhCNImportManage,
       },
       'zh-TW': {
         common: zhTWTranslation,
         file: zhTWFileManage,
+        import: zhTWImportManage,
       },
       'ko-KR': {
         common: koKRTranslation,
         file: koKRFileManage,
+        import: koKRImportManage,
       },
       'ja-JP': {
         common: jaJPTranslation,
         file: jaJPFileManage,
+        import: jaJPImportManage,
       },
       'ru-RU': {
         common: ruRUTranslation,
         file: ruRUFileManage,
+        import: ruRUImportManage,
       },
     },
     ns: ['common'],

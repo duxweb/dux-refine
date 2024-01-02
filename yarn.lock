@@ -3547,6 +3547,11 @@ export-to-csv-fix-source-map@^0.2.1:
   resolved "https://registry.yarnpkg.com/export-to-csv-fix-source-map/-/export-to-csv-fix-source-map-0.2.1.tgz#820020401ae7a29e3d08b9f863c03a112038bb8e"
   integrity sha512-02CGZG9Kduc0l9ErJ5b+99+PjeQIyoeVGz+f7/Yc04V4YKNPbdT63sQqBC5RW05va4w0MZen7pQpf92H3funYw==
 
+export-to-csv@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/export-to-csv/-/export-to-csv-1.2.2.tgz#24f09a2dba34aff65f8f97402a869e88232b8f58"
+  integrity sha512-d9BxkLlyxeyFU1yhQKGjnnEQj2fh6PjyDVGyiI/uj7PD/oe7Lo1551B1lTaQeXHGPRX2DHuk6i3JMZB6ncJApQ==
+
 express@^4.18.2:
   version "4.18.2"
   resolved "https://registry.yarnpkg.com/express/-/express-4.18.2.tgz#3fabe08296e930c796c19e3c516979386ba9fd59"

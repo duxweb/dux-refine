@@ -36,6 +36,7 @@
     "deepmerge": "^4.3.1",
     "echarts": "^5.4.3",
     "echarts-for-react": "^3.0.2",
+    "export-to-csv": "^1.2.2",
     "framer-motion": "^10.16.4",
     "i18next": "^23.6.0",
     "i18next-browser-languagedetector": "^7.1.0",

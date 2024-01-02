@@ -1,0 +1,6 @@
+{
+  "select": "Click to select file",
+  "example": "Download example template",
+  "loading": "Loading file, please wait...",
+  "complete": "File import complete"
+}
