@@ -165,18 +165,37 @@ interface SiderGroupProps {
 const SiderGroup = ({ menuData }: SiderGroupProps) => {
   const translate = useTranslate()
   const { value } = useContext(siderContext)
+  const [open, setOpen] = useState(value?.[1] == menuData.key)
   return (
     <div className='pb-2 pt-2'>
-      <div className='text-sm text-secondary pt-2 pb-4 px-4 flex gap-2'>
-        {menuData.icon &&
-          (menuData.icon?.includes('i-') ? (
-            <div className={clsx(['h-5 w-5', menuData.icon])}></div>
-          ) : (
-            <Icon size={'20px'} name={menuData.icon} />
-          ))}
-        {translate(`${menuData.label}.name`, menuData?.label)}
+      <div
+        className='text-sm text-secondary py-2.5 pl-4 pr-2 flex gap-2 cursor-pointer'
+        onClick={() => setOpen((v) => !v)}
+      >
+        <div className='flex gap-2 flex-1'>
+          {menuData.icon &&
+            (menuData.icon?.includes('i-') ? (
+              <div className={clsx(['h-5 w-5', menuData.icon])}></div>
+            ) : (
+              <Icon size={'20px'} name={menuData.icon} />
+            ))}
+          {translate(`${menuData.label}.name`, menuData?.label)}
+        </div>
+        <div>
+          <div
+            className={clsx([
+              'transition w-5 h-5 i-tabler:chevron-down text-placeholder',
+              open ? 'rotate-180' : 'rotate-0',
+            ])}
+          ></div>
+        </div>
       </div>
-      <div className='flex flex-col gap-1'>
+      <div
+        className={clsx([
+          'transition flex flex-col gap-1 overflow-hidden',
+          !open ? 'h-0' : 'h-auto',
+        ])}
+      >
         {menuData.children?.map((item, itemIndex) => (
           <SiderItem key={itemIndex} menuData={item} active={value?.[2]} />
         ))}
