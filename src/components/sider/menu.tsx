@@ -25,7 +25,7 @@ export const useMenu = (): UseMenuProps => {
   const { menuItems } = useRefMenu({
     hideOnMissingParameter: true,
   })
-  const { pathname } = useParsed()
+  const { pathname, resource } = useParsed()
   const [apiMenuData, setApiMenuData] = useState<MenuItemProps[]>([])
 
   const sortData = useCallback((arr: MenuItemProps[]): MenuItemProps[] => {
@@ -98,9 +98,9 @@ export const useMenu = (): UseMenuProps => {
   }, [apiMenuData, refineMenuData, sortData])
 
   const openkeys = useMemo(() => {
-    const pathList = getPathByKey(pathname || `/${name}`, menuData)
+    const pathList = getPathByKey(resource?.name || `/${name}`, menuData)
     return pathList.map((item) => item.key).reverse()
-  }, [menuData, name, pathname])
+  }, [menuData, name, resource])
 
   return {
     menuData: menuData,
@@ -117,7 +117,7 @@ const getPathByKey = (curKey: string, data: MenuItemProps[]) => {
     }
     for (const item of data) {
       path.push(item)
-      if (item.route === curKey) {
+      if (item.name === curKey) {
         result = JSON.parse(JSON.stringify(path))
         return
       }
