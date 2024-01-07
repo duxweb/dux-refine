@@ -11,6 +11,7 @@ import React, {
   useImperativeHandle,
   forwardRef,
   useContext,
+  useEffect,
 } from 'react'
 import { Dialog, DialogPlugin } from 'tdesign-react/esm'
 
@@ -48,15 +49,16 @@ const ModalComp = forwardRef<ModalContextProps, ModalProps>(
       onClose,
       className,
       width,
+      open,
       defaultOpen = false,
     },
     ref
   ) => {
-    const [open, setOpen] = useState(defaultOpen)
+    const [status, setStatus] = useState(defaultOpen)
     const AsyncContent = component ? lazy(component) : undefined
 
     const onCloseFun = useCallback(() => {
-      setOpen(false)
+      setStatus(false)
       onClose?.()
     }, [onClose])
 
@@ -64,17 +66,24 @@ const ModalComp = forwardRef<ModalContextProps, ModalProps>(
       onClose: onCloseFun,
     }))
 
+    useEffect(() => {
+      if (open == undefined) {
+        return
+      }
+      setStatus(open)
+    }, [open])
+
     return (
       <>
         {React.isValidElement(trigger) &&
           React.cloneElement(trigger, {
             onClick: () => {
-              setOpen(true)
+              setStatus(true)
             },
           })}
         <context.Provider value={{ onClose: onCloseFun }}>
           <Dialog
-            visible={open}
+            visible={status}
             onClose={onCloseFun}
             destroyOnClose
             header={title}

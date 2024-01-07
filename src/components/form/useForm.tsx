@@ -17,7 +17,7 @@ export interface useFormProps extends UseRefineFormProps {
 
 export interface useFormReturnProps extends UseFormReturnType {
   onSubmit: (e: SubmitContext) => void
-  formData: Record<string, any>
+  formData?: Record<string, any>
 }
 
 export const useForm = (props: useFormProps): useFormReturnProps => {
@@ -43,28 +43,21 @@ export const useForm = (props: useFormProps): useFormReturnProps => {
     ...props,
   })
 
-  const [data, setData] = useState<Record<string, any>>({})
-
-  useDeepCompareEffect(() => {
-    const info = props?.initData || result.queryResult?.data?.data
-    if (!info) {
-      return
-    }
-    setData(props?.initFormat?.(info) || info)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [result.queryResult?.data?.data])
-
   useDeepCompareEffect(() => {
     let isUnmounted = false
     if (isUnmounted) {
       return
     }
-    props?.form?.setFieldsValue(data)
+    if (!result.queryResult?.data) {
+      return
+    }
+
+    props?.form?.setFieldsValue(result.queryResult?.data?.data)
     return () => {
       isUnmounted = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
+  }, [result.queryResult?.data?.data])
 
   const onSubmit = useCallback(async (e: SubmitContext) => {
     if (e.validateResult === true) {
@@ -76,7 +69,7 @@ export const useForm = (props: useFormProps): useFormReturnProps => {
   return {
     ...result,
     onSubmit,
-    formData: data,
+    formData: result.queryResult?.data?.data,
   }
 }
 

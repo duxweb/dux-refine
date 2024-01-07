@@ -1,4 +1,10 @@
-import { Button, EnhancedTable, PrimaryTableCol, PrimaryTableCellParams } from 'tdesign-react/esm'
+import {
+  Button,
+  Table,
+  PrimaryTableCol,
+  PrimaryTableCellParams,
+  SelectOptions,
+} from 'tdesign-react/esm'
 import { useControllableValue } from 'ahooks'
 import {
   useMemo,
@@ -24,6 +30,8 @@ export interface ListformData {
 }
 
 export interface ListformProps {
+  select?: boolean
+  onSelect?: (selectedRowKeys: Array<string | number>, options: SelectOptions<any>) => void
   value?: Record<string, any>[]
   defaultValue?: Record<string, any>[]
   onChange?: (value: Record<string, any>[]) => void
@@ -31,6 +39,7 @@ export interface ListformProps {
   createAction?: boolean
   deleteAction?: boolean
   createCallback?: (value: Record<string, any>[]) => void
+  rowKey?: string
 }
 
 export const Listform = ({
@@ -38,13 +47,16 @@ export const Listform = ({
   createAction = true,
   deleteAction = true,
   createCallback,
+  select,
+  onSelect,
+  rowKey,
   ...props
 }: ListformProps) => {
   const translate = useTranslate()
   const [value, setValue] = useControllableValue<Record<string, any>[]>(props)
 
   const columns = useMemo<PrimaryTableCol[]>(() => {
-    const cols = options.map<PrimaryTableCol>((item) => {
+    let cols = options.map<PrimaryTableCol>((item) => {
       return {
         title: item.title,
         colKey: item.field,
@@ -66,6 +78,11 @@ export const Listform = ({
         },
       }
     })
+
+    if (select) {
+      cols = [{ colKey: 'row-select', type: 'multiple' }, ...cols]
+    }
+
     if (!createAction && !deleteAction) {
       return cols
     }
@@ -121,7 +138,13 @@ export const Listform = ({
 
   return (
     <context.Provider value>
-      <EnhancedTable bordered columns={columns} data={value || []} rowKey='key' />
+      <Table
+        bordered
+        columns={columns}
+        data={value || []}
+        rowKey={rowKey || 'id'}
+        onSelectChange={onSelect}
+      />
     </context.Provider>
   )
 }

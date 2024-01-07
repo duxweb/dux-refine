@@ -205,7 +205,7 @@ export const Editor = ({ config, value, onChange, disabled }: EditorProps) => {
           ...initData,
         }}
         disabled={disabled}
-        value={value}
+        value={value || ''}
         onEditorChange={(value) => {
           setTimeout(() => {
             onChange?.(value)

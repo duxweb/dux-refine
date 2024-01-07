@@ -59,7 +59,6 @@ export const Form = ({
       ...(meta || {}),
       params: queryParams,
     },
-    initData: initData,
     initFormat: initFormat,
     saveFormat: saveFormat,
     ...formParams,
@@ -84,7 +83,7 @@ export const Form = ({
     <TdForm
       onSubmit={onSubmitFun}
       disabled={formLoading}
-      initialData={formData}
+      initialData={initData || formData}
       form={form}
       preventSubmitDefault={true}
       {...formProps}
