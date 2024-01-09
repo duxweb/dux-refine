@@ -101,7 +101,7 @@ export const Listform = ({
               onClick={() => {
                 setValue((old) => {
                   const list = old || []
-                  return [list, createCallback?.(list) || {}]
+                  return [...list, createCallback?.(list) || {}]
                 })
               }}
             />
