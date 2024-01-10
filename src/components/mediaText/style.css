@@ -3,7 +3,7 @@
 }
 
 .app-media-text-content {
-  @apply flex-1 w-0 flex flex-col gap-1;
+  @apply flex-1 flex flex-col gap-1;
 }
 
 .app-media-text-title {
