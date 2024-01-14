@@ -1,7 +1,7 @@
 import { PaginationMini, Select, SelectProps } from 'tdesign-react/esm'
 import { ReactNode, useMemo, useState } from 'react'
-import { useClient } from '../../provider'
-import { useDeepCompareEffect } from 'ahooks'
+import { useSelect } from './useSelect'
+import { BaseKey, BaseOption } from '@refinedev/core'
 
 export interface SelectAsyncProps extends SelectProps {
   url: string
@@ -16,86 +16,52 @@ export interface SelectAsyncProps extends SelectProps {
 export const SelectAsync = ({
   url,
   query,
-  value,
-  defaultValue,
   pagination,
-  optionValue,
-  optionLabel,
+  optionValue = 'id',
+  optionLabel = 'title',
   optionRender,
   format,
   ...props
 }: SelectAsyncProps) => {
-  const [hasExecuted, setHasExecuted] = useState(false)
-  const [keyword, setKeyword] = useState<string>()
-  const [options, setOptions] = useState([])
-  const [select, setSelect] = useState([])
   const [page, setPage] = useState(1)
-  const [pages, setPages] = useState(1)
 
-  const { request, isLoading } = useClient()
-  useDeepCompareEffect(() => {
-    const data = value ? (Array.isArray(value) ? value : [value]) : []
-    if (!hasExecuted && data.length > 0) {
-      setHasExecuted(true)
-      request(url, 'get', {
-        params: {
-          ...query,
-          ids: data.join(','),
-        },
-      }).then((res) => {
-        setSelect(res?.data || [])
-      })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url, query, value])
+  const { options, queryResult, onSearch } = useSelect<Record<string, any>>({
+    resource: url,
+    optionLabel: optionLabel,
+    optionValue: optionValue,
+    defaultValue: (props.value || props.defaultValue) as BaseKey | BaseKey[],
+    meta: {
+      params: query,
+    },
+    pagination: {
+      mode: pagination ? 'server' : 'off',
+      current: page,
+      pageSize: 20,
+    },
+  })
 
-  useDeepCompareEffect(() => {
-    let params = {
-      ...query,
-      keyword,
-    }
-    if (pagination) {
-      params = {
-        ...params,
-        ...{
-          pageSize: 20,
-          page,
-        },
-      }
-    }
-
-    request(url, 'get', {
-      params: params,
-    }).then((res) => {
-      setOptions(res?.data || [])
-      if (pagination) {
-        setPage(res?.meta?.page || 1)
-        const totalPages = Math.ceil(res?.meta?.total / 20)
-        setPages(totalPages)
-      }
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, url, keyword, page])
+  const pages = useMemo(() => {
+    return Math.ceil(queryResult?.data?.meta?.total / 20)
+  }, [queryResult])
 
   const getOptions = useMemo(() => {
-    const mergedArray = [...options, ...select]
-    return Array.from(new Set(mergedArray)).map((item) => {
+    return Array.from(new Set(options)).map((item: BaseOption) => {
       return {
         content: optionRender?.(item),
-        label: item[optionLabel || 'label'],
-        value: item[optionValue || 'value'],
+        label: item?.label,
+        value: item?.value,
         row: item,
       }
     })
-  }, [optionLabel, optionRender, optionValue, options, select])
+  }, [optionRender, options])
 
   return (
     <Select
       options={getOptions}
-      onSearch={(k) => setKeyword(k)}
-      defaultValue={format?.(defaultValue) || defaultValue}
-      value={format?.(value) || value}
-      loading={isLoading}
+      onSearch={onSearch}
+      loading={queryResult.isLoading}
+      defaultValue={format?.(props.defaultValue) || props.defaultValue}
+      value={format?.(props.value) || props.value}
       panelBottomContent={
         pagination ? (
           <div className='flex justify-center pb-2'>

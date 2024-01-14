@@ -1060,6 +1060,11 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.15.tgz#596a1747233694d50f6ad8a7869fcb6f56cf5841"
   integrity sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==
 
+"@types/lodash@^4.14.202":
+  version "4.14.202"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.202.tgz#f09dbd2fb082d507178b2f2a5c7e74bd72ff98f8"
+  integrity sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==
+
 "@types/mdast@^3.0.0":
   version "3.0.15"
   resolved "https://registry.yarnpkg.com/@types/mdast/-/mdast-3.0.15.tgz#49c524a263f30ffa28b71ae282f813ed000ab9f5"
@@ -7453,10 +7458,10 @@ tdesign-icons-react@^0.3.0:
     "@babel/runtime" "^7.16.5"
     classnames "^2.2.6"
 
-tdesign-react@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/tdesign-react/-/tdesign-react-1.4.1.tgz#12e11588ffeb23eee6348618924c214e684e00a2"
-  integrity sha512-D0bnAyrqT2alJxUCJpnOmu0K3IF3flvs0R1w2wZAnHRZTt79sXllIqyO+qzlt3QEZIIcQAMzDEPTdkRcT7KzeQ==
+tdesign-react@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/tdesign-react/-/tdesign-react-1.5.0.tgz#114e354a24987eaa354d0429675d29b5e11760e4"
+  integrity sha512-AQBBZacspReGHktEY3OWD0XD7hSPtKkRiFLINHzz+gO0aTU+0wjEaogqiXMGiIuDkhQm6dHS4yElf2AssES2jg==
   dependencies:
     "@babel/runtime" "~7.17.2"
     "@popperjs/core" "~2.11.2"

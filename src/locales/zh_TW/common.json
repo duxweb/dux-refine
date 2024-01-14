@@ -96,6 +96,8 @@
     "back": "返回",
     "rest": "重置",
     "setting": "設置",
+    "restore": "還原",
+    "trash": "清空",
     "notAccessTitle": "您無權訪問"
   },
   "warnWhenUnsavedChanges": "未儲存的更改將不會保留。",

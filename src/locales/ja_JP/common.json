@@ -96,6 +96,8 @@
     "back": "戻る",
     "rest": "リセット",
     "setting": "設定",
+    "restore": "リストア",
+    "trash": "クリア",
     "notAccessTitle": "アクセス権がありません"
   },
   "warnWhenUnsavedChanges": "未保存の変更は破棄されます。",

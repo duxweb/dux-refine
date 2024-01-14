@@ -113,7 +113,7 @@ export const FormPage = ({
           }}
           formProps={{
             labelAlign: 'left',
-            className: 'divide-y divide-gray-2 dark:divide-gray-10 py-2',
+            className: 'divide-y divide-gray-2 dark:divide-gray-10',
             ...formProps,
           }}
           {...props}

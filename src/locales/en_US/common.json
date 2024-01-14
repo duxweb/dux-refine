@@ -95,6 +95,8 @@
     "back": "Back",
     "rest": "Rest",
     "setting": "Setting",
+    "restore": "Restore",
+    "trash": "Trash",
     "notAccessTitle": "You don't have permission to access"
   },
   "warnWhenUnsavedChanges": "Are you sure you want to leave? You have unsaved changes.",
