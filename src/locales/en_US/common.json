@@ -7,7 +7,9 @@
     "logout":"Logout",
     "light": "Light",
     "dark": "Dark",
-    "lang": "Language"
+    "lang": "Language",
+    "select": "Select",
+    "placeholderKeyword": "Please enter a keyword"
   },
   "pages": {
     "login": {

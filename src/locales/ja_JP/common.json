@@ -7,7 +7,9 @@
     "logout": "ログアウト",
     "light": "明るいモード",
     "dark": "ダークモード",
-    "lang": "言語切り替え"
+    "lang": "言語切り替え",
+    "select": "選択",
+    "placeholderKeyword": "キーワードを入力してください"
   },
   "pages": {
     "login": {

@@ -7,7 +7,9 @@
     "logout": "시스템 로그아웃",
     "light": "밝은 모드",
     "dark": "어두운 모드",
-    "lang": "언어 변경"
+    "lang": "언어 변경",
+    "select": "선택",
+    "placeholderKeyword": "키워드를 입력하세요"
   },
   "pages": {
     "login": {

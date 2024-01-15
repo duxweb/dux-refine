@@ -7,7 +7,9 @@
     "logout": "退出系统",
     "light": "明亮模式",
     "dark": "暗色模式",
-    "lang": "切换语言"
+    "lang": "切换语言",
+    "select": "选择",
+    "placeholderKeyword": "请输入关键词"
   },
   "pages": {
     "login": {

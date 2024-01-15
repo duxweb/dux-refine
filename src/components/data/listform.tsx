@@ -40,6 +40,7 @@ export interface ListformProps {
   deleteAction?: boolean
   createCallback?: (value: Record<string, any>[]) => void
   rowKey?: string
+  sort?: boolean
 }
 
 export const Listform = ({
@@ -49,7 +50,8 @@ export const Listform = ({
   createCallback,
   select,
   onSelect,
-  rowKey,
+  rowKey = 'index',
+  sort,
   ...props
 }: ListformProps) => {
   const translate = useTranslate()
@@ -136,13 +138,24 @@ export const Listform = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options])
 
+  const getData = useMemo(() => {
+    return (value || []).map((item, index) => {
+      item.index = index + 1
+      return item
+    })
+  }, [value])
+
   return (
     <context.Provider value>
       <Table
         bordered
+        dragSort={sort ? 'row' : undefined}
+        onDragSort={({ newData }) => {
+          setValue(newData)
+        }}
         columns={columns}
-        data={value || []}
-        rowKey={rowKey || 'id'}
+        data={getData}
+        rowKey={rowKey}
         onSelectChange={onSelect}
       />
     </context.Provider>
