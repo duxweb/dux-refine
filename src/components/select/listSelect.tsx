@@ -17,6 +17,7 @@ interface SpecProps {
   table?: TableProps
   tableHook?: useTableProps<BaseRecord, HttpError, BaseRecord>
   tableColumns?: PrimaryTableCol[]
+  sort?: boolean
 }
 
 export const ListSelect = ({
@@ -25,6 +26,7 @@ export const ListSelect = ({
   table,
   tableHook,
   tableColumns,
+  sort,
   ...props
 }: SpecProps) => {
   const translate = useTranslate()
@@ -38,7 +40,7 @@ export const ListSelect = ({
   })
 
   useEffect(() => {
-    setData(data)
+    setData(list?.data || [])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [list])
 
@@ -69,7 +71,7 @@ export const ListSelect = ({
           onChange={(values) => {
             setData(values)
           }}
-          sort
+          sort={sort}
         />
         <ModalSelect
           open={open}
