@@ -1,7 +1,7 @@
 import { PaginationMini, Select, SelectProps } from 'tdesign-react/esm'
 import { ReactNode, useMemo, useState } from 'react'
 import { useSelect } from './useSelect'
-import { BaseKey, BaseOption } from '@refinedev/core'
+import { BaseKey } from '@refinedev/core'
 
 export interface SelectAsyncProps extends SelectProps {
   url: string
@@ -25,7 +25,7 @@ export const SelectAsync = ({
 }: SelectAsyncProps) => {
   const [page, setPage] = useState(1)
 
-  const { options, queryResult, onSearch } = useSelect<Record<string, any>>({
+  const { queryResult, onSearch } = useSelect<Record<string, any>>({
     resource: url,
     optionLabel: optionLabel,
     optionValue: optionValue,
@@ -45,15 +45,15 @@ export const SelectAsync = ({
   }, [queryResult])
 
   const getOptions = useMemo(() => {
-    return Array.from(new Set(options)).map((item: BaseOption) => {
+    return Array.from(new Set(queryResult?.data?.data || [])).map((item: Record<string, any>) => {
       return {
         content: optionRender?.(item),
-        label: item?.label,
-        value: item?.value,
+        label: item[optionLabel],
+        value: item[optionValue],
         row: item,
       }
     })
-  }, [optionRender, options])
+  }, [optionLabel, optionRender, optionValue, queryResult?.data?.data])
 
   return (
     <Select
