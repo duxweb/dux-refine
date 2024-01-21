@@ -32,6 +32,7 @@ export interface Config {
   apiPath: apiPath
   defaultApp: string
   resourcesPrefix: boolean
+  indexName?: string
   moduleApp?: Record<string, moduleApp>
   sideType?: siderType
   baiduMap?: string

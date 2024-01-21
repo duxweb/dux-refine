@@ -98,9 +98,15 @@ export const useMenu = (): UseMenuProps => {
   }, [apiMenuData, refineMenuData, sortData])
 
   const openkeys = useMemo(() => {
-    const pathList = getPathByKey(resource?.name || `/${name}`, menuData)
-    return pathList.map((item) => item.key).reverse()
-  }, [menuData, name, resource])
+    const pathList = getNameByKey(resource?.name || `/${name}`, 'name', menuData)
+    let resKeys = pathList.map((item) => item.key).reverse()
+
+    if (resKeys.length == 0) {
+      const pathList = getNameByKey(pathname || `/${name}`, 'route', menuData)
+      resKeys = pathList.map((item) => item.key).reverse()
+    }
+    return resKeys
+  }, [menuData, name, resource, pathname])
 
   return {
     menuData: menuData,
@@ -108,7 +114,7 @@ export const useMenu = (): UseMenuProps => {
   }
 }
 
-const getPathByKey = (curKey: string, data: MenuItemProps[]) => {
+const getNameByKey = (curKey: string, name: 'name' | 'route', data: MenuItemProps[]) => {
   let result: MenuItemProps[] = []
 
   const traverse = (curKey: string | number, path: any[], data: MenuItemProps[]) => {
@@ -117,7 +123,7 @@ const getPathByKey = (curKey: string, data: MenuItemProps[]) => {
     }
     for (const item of data) {
       path.push(item)
-      if (item.name === curKey) {
+      if (item[name] === curKey) {
         result = JSON.parse(JSON.stringify(path))
         return
       }

@@ -56,8 +56,7 @@ export const Layout = ({ children, siderType = 'collapse' }: LayoutProps) => {
       id: 'light',
       name: t('common.light'),
       section: t('common.more'),
-      shortcut: ['l'],
-      keywords: 'l',
+      keywords: 'light',
       icon: <Icon name={'sunny'} />,
       perform: () => {
         setLight()
@@ -68,8 +67,7 @@ export const Layout = ({ children, siderType = 'collapse' }: LayoutProps) => {
       id: 'dark',
       name: t('common.dark'),
       section: t('common.more'),
-      shortcut: ['d'],
-      keywords: 'd',
+      keywords: 'dark',
       icon: <Icon name={'moon'} />,
       perform: () => {
         setDark()
@@ -80,8 +78,7 @@ export const Layout = ({ children, siderType = 'collapse' }: LayoutProps) => {
       id: 'logout',
       name: t('common.logout'),
       section: t('common.more'),
-      shortcut: ['o'],
-      keywords: 'o',
+      keywords: 'logout',
       icon: <Icon name={'logout'} />,
       perform: () => {
         logout()

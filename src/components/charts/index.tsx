@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react'
-import { EChartsOption } from 'echarts'
+import React, { useEffect, useMemo, useState } from 'react'
+import { EChartsOption, registerMap } from 'echarts'
 import ReactECharts from 'echarts-for-react'
 import { useAppStore } from '../../stores/app'
 import merge from 'deepmerge'
@@ -120,6 +120,7 @@ export const ChartLine = ({ labels, data, min, legend, options }: ChartLineProps
         name: item.name,
         data: item.data,
         type: 'line',
+        smooth: true,
       })),
       tooltip: {
         trigger: 'axis',
@@ -209,4 +210,64 @@ export const ChartRing = ({ data, min, options, single }: ChartRingProps) => {
     }
   }, [dark, data])
   return <Charts options={[config, options || {}]} min={min} single={single} />
+}
+
+export interface ChartMapProps {
+  name: string
+  map: string
+  data?: Record<string, any>[]
+  min?: boolean
+  single?: boolean
+  options?: EChartsOption
+}
+
+export const ChartMap = ({ name, map, data, min, options, single }: ChartMapProps) => {
+  const dark = useAppStore((state) => state.dark)
+  const [loading, setloading] = useState(true)
+  useEffect(() => {
+    fetch(`/maps/${map}.json`)
+      .then((r) => r.json())
+      .then((data) => {
+        registerMap('china', data)
+        setloading(false)
+      })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const config = useMemo<EChartsOption>(() => {
+    return {
+      visualMap: {
+        show: false,
+        min: 0,
+        max: 50000,
+        realtime: false,
+        calculable: true,
+        // inRange: {
+        //   color: ['#000', '#fedeb5', '#f96a35', '#c3380e', '#942005'],
+        // },
+      },
+      tooltip: {
+        trigger: 'item',
+        showDelay: 0,
+        transitionDuration: 0.2,
+      },
+      series: [
+        {
+          name: name,
+          type: 'map',
+          map: map,
+          label: {
+            show: false,
+          },
+          itemStyle: {
+            areaColor: !dark ? '#f2f3ff' : '#181818',
+          },
+          data: data,
+          zoom: 1.2,
+        },
+      ],
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dark, data, map])
+  return loading ? <></> : <Charts options={[config, options || {}]} min={min} single={single} />
 }

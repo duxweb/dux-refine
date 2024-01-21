@@ -14,6 +14,7 @@ export interface appContext {
   getApps: () => App[]
   addI18n: (lng: string, ns: string, resources: any) => void
   addListener: (name: string, callback: any) => void
+  config: Config
 }
 
 export interface appConfig {
@@ -71,15 +72,15 @@ export const AppProvider = ({ appsData, config }: AppProviderProps) => {
     }
 
     appsData.map((item) => {
-      item?.init?.({ createApp, getApp, getApps, addI18n, addListener })
+      item?.init?.({ createApp, getApp, getApps, addI18n, addListener, config })
     })
 
     appsData.map((item) => {
-      item?.register?.({ createApp, getApp, getApps, addI18n, addListener })
+      item?.register?.({ createApp, getApp, getApps, addI18n, addListener, config })
     })
 
     appsData.map((item) => {
-      item?.run?.({ createApp, getApp, getApps, addI18n, addListener })
+      item?.run?.({ createApp, getApp, getApps, addI18n, addListener, config })
     })
 
     const routes: RouteObject[] = [

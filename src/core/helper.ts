@@ -11,7 +11,14 @@ interface ResourceModuleProps extends ResourceProps {
   showElenemt?: React.ReactNode | null
 }
 
+interface ResourceIndex {
+  name: string
+  component: React.ReactNode
+}
+
 export interface App {
+  addIndexs: (index: ResourceIndex[]) => void
+  getIndexs: () => ResourceIndex[]
   addRouter: (routes: RouteObject[]) => void
   getRouter: () => RouteObject[]
   addResources: (resource: ResourceModuleProps[]) => void
@@ -23,6 +30,14 @@ export interface App {
 export const createApp = (): App => {
   let routers: RouteObject[] = []
   let resources: ResourceProps[] = []
+  let indexs: ResourceIndex[] = []
+
+  const addIndexs = (index: ResourceIndex[]) => {
+    indexs = [...indexs, ...index]
+  }
+  const getIndexs = () => {
+    return indexs
+  }
 
   const addResources = (resource: ResourceModuleProps[]) => {
     resource = resource?.map((item) => {
@@ -81,6 +96,8 @@ export const createApp = (): App => {
   }
 
   return {
+    addIndexs,
+    getIndexs,
     addRouter,
     getRouter,
     addResources,

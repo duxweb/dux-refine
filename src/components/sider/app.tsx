@@ -43,11 +43,8 @@ export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
   const dark = useAppStore((state) => state.dark)
 
   useEffect(() => {
-    if (value) {
-      return
-    }
     setValue(defaultOpenKeys.reverse())
-  }, [defaultOpenKeys, value])
+  }, [defaultOpenKeys])
 
   const panelData = useMemo(() => {
     return menuData.find((item) => {
@@ -75,14 +72,13 @@ export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
         </div>
 
         <div className='flex-none  mb-6 flex justify-center items-center'>
-          <div className='w-8 h-8 shadow-sm hover:shadow rounded-full flex justify-center items-center bg-container cursor-pointer'>
-            <Icon
-              size='16px'
-              name='search'
-              onClick={() => {
-                query.toggle()
-              }}
-            />
+          <div
+            className='w-8 h-8 shadow-sm hover:shadow rounded-full flex justify-center items-center bg-container cursor-pointer'
+            onClick={() => {
+              query.toggle()
+            }}
+          >
+            <Icon size='16px' name='search' />
           </div>
         </div>
 
