@@ -100,7 +100,9 @@
     "setting": "設定",
     "restore": "リストア",
     "trash": "クリア",
-    "notAccessTitle": "アクセス権がありません"
+    "notAccessTitle": "アクセス権がありません",
+    "submit": "提出",
+    "export": "エクスポート"
   },
   "warnWhenUnsavedChanges": "未保存の変更は破棄されます。",
   "notifications": {

@@ -133,7 +133,7 @@ export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
         }}
       >
         {!collapse && panelData?.children?.length && panelData?.children.length > 0 ? (
-          <div className='flex flex-col w-[190px] bg-container divide-y divide-gray-3 dark:divide-gray-11 px-3 text-sm '>
+          <div className='flex flex-col w-[190px] bg-container divide-y divide-gray-3 dark:divide-gray-11 px-3 text-sm overflow-y-auto'>
             {panelData?.children?.map((sub, subIndex) => {
               return sub.children && sub.children.length > 0 ? (
                 <SiderGroup menuData={sub} key={subIndex} />

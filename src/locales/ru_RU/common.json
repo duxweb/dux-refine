@@ -100,7 +100,9 @@
     "setting": "Настройки",
     "restore": "Восстановить",
     "trash": "Очистить",
-    "notAccessTitle": "У вас нет доступа"
+    "notAccessTitle": "У вас нет доступа",
+    "submit": "Отправить",
+    "export": "Экспорт"
   },
   "warnWhenUnsavedChanges": "Не сохраненные изменения не будут сохранены.",
   "notifications": {

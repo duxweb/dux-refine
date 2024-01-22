@@ -100,7 +100,9 @@
     "setting": "設置",
     "restore": "還原",
     "trash": "清空",
-    "notAccessTitle": "您無權訪問"
+    "notAccessTitle": "您無權訪問",
+    "submit": "提交",
+    "export": "導出"
   },
   "warnWhenUnsavedChanges": "未儲存的更改將不會保留。",
   "notifications": {

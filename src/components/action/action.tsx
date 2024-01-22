@@ -52,12 +52,14 @@ export const CreateAction = <T extends Extends>({
 }: ActionProps<T>) => {
   const translate = useTranslate()
   const { create } = useNavigation()
+  const { resource: res } = useResource()
 
   return (
     <Action
+      resource={resource}
       action={action}
       onClick={() => {
-        create(resource || '')
+        create(resource || res?.name || '')
       }}
       title={translate('buttons.create')}
       {...props}
@@ -75,12 +77,13 @@ export const ShowAction = <T extends Extends>({
 }: ActionIDProps<T>) => {
   const translate = useTranslate()
   const { show } = useNavigation()
+  const { resource: res } = useResource()
   return (
     <Action
       resource={resource}
       action={action}
       onClick={() => {
-        show(resource || '', rowId)
+        show(resource || res?.name || '', rowId)
       }}
       title={translate('buttons.show')}
       {...props}
@@ -96,13 +99,14 @@ export const EditAction = <T extends Extends>({
 }: ActionIDProps<T>) => {
   const translate = useTranslate()
   const { edit } = useNavigation()
+  const { resource: res } = useResource()
 
   return (
     <Action
       resource={resource}
       action={action}
       onClick={() => {
-        edit(resource || '', rowId)
+        edit(resource || res?.name || '', rowId)
       }}
       title={translate('buttons.edit')}
       {...props}

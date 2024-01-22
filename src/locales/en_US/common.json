@@ -99,7 +99,9 @@
     "setting": "Setting",
     "restore": "Restore",
     "trash": "Trash",
-    "notAccessTitle": "You don't have permission to access"
+    "notAccessTitle": "You don't have permission to access",
+    "submit": "Submit",
+    "export": "Export"
   },
   "warnWhenUnsavedChanges": "Are you sure you want to leave? You have unsaved changes.",
   "notifications": {
