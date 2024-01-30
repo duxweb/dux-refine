@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { DuxLogo } from '../logo'
 import { useWindowSize } from '../../core'
-import { Button, Drawer, Menu } from 'tdesign-react/esm'
+import { Button, Menu } from 'tdesign-react/esm'
 import { MoreIcon, Icon } from 'tdesign-icons-react'
 import { TabMenu } from './menu'
+import clsx from 'clsx'
 const { HeadMenu } = Menu
 
 interface HeaderProps {
@@ -34,7 +35,12 @@ const Header = ({ title, icon, actions, children }: HeaderProps) => {
         {size > sizeMap.md &&
           (children || (
             <div className='flex items-center gap-2'>
-              {icon && <Icon name={icon} />}
+              {icon?.includes('i-') ? (
+                <div className={clsx(['t-icon', icon])}></div>
+              ) : (
+                <Icon name={icon} />
+              )}
+
               <div className='text-base'>{title}</div>
             </div>
           ))}

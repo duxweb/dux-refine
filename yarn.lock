@@ -4026,6 +4026,11 @@ fuse.js@^6.6.2:
   resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-6.6.2.tgz#fe463fed4b98c0226ac3da2856a415576dc9a111"
   integrity sha512-cJaJkxCCxC8qIIcPBF9yGxY0W/tVZS3uEISDxhYIdtk8OL93pe+6Zj7LjCqVV4dzbqcriOZ+kQ/NE4RXZHsIGA==
 
+gcoord@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/gcoord/-/gcoord-1.0.5.tgz#bd92a1d8d3e8ab9470f5f74fbafffd11ca516413"
+  integrity sha512-IJjyWd7Q57K36SzoEAZ5LEnhFVXVR3996WJp/3NlleXVBzb/GcORfNhCw8JuZPvSGloHgG0yhPFK4Aqf0t/ohg==
+
 gensync@^1.0.0-beta.2:
   version "1.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"

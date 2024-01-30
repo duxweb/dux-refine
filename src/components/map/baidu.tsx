@@ -6,20 +6,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import pointImg from './point.png'
 import { useTranslate } from '@refinedev/core'
 import { useAppContext } from '../../core'
+import gcoord, { CRSTypes } from 'gcoord'
 
 const PI = Math.PI
 const x_pi = (PI * 3000.0) / 180.0
-
-//GCJ-02 to BD-09
-export const bdEncrypt = (gcjLat: number, gcjLng: number) => {
-  const x = gcjLng,
-    y = gcjLat
-  const z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * x_pi)
-  const theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * x_pi)
-  const bdLon = z * Math.cos(theta) + 0.0065
-  const bdLat = z * Math.sin(theta) + 0.006
-  return { lat: bdLat, lng: bdLon }
-}
 
 //BD-09 to GCJ-02
 export const bdDecrypt = (bdLat: number, gcjLng: number) => {
@@ -48,9 +38,10 @@ export interface MapSelectProps {
   onSelect?: (data?: MapSelectData) => void
   value?: MapSelectValue
   defaultValue?: MapSelectValue
+  type?: CRSTypes
 }
 
-export const MapSelect = ({ value, defaultValue, onChange, onSelect }: MapSelectProps) => {
+export const MapSelect = ({ value, defaultValue, onChange, onSelect, type }: MapSelectProps) => {
   const { config } = useAppContext()
 
   return (
@@ -62,6 +53,7 @@ export const MapSelect = ({ value, defaultValue, onChange, onSelect }: MapSelect
             defaultValue={defaultValue}
             onChange={onChange}
             onSelect={onSelect}
+            type={type}
           />
         </Provider>
       </APILoader>
@@ -69,7 +61,7 @@ export const MapSelect = ({ value, defaultValue, onChange, onSelect }: MapSelect
   )
 }
 
-const MapMarker = ({ onSelect, ...props }: MapSelectProps) => {
+const MapMarker = ({ onSelect, type = gcoord.GCJ02, ...props }: MapSelectProps) => {
   const [data, setData] = useControllableValue<MapSelectValue | undefined>(props)
   const [address, setAddress] = useState('')
 
@@ -81,7 +73,11 @@ const MapMarker = ({ onSelect, ...props }: MapSelectProps) => {
 
   const setGeo = useCallback(
     (point: BMap.Point) => {
-      const gcjData = bdDecrypt(point.lat, point.lng)
+      const result = gcoord.transform([point.lng, point.lat], gcoord.BD09, type)
+      const gcjData = {
+        lng: result[0],
+        lat: result[1],
+      }
       setData({
         lat: gcjData.lat,
         lng: gcjData.lng,
@@ -136,8 +132,13 @@ const MapMarker = ({ onSelect, ...props }: MapSelectProps) => {
     if (!data) {
       return {}
     }
-    return bdEncrypt(Number(data.lat), Number(data.lng))
-  }, [data])
+    const result = gcoord.transform([Number(data.lng), Number(data.lat)], type, gcoord.BD09)
+
+    return {
+      lng: result[0],
+      lat: result[1],
+    } as Record<string, number>
+  }, [data, type])
 
   return (
     <>
