@@ -1,6 +1,6 @@
 {
   "name": "@duxweb/dux-refine",
-  "version": "0.8.3",
+  "version": "0.8.5",
   "description": "🌲 Integrated UI based on refine and tdesign",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -38,6 +38,7 @@
     "echarts-for-react": "^3.0.2",
     "export-to-csv": "^1.2.2",
     "framer-motion": "^10.16.4",
+    "gcoord": "^1.0.5",
     "i18next": "^23.6.0",
     "i18next-browser-languagedetector": "^7.1.0",
     "kbar": "^0.1.0-beta.44",
