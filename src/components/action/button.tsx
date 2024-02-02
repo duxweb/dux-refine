@@ -14,6 +14,8 @@ import {
   DeleteManyAction,
   EditAction,
   EditActionModal,
+  ExportAction,
+  ExportActionProps,
   ModalActionProps,
   ShowAction,
   ShowActionModal,
@@ -85,4 +87,15 @@ export const ShowButtonModal = ({ ...props }: ModalButtonProps) => {
 
 export const EditButtonModal = ({ ...props }: ModalButtonProps) => {
   return <EditActionModal<TdButtonProps> Cp={TdButton} {...props} />
+}
+
+type ExportButtonProps = ExportActionProps<TdButtonProps>
+export const ExportButton = ({ ...props }: ExportButtonProps) => {
+  return (
+    <ExportAction<TdButtonProps>
+      Cp={TdButton}
+      icon={<div className='t-icon i-tabler:file-export'></div>}
+      {...props}
+    />
+  )
 }

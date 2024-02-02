@@ -14,6 +14,8 @@ import {
   DeleteManyAction,
   EditAction,
   EditActionModal,
+  ExportAction,
+  ExportActionProps,
   ModalActionProps,
   ShowAction,
   ShowActionModal,
@@ -73,4 +75,9 @@ export const ShowLinkModal = ({ ...props }: ModalLinkProps) => {
 
 export const EditLinkModal = ({ ...props }: ModalLinkProps) => {
   return <EditActionModal<TdLinkProps> Cp={TdLink} {...props} />
+}
+
+type ExportLinkProps = ExportActionProps<TdLinkProps>
+export const ExportLink = ({ ...props }: ExportLinkProps) => {
+  return <ExportAction<TdLinkProps> Cp={TdLink} {...props} />
 }

@@ -13,6 +13,7 @@ export interface appContext {
   getApp: (name: string) => App
   getApps: () => App[]
   addI18n: (lng: string, ns: string, resources: any) => void
+  addI18ns: (files: Record<string, unknown>) => void
   addListener: (name: string, callback: any) => void
   config: Config
 }
@@ -65,6 +66,25 @@ export const AppProvider = ({ appsData, config }: AppProviderProps) => {
       i18n.addResourceBundle(lng, ns, resources)
     }
 
+    const addI18ns = (files: Record<string, unknown>) => {
+      for (const path in files) {
+        const filename = path.split('/').pop()
+        if (!filename) {
+          continue
+        }
+        const names = filename.split('.')
+        const messages = files[path] as Record<string, any>
+        let packageName = 'common'
+        let name = names[0]
+
+        if (names[1] != 'json') {
+          packageName = names[0]
+          name = names[1]
+        }
+        i18n.addResourceBundle(name, packageName, messages.default)
+      }
+    }
+
     const addListener = (name: string, callback: any) => {
       setEvent((e) => {
         return { ...e, callback }
@@ -72,15 +92,15 @@ export const AppProvider = ({ appsData, config }: AppProviderProps) => {
     }
 
     appsData.map((item) => {
-      item?.init?.({ createApp, getApp, getApps, addI18n, addListener, config })
+      item?.init?.({ createApp, getApp, getApps, addI18n, addI18ns, addListener, config })
     })
 
     appsData.map((item) => {
-      item?.register?.({ createApp, getApp, getApps, addI18n, addListener, config })
+      item?.register?.({ createApp, getApp, getApps, addI18n, addI18ns, addListener, config })
     })
 
     appsData.map((item) => {
-      item?.run?.({ createApp, getApp, getApps, addI18n, addListener, config })
+      item?.run?.({ createApp, getApp, getApps, addI18n, addI18ns, addListener, config })
     })
 
     const routes: RouteObject[] = [

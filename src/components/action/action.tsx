@@ -6,6 +6,7 @@ import {
   BaseKey,
   useDelete,
   useDeleteMany,
+  useExport,
 } from '@refinedev/core'
 import { ComponentType } from 'react'
 import {
@@ -285,4 +286,42 @@ export const EditActionModal = <T extends Extends>({
 }: ModalActionProps<T>) => {
   const translate = useTranslate()
   return <ActionModal title={title || translate('buttons.edit')} action={action} {...props} />
+}
+
+export type ExportActionProps<T> = ActionProps<T> & {
+  resourceExport?: string
+  map?: (item: Record<string, any>) => Record<string, any>
+  filter?: Record<string, any>
+}
+
+export const ExportAction = <T extends Extends>({
+  resource,
+  action = 'list',
+  resourceExport,
+  title,
+  map,
+  filter,
+  Cp,
+  ...props
+}: ExportActionProps<T>) => {
+  const translate = useTranslate()
+  const { resource: res } = useResource()
+
+  const { triggerExport, isLoading } = useExport<Record<string, any>>({
+    resource: resourceExport || resource,
+    mapData: map,
+    meta: {
+      params: filter,
+    },
+  })
+
+  return (
+    <CanAccess resource={resource || res?.name} action={action}>
+      {Cp && (
+        <Cp theme='primary' loading={isLoading} onClick={triggerExport} {...props}>
+          {props?.children || title || translate('buttons.export')}
+        </Cp>
+      )}
+    </CanAccess>
+  )
 }
