@@ -1,4 +1,5 @@
 export * from './useUpload'
+export * from './manage'
 export * from './uploadFile'
 export * from './uploadImage'
 export * from './uploadFileManage'

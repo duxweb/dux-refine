@@ -67,7 +67,7 @@ import { useAppStore } from '../../stores'
 import { useModuleContext } from '../../core'
 import { formatHtml, uploadFile } from './plugins/handler'
 import { Dialog } from 'tdesign-react/esm'
-import FileManage from '../upload/manage'
+import { FileManage } from '../upload/manage'
 import { Editor as TypeEditor } from 'tinymce/tinymce'
 
 const BaseEditor = ({ init, ...rest }: IAllProps) => {

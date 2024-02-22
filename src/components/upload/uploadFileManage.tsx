@@ -4,7 +4,7 @@ import { useState } from 'react'
 import clsx from 'clsx'
 import { Icon } from 'tdesign-icons-react/esm'
 import { useTranslate } from '@refinedev/core'
-import FileManage from './manage'
+import { FileManage } from './manage'
 
 interface FileValue {
   url: string

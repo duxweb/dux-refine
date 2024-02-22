@@ -15,14 +15,14 @@ import { Icon } from 'tdesign-icons-react'
 import { useUpload } from './useUpload'
 import { useModuleContext } from '../../core'
 
-interface PageProps {
+export interface FileManageProps {
   accept?: string
   mode?: 'single' | 'multi'
   onChange?: (data: Record<string, any>[]) => void
   onClose?: () => void
 }
 
-const FileManage = ({ mode = 'single', accept, onChange, onClose }: PageProps) => {
+export const FileManage = ({ mode = 'single', accept, onChange, onClose }: FileManageProps) => {
   const [select, setSelect] = useState<unknown[]>([])
   const [folder, setFolder] = useState(0)
   const [page, setPage] = useState(1)
@@ -500,5 +500,3 @@ const FileTopic = ({ mime = '', url }: FileIconProps) => {
       )
   }
 }
-
-export default FileManage
