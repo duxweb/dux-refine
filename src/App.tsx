@@ -11,6 +11,8 @@ import zhTWConfig from 'tdesign-react/esm/locale/zh_TW'
 import ruRUConfig from 'tdesign-react/esm/locale/ru_RU'
 import 'tdesign-react/esm/style/index.js'
 
+import 'overlayscrollbars/overlayscrollbars.css'
+
 // app
 import { useAppStore } from './stores/app'
 

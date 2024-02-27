@@ -35,10 +35,14 @@ const Header = ({ title, icon, actions, children }: HeaderProps) => {
         {size > sizeMap.md &&
           (children || (
             <div className='flex items-center gap-2'>
-              {icon?.includes('i-') ? (
-                <div className={clsx(['t-icon', icon])}></div>
+              {icon ? (
+                icon?.includes('i-') ? (
+                  <div className={clsx(['t-icon', icon])}></div>
+                ) : (
+                  <Icon name={icon} />
+                )
               ) : (
-                <Icon name={icon} />
+                ''
               )}
 
               <div className='text-base'>{title}</div>

@@ -16,6 +16,7 @@ import { DuxLogo } from '../logo'
 import { Icon } from 'tdesign-icons-react'
 import clsx from 'clsx'
 import { SideUser } from './collapse'
+import { OverlayScrollbarsComponent } from 'overlayscrollbars-react'
 
 export interface SiderAppProps {
   menuData: MenuItemProps[]
@@ -81,46 +82,46 @@ export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
             <Icon size='16px' name='search' />
           </div>
         </div>
-
-        <div className='flex-1 h-1 flex flex-col overflow-y-auto gap-4 px-1'>
-          {menuData.map((item, key) => (
-            <div
-              key={key}
-              className={clsx([
-                'flex flex-col gap-1 justify-center items-center cursor-pointer hover:text-brand',
-                value?.[0] == item.key ? 'text-brand' : 'text-secondary',
-              ])}
-              onClick={() => {
-                if (item.route) {
-                  go({
-                    to: item.route,
-                  })
-                  setValue([item.key])
-                } else if (item.children?.[0]?.route) {
-                  go({
-                    to: item.children[0].route,
-                  })
-                  setValue([item.key, item.children[0].key])
-                } else if (item.children?.[0]?.children?.[0]?.route) {
-                  go({
-                    to: item.children[0].children[0].route,
-                  })
-                  setValue([item.key, item.children[0].key, item.children[0].children[0].key])
-                }
-              }}
-            >
-              <div>
-                {item.icon?.includes('i-') ? (
-                  <div className={clsx(['h-6 w-6', item.icon])}></div>
-                ) : (
-                  <Icon size={'22px'} name={item.icon} />
-                )}
+        <OverlayScrollbarsComponent defer className='flex-1 h-1'>
+          <div className=' flex flex-col gap-4 px-1'>
+            {menuData.map((item, key) => (
+              <div
+                key={key}
+                className={clsx([
+                  'flex flex-col gap-1 justify-center items-center cursor-pointer hover:text-brand',
+                  value?.[0] == item.key ? 'text-brand' : 'text-secondary',
+                ])}
+                onClick={() => {
+                  if (item.route) {
+                    go({
+                      to: item.route,
+                    })
+                    setValue([item.key])
+                  } else if (item.children?.[0]?.route) {
+                    go({
+                      to: item.children[0].route,
+                    })
+                    setValue([item.key, item.children[0].key])
+                  } else if (item.children?.[0]?.children?.[0]?.route) {
+                    go({
+                      to: item.children[0].children[0].route,
+                    })
+                    setValue([item.key, item.children[0].key, item.children[0].children[0].key])
+                  }
+                }}
+              >
+                <div>
+                  {item.icon?.includes('i-') ? (
+                    <div className={clsx(['h-6 w-6', item.icon])}></div>
+                  ) : (
+                    <Icon size={'22px'} name={item.icon} />
+                  )}
+                </div>
+                <div className='text-sm'>{translate(`${item.label}.name`, item?.label)}</div>
               </div>
-              <div className='text-sm'>{translate(`${item.label}.name`, item?.label)}</div>
-            </div>
-          ))}
-        </div>
-
+            ))}
+          </div>
+        </OverlayScrollbarsComponent>
         <div className='flex-none flex justify-center items-center py-2'>
           <SideUser collapse={true} menu={module.userMenu} size='large' />
         </div>
@@ -133,17 +134,19 @@ export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
         }}
       >
         {!collapse && panelData?.children?.length && panelData?.children.length > 0 ? (
-          <div className='flex flex-col w-[190px] bg-container divide-y divide-gray-3 dark:divide-gray-11 px-3 text-sm overflow-y-auto'>
-            {panelData?.children?.map((sub, subIndex) => {
-              return sub.children && sub.children.length > 0 ? (
-                <SiderGroup menuData={sub} key={subIndex} />
-              ) : (
-                <div className='py-2' key={subIndex}>
-                  <SiderItem menuData={sub} active={value?.[1]} icon={sub.icon} />
-                </div>
-              )
-            })}
-          </div>
+          <OverlayScrollbarsComponent defer className='w-[190px] bg-container'>
+            <div className='flex flex-col divide-y divide-gray-3 dark:divide-gray-11 px-3 text-sm'>
+              {panelData?.children?.map((sub, subIndex) => {
+                return sub.children && sub.children.length > 0 ? (
+                  <SiderGroup menuData={sub} key={subIndex} />
+                ) : (
+                  <div className='py-2' key={subIndex}>
+                    <SiderItem menuData={sub} active={value?.[1]} icon={sub.icon} />
+                  </div>
+                )
+              })}
+            </div>
+          </OverlayScrollbarsComponent>
         ) : (
           ''
         )}
