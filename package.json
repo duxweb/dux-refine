@@ -1,6 +1,6 @@
 {
   "name": "@duxweb/dux-refine",
-  "version": "0.8.11",
+  "version": "0.8.12",
   "description": "🌲 Integrated UI based on refine and tdesign",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -46,6 +46,8 @@
     "less": "^4.2.0",
     "lodash-es": "^4.17.21",
     "mammoth": "^1.6.0",
+    "overlayscrollbars": "^2.5.0",
+    "overlayscrollbars-react": "^0.5.4",
     "prismjs": "^1.29.0",
     "query-string": "^8.1.0",
     "react-ace": "^10.1.0",
