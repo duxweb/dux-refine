@@ -87,6 +87,7 @@ export const FileManage = ({ mode = 'single', accept, onChange, onClose }: FileM
               setUploadLoading(false)
               fileRefetch()
             }}
+            multiple
             formatRequest={(requestData) => {
               requestData.dir_id = folder
               return requestData
