@@ -13,6 +13,7 @@ import React, {
   ReactElement,
   ReactNode,
   SetStateAction,
+  useCallback,
 } from 'react'
 import { useTranslate } from '@refinedev/core'
 
@@ -27,6 +28,7 @@ export interface ListformData {
     cell: PrimaryTableCellParams<Record<string, any>>,
     setValue: (v: SetStateAction<Record<string, any>[]>, ...args: any[]) => void
   ) => ReactNode
+  copy?: boolean
 }
 
 export interface ListformProps {
@@ -57,10 +59,47 @@ export const Listform = ({
   const translate = useTranslate()
   const [value, setValue] = useControllableValue<Record<string, any>[]>(props)
 
+  const getData = useMemo<Record<string, any>[]>(() => {
+    return (value || []).map((item, index) => {
+      item.index = index + 1
+      return item
+    })
+  }, [value])
+
+  const copy = useCallback(
+    (field: string) => {
+      setValue((value) => {
+        const firstRowValue = value[0][field]
+        const newData = [...value].map((row) => ({
+          ...row,
+          [field]: firstRowValue,
+        }))
+        return [...newData]
+      })
+    },
+    [setValue]
+  )
+
   const columns = useMemo<PrimaryTableCol[]>(() => {
     let cols = options.map<PrimaryTableCol>((item) => {
       return {
-        title: item.title,
+        title: (
+          <div className='flex items-center justify-between'>
+            <div>{item.title}</div>
+            {item.copy && (
+              <div>
+                <Button
+                  onClick={() => {
+                    copy(item.field)
+                  }}
+                  icon={<div className='i-tabler:pencil-down t-icon'></div>}
+                  variant='text'
+                  shape='circle'
+                ></Button>
+              </div>
+            )}
+          </div>
+        ),
         colKey: item.field,
         width: item.width,
         cell: (cell: PrimaryTableCellParams<Record<string, any>>) => {
@@ -137,13 +176,6 @@ export const Listform = ({
     return cols
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options])
-
-  const getData = useMemo(() => {
-    return (value || []).map((item, index) => {
-      item.index = index + 1
-      return item
-    })
-  }, [value])
 
   return (
     <context.Provider value>
