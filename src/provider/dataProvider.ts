@@ -39,7 +39,12 @@ client.interceptors.response.use(
 )
 
 export interface UseClientResult {
-  request: (url: string, method?: string, axConfig?: AxiosRequestConfig) => Promise<any>
+  request: (
+    url: string,
+    method?: string,
+    axConfig?: AxiosRequestConfig,
+    original?: boolean
+  ) => Promise<any>
   isLoading: boolean
 }
 
@@ -49,7 +54,7 @@ export const useClient = (): UseClientResult => {
   const { data: identity } = useGetIdentity<{
     token: string
   }>()
-  const request = useCallback((url: string, method = 'get', axConfig = {}) => {
+  const request = useCallback((url: string, method = 'get', axConfig = {}, original = false) => {
     setIsLoading(true)
     return client
       .request({
@@ -62,6 +67,9 @@ export const useClient = (): UseClientResult => {
       })
       .then((res) => {
         setIsLoading(false)
+        if (original) {
+          return res
+        }
         return res.data
       })
       .catch((res) => {
