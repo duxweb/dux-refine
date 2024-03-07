@@ -1,8 +1,9 @@
 import { useSelect, useTranslate } from '@refinedev/core'
 import { ButtonModal, DeleteButton } from '../action'
-import { ComponentType, useEffect, useState } from 'react'
+import { ComponentType, useContext, useEffect, useState } from 'react'
 import { Form, Select } from 'tdesign-react/esm'
 import { InternalFormInstance } from 'tdesign-react/esm/form/hooks/interface'
+import { pageTableContext } from './page'
 
 interface FilterEditProps {
   form: InternalFormInstance
@@ -34,8 +35,10 @@ export const FilterEdit = ({
     optionValue: optionValue || 'id',
   })
 
+  const tableContext = useContext(pageTableContext)
+
   useEffect(() => {
-    if (!defaultSelect || !options.length || init) {
+    if (!defaultSelect || !options.length || !tableContext || init) {
       return
     }
     setInit(() => true)
@@ -43,8 +46,13 @@ export const FilterEdit = ({
     form?.setFieldsValue({
       [field]: options[0]?.value,
     })
+
+    tableContext.setFilters({
+      [field]: options[0]?.value,
+    })
+
     console.log(form?.getFieldValue(field))
-  }, [defaultSelect, field, form, init, options])
+  }, [defaultSelect, field, form, init, options, tableContext])
 
   const id = Form.useWatch(field, form)
 

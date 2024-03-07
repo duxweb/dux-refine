@@ -7,7 +7,6 @@ import {
   FormInstanceFunctions,
 } from 'tdesign-react/esm'
 import { useForm, useFormProps } from './useForm'
-import { useDeepCompareEffect } from 'ahooks'
 
 export interface FormResult {
   formData?: Record<string, any>
@@ -77,6 +76,7 @@ export const Form = ({
   const onSubmitFun = useCallback(async (e: SubmitContext) => {
     await formResult.onSubmit(e)
     await onSubmit?.(e)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
