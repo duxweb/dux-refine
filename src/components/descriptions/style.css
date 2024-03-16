@@ -43,10 +43,8 @@
   @apply flex-grow w-1;
 }
 
-.app-descriptions-horizontal.app-descriptions-right {
-  &-content {
-    @apply flex justify-end;
-  }
+.app-descriptions-horizontal.app-descriptions-right-content {
+  @apply flex justify-end;
 }
 
 .app-descriptions-vertical {

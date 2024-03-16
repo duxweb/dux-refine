@@ -1,0 +1,8 @@
+.md-editor, .md-editor-dark, .md-editor-modal-container[data-theme=dark] {
+  --md-bk-color: var(--td-bg-color-container);
+  --md-border-color: var(--td-component-border);
+  --md-scrollbar-bg-color: var(--td-bg-color-page);
+  --md-scrollbar-thumb-color: var(--td-scrollbar-color);
+  --md-scrollbar-thumb-hover-color: var(--td-scrollbar-color);
+  --md-scrollbar-thumb-active-color: var(--td-scrollbar-color);
+}

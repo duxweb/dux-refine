@@ -1,4 +1,4 @@
-import mammoth from 'mammoth'
+import mammoth from 'mammoth/mammoth.browser'
 
 tinymce.PluginManager.add('customWord', function (editor) {
   function handleFileSelect(event) {

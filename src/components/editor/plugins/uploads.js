@@ -47,7 +47,7 @@ tinymce.PluginManager.add('customImages', function (editor) {
 
   return {
     name: 'customImages',
-    url: 'https://www.dux.plus',
+    url: 'https://www.dux.cn',
   }
 })
 
