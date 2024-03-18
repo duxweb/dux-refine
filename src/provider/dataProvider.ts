@@ -177,7 +177,7 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
     }
   },
   getOne: async ({ resource, id, meta }) => {
-    let path = `${resource}/${id}`
+    let path = `${resource}${id ? '/' + id : ''}`
     if (meta?.mode == 'page') {
       path = resource
     }

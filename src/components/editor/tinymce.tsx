@@ -106,7 +106,7 @@ const BaseEditor = ({ init, ...rest }: IAllProps) => {
   )
 }
 
-interface EditorProps {
+export interface EditorProps {
   config?: IAllProps
   value?: string
   disabled?: boolean
