@@ -25,13 +25,11 @@ export const Main = ({ title, icon, header, actions, children }: MainProps) => {
       >
         {header}
       </Header>
-      <div className='flex-1 overflow-auto'>
-        <div className='p-4'>
-          <div className='mb-4'>
-            <Breadcrumb />
-          </div>
-          <div>{children}</div>
+      <div className='flex-1 overflow-auto flex flex-col p-4'>
+        <div className='mb-4 flex-none'>
+          <Breadcrumb />
         </div>
+        {children}
       </div>
     </>
   )

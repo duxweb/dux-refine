@@ -1,4 +1,4 @@
-import React, { createContext, forwardRef, useEffect, useImperativeHandle, useMemo } from 'react'
+import React, { createContext, forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import {
   EnhancedTable as TdTable,
   EnhancedTableProps,
@@ -103,6 +103,30 @@ export const PageTable = forwardRef(
       }
     })
 
+    const cardRef = useRef<HTMLDivElement>(null)
+    const footerRef = useRef<HTMLDivElement>(null)
+    const [tableHeight, setTableHeight] = useState<number|undefined>(undefined)
+
+    useEffect(() => {
+      if (!cardRef?.current) {
+        return
+      }
+      const handleResize = () => {
+        const elementRect = cardRef?.current?.getBoundingClientRect()
+        let height = elementRect?.top || 0
+        let footer = footerRef?.current?.clientHeight || 0
+        if (height) {
+          height -= footer
+        }
+        setTableHeight(height ? window.innerHeight - 100 - height : undefined)
+      };
+      window.addEventListener('resize', handleResize)
+      handleResize()
+      return () => {
+        window.removeEventListener('resize', handleResize)
+      }
+    }, []);
+
     return (
       <pageTableContext.Provider value={tableResult}>
         <Main
@@ -161,8 +185,10 @@ export const PageTable = forwardRef(
             </div>
           )}
 
+          
           <Card
             headerBordered
+
             header={
               (filterRender || (selecteds && selecteds.length > 0)) && (
                 <div className='flex flex-1 flex-col flex-wrap justify-between gap-2 md:flex-row md:items-center'>
@@ -192,6 +218,7 @@ export const PageTable = forwardRef(
               )
             }
           >
+          <div ref={cardRef}>
             <TdTable
               rowKey={table?.rowKey || 'id'}
               columns={getColumns}
@@ -218,11 +245,16 @@ export const PageTable = forwardRef(
               filterValue={tableFilters}
               onFilterChange={setTableFilters}
               onRowEdit={onRowEdit}
+              maxHeight={tableHeight}
               {...table}
             />
+            </div>
           </Card>
-          {footerRender?.()}
-          <appHook.Render mark={[moduleName, resource?.name as string, 'table', 'footer']} />
+
+          <div ref={footerRef}>
+            {footerRender?.()}
+            <appHook.Render mark={[moduleName, resource?.name as string, 'table', 'footer']} />
+          </div>
         </Main>
       </pageTableContext.Provider>
     )
