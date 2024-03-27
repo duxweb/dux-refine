@@ -244,19 +244,18 @@ export const ActionModal = <T extends Extends>({
   const { resource: res } = useResource()
   return (
     <CanAccess resource={resource || res?.name} action={action}>
-      <Modal
-        title={title}
-        trigger={
-          Cp && (
-            <Cp theme='primary' {...props}>
-              {props?.children || title}
-            </Cp>
-          )
-        }
-        component={component}
-        componentProps={{ id: rowId, ...componentProps }}
-        {...modal}
-      />
+      {Cp && (
+        <Cp theme='primary' onClick={() => {
+          Modal.open({
+            title: title,
+            component: component,
+            componentProps:{ id: rowId, ...componentProps },
+            ...modal
+          })
+        }} {...props}>
+          {props?.children || title}
+        </Cp>
+      )}
     </CanAccess>
   )
 }

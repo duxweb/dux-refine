@@ -13,7 +13,9 @@ import React, {
   useContext,
   useEffect,
 } from 'react'
-import { Dialog, DialogPlugin } from 'tdesign-react/esm'
+import { Dialog } from 'tdesign-react/esm'
+import NiceModal from '@ebay/nice-modal-react'
+import CreateModal from './create'
 
 export interface ModalContextProps {
   onClose?: () => void
@@ -32,6 +34,7 @@ export interface ModalProps {
   defaultOpen?: boolean
   open?: boolean
   onClose?: () => void
+  onClosed?: () =>void
 }
 
 interface TriggerProps {
@@ -47,6 +50,7 @@ const ModalComp = forwardRef<ModalContextProps, ModalProps>(
       component,
       componentProps,
       onClose,
+      onClosed,
       className,
       width,
       open,
@@ -85,6 +89,7 @@ const ModalComp = forwardRef<ModalContextProps, ModalProps>(
           <Dialog
             visible={status}
             onClose={onCloseFun}
+            onClosed={onClosed}
             destroyOnClose
             header={title}
             footer={null}
@@ -126,45 +131,16 @@ const ModalFooter = ({ children }: ModalFooterProps) => {
   return <div className='t-dialog__footer'>{children}</div>
 }
 
+const ModalOpen = (props: ModalProps) => {
+  return NiceModal.show(CreateModal, props)
+}
+
+
 type ModalType = typeof ModalComp & {
   Footer: typeof ModalFooter
+  open: typeof ModalOpen
 }
 
 export const Modal = ModalComp as ModalType
 Modal.Footer = ModalFooter
-
-export const ModalOpen = ({ title, children, component, componentProps, onClose }: ModalProps) => {
-  const AsyncContent = component ? lazy(component) : undefined
-
-  const dialogNode = DialogPlugin({
-    onClose: onClose,
-    destroyOnClose: true,
-    footer: null,
-    closeOnOverlayClick: false,
-    closeOnEscKeydown: false,
-    draggable: true,
-    header: title,
-    body: component ? (
-      <Suspense>
-        {AsyncContent && (
-          <AsyncContent
-            {...componentProps}
-            onClose={() => {
-              onClose?.()
-              dialogNode.hide()
-            }}
-          />
-        )}
-      </Suspense>
-    ) : typeof children === 'function' ? (
-      children(() => {
-        onClose?.()
-        dialogNode.hide()
-      })
-    ) : (
-      children
-    ),
-  })
-
-  return dialogNode
-}
+Modal.open = ModalOpen

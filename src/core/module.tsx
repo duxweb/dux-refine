@@ -1,4 +1,5 @@
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useState } from 'react'
+import NiceModal from '@ebay/nice-modal-react'
 import { Config, userMenuItem } from './config'
 
 interface ModuleContext {
@@ -21,11 +22,22 @@ interface ModuleProps {
 }
 
 export const Module = (props: ModuleProps) => {
+
+
+  const [modalList, setModalList] = useState([])
+
   return (
     <moduleContext.Provider
       value={{ name: props.name, config: props.config, userMenu: props.userMenu }}
     >
+      <NiceModal.Provider>
       {props.children}
+      </NiceModal.Provider>
     </moduleContext.Provider>
   )
+}
+
+
+Module.openModal = () => {
+  
 }

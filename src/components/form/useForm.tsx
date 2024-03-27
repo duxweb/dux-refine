@@ -22,6 +22,7 @@ export interface useFormReturnProps extends UseFormReturnType {
 
 export const useForm = (props: useFormProps): useFormReturnProps => {
   const t = useTranslate()
+
   const result = useRefineForm({
     onMutationError: (error, variables, context, isAutoSave) => {
       if (result?.formLoading) {
