@@ -325,8 +325,7 @@ export const SideUser = ({ collapse, menu = [], size = 'medium' }: UserProps) =>
       },
     })
     return optionData
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [menu])
+  }, [menu, dark])
 
   return (
     <div className='flex items-center gap-2 leading-5'>

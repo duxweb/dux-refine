@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useControllableValue } from 'ahooks'
 import { Select, SelectValue } from 'tdesign-react/esm'
 import { useClient } from '../../provider/dataProvider'
+import clsx from 'clsx'
 
 export interface AreaSelectProps {
   url: string
@@ -9,9 +10,11 @@ export interface AreaSelectProps {
   onChange?: (value?: string[]) => void
   value?: string[]
   defaultValue?: string[]
+  className?: string
+  block?: boolean
 }
 
-export const AreaSelect = ({ url, range = 3, ...props }: AreaSelectProps) => {
+export const AreaSelect = ({ url, range = 3, className, block, ...props }: AreaSelectProps) => {
   const { request } = useClient()
   const [data, setData] = useControllableValue<string[]>(props)
   const [loading, setLoading] = useState(false)
@@ -130,7 +133,7 @@ export const AreaSelect = ({ url, range = 3, ...props }: AreaSelectProps) => {
   }, [])
 
   return (
-    <div className='w-full flex flex-col flex-wrap gap-4 lg:flex-row'>
+    <div className={clsx(['w-full gap-4 ', !block ? 'flex flex-col flex-wrap lg:flex-row' : 'grid lg:grid-cols-2 grid-cols-1', className || ''])}>
       <div>
         <Select
           clearable
