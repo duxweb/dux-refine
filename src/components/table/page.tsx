@@ -206,14 +206,6 @@ export const PageTable = forwardRef(
                       mark={[moduleName, resource?.name as string, 'table', 'filter']}
                     />
                   </Form>
-                  {selecteds && selecteds.length > 0 && (
-                    <div>
-                      {batchRender?.()}{' '}
-                      <appHook.Render
-                        mark={[moduleName, resource?.name as string, 'table', 'batch']}
-                      />
-                    </div>
-                  )}
                 </div>
               )
             }
@@ -229,8 +221,16 @@ export const PageTable = forwardRef(
               loading={loading}
               pagination={{
                 ...pagination,
+                totalContent: selecteds && selecteds.length > 0 ? (
+                  <div>
+                    {batchRender?.()}
+                    <appHook.Render
+                      mark={[moduleName, resource?.name as string, 'table', 'batch']}
+                    />
+                  </div>
+                ) : true,
                 className: 'app-pagination',
-                theme: table?.pagination?.theme || size <= sizeMap.xl ? 'simple' : 'default',
+                theme: selecteds && selecteds.length > 0 || size <= sizeMap.xl ? 'simple' :  (table?.pagination?.theme || 'default'),
                 showJumper:
                   table?.pagination?.showJumper !== undefined || size <= sizeMap.xl ? false : true,
                 showPageSize:
