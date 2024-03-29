@@ -7,6 +7,7 @@ import {
   PrimaryTableCol,
   Radio,
   FormInstanceFunctions,
+  SelectOptions,
 } from 'tdesign-react/esm'
 import { useWindowSize } from '../../core/helper'
 import { TableRef, TableTab, useTable, useTableProps, useTableReturnType } from './table'
@@ -25,7 +26,7 @@ export interface PageTableProps {
   footerRender?: () => React.ReactElement
   actionRender?: () => React.ReactElement
   filterRender?: () => React.ReactElement
-  batchRender?: () => React.ReactElement
+  batchRender?: (setSelecteds: Array<string | number> | undefined, selectOptions: SelectOptions<BaseRecord> | undefined) => React.ReactElement
   filterForm?: FormInstanceFunctions
 }
 
@@ -223,7 +224,7 @@ export const PageTable = forwardRef(
                 ...pagination,
                 totalContent: selecteds && selecteds.length > 0 ? (
                   <div>
-                    {batchRender?.()}
+                    {batchRender?.(selecteds, selectOptions)}
                     <appHook.Render
                       mark={[moduleName, resource?.name as string, 'table', 'batch']}
                     />
