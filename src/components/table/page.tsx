@@ -26,7 +26,7 @@ export interface PageTableProps {
   footerRender?: () => React.ReactElement
   actionRender?: () => React.ReactElement
   filterRender?: () => React.ReactElement
-  batchRender?: (setSelecteds: Array<string | number> | undefined, selectOptions: SelectOptions<BaseRecord> | undefined) => React.ReactElement
+  batchRender?: (selecteds: Array<string | number> | undefined, selectOptions: SelectOptions<BaseRecord> | undefined) => React.ReactElement
   filterForm?: FormInstanceFunctions
 }
 
