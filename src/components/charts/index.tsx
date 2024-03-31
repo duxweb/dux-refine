@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { EChartsOption, registerMap } from 'echarts'
+import { EChartsOption, VisualMapComponentOption, registerMap } from 'echarts'
 import ReactECharts from 'echarts-for-react'
 import { useAppStore } from '../../stores/app'
 import merge from 'deepmerge'
@@ -217,11 +217,12 @@ export interface ChartMapProps {
   map: string
   data?: Record<string, any>[]
   min?: boolean
+  params?: VisualMapComponentOption
   single?: boolean
   options?: EChartsOption
 }
 
-export const ChartMap = ({ name, map, data, min, options, single }: ChartMapProps) => {
+export const ChartMap = ({ name, map, data, min, params, options, single }: ChartMapProps) => {
   const dark = useAppStore((state) => state.dark)
   const [loading, setloading] = useState(true)
   useEffect(() => {
@@ -239,9 +240,10 @@ export const ChartMap = ({ name, map, data, min, options, single }: ChartMapProp
       visualMap: {
         show: false,
         min: 0,
-        max: 50000,
+        max: 5000,
         realtime: false,
         calculable: true,
+        ...params,
         // inRange: {
         //   color: ['#000', '#fedeb5', '#f96a35', '#c3380e', '#942005'],
         // },
