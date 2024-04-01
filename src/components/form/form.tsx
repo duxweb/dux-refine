@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react'
-import { FormAction, MetaQuery, BaseKey, RedirectAction } from '@refinedev/core'
+import { FormAction, MetaQuery, BaseKey, RedirectAction, useInvalidate } from '@refinedev/core'
 import {
   Form as TdForm,
   SubmitContext,
@@ -27,6 +27,7 @@ export interface FormProps {
   redirect?: RedirectAction
   onResult?: (data: FormResult) => void
   form?: FormInstanceFunctions
+  refresh?: string
 }
 
 export const Form = ({
@@ -44,8 +45,10 @@ export const Form = ({
   redirect,
   form,
   onResult,
+  refresh,
 }: FormProps) => {
   const { meta, ...formParams } = useFormProps || {}
+  const invalidateCall = useInvalidate()
 
   const formResult = useForm({
     resource: resource,
@@ -53,7 +56,7 @@ export const Form = ({
     action: action || id ? 'edit' : 'create',
     id: id,
     //liveMode: 'manual',
-    redirect: redirect,
+    redirect: redirect || false,
     meta: {
       ...(meta || {}),
       params: queryParams,
@@ -76,6 +79,12 @@ export const Form = ({
   const onSubmitFun = useCallback(async (e: SubmitContext) => {
     await formResult.onSubmit(e)
     await onSubmit?.(e)
+    if (refresh) {
+      await invalidateCall({
+        resource: refresh,
+        invalidates: ['all'],
+      })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
