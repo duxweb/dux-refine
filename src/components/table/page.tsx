@@ -1,4 +1,4 @@
-import React, { createContext, forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import React, { createContext, forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import {
   EnhancedTable as TdTable,
   EnhancedTableProps,
@@ -93,13 +93,18 @@ export const PageTable = forwardRef(
       loading,
     } = tableResult
 
+    const onSetFilters = useCallback((values: Record<string, unknown>) => {
+      form?.setFieldsValue(values)
+      setFilters(values)
+    }, [setFilters])
+
     useImperativeHandle(ref, () => {
       return {
         refetch: refetch,
         selecteds,
         selectOptions,
         filters,
-        setFilters,
+        setFilters: onSetFilters,
         form,
       }
     })

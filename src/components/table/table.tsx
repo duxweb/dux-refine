@@ -126,6 +126,7 @@ export const useTable = <
   const setOnFilters = useCallback(
     (values: Record<string, unknown>) => {
       setFilters(formatFilter(values))
+      
     },
     [formatFilter, setFilters]
   )
