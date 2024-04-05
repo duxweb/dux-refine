@@ -21,11 +21,13 @@ import {
   PrimaryTableRowEditContext,
   NamePath,
   Form,
+  FormInstanceFunctions,
 } from 'tdesign-react/esm'
 import { InternalFormInstance } from 'tdesign-react/esm/form/hooks/interface'
 
 export interface useTableProps<TQueryFnData, TError, TData>
   extends useRefineTableProps<TQueryFnData, TError, TData> {
+  filterForm?: FormInstanceFunctions
   columns?: PrimaryTableCol[]
   rowKey?: string
 }
@@ -53,6 +55,7 @@ export const useTable = <
 >({
   columns,
   rowKey = 'id',
+  filterForm,
   ...props
 }: useTableProps<TQueryFnData, TError, TData>): useTableReturnType<TData> => {
   const {
@@ -126,7 +129,7 @@ export const useTable = <
   const setOnFilters = useCallback(
     (values: Record<string, unknown>) => {
       setFilters(formatFilter(values))
-      
+      filterForm?.setFieldsValue(values)
     },
     [formatFilter, setFilters]
   )

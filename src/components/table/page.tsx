@@ -73,6 +73,7 @@ export const PageTable = forwardRef(
       },
       columns: getColumns,
       rowKey: table?.rowKey,
+      filterForm: form,
       ...tableHook,
     })
 
@@ -93,18 +94,13 @@ export const PageTable = forwardRef(
       loading,
     } = tableResult
 
-    const onSetFilters = useCallback((values: Record<string, unknown>) => {
-      form?.setFieldsValue(values)
-      setFilters(values)
-    }, [setFilters])
-
     useImperativeHandle(ref, () => {
       return {
         refetch: refetch,
         selecteds,
         selectOptions,
         filters,
-        setFilters: onSetFilters,
+        setFilters,
         form,
       }
     })
