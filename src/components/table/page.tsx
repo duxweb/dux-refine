@@ -16,17 +16,23 @@ import { useResource, BaseRecord, HttpError } from '@refinedev/core'
 import { appHook } from '../../utils/hook'
 import { useModuleContext } from '../../core'
 
+export interface PageTableRenderProps {
+  filters?: Record<string, any>
+  selecteds?: Array<string | number>,
+  selectOptions?: SelectOptions<BaseRecord>
+}
+
 export interface PageTableProps {
   title?: React.ReactNode
   tabs?: Array<TableTab>
   table?: EnhancedTableProps
   tableHook?: useTableProps<BaseRecord, HttpError, BaseRecord>
   columns?: PrimaryTableCol[]
-  headerRender?: () => React.ReactElement
-  footerRender?: () => React.ReactElement
-  actionRender?: () => React.ReactElement
-  filterRender?: () => React.ReactElement
-  batchRender?: (selecteds: Array<string | number> | undefined, selectOptions: SelectOptions<BaseRecord> | undefined) => React.ReactElement
+  headerRender?: (params: PageTableRenderProps) => React.ReactElement
+  footerRender?: (params: PageTableRenderProps) => React.ReactElement
+  actionRender?: (params: PageTableRenderProps) => React.ReactElement
+  filterRender?: (params: PageTableRenderProps) => React.ReactElement
+  batchRender?: (params: PageTableRenderProps) => React.ReactElement
   filterForm?: FormInstanceFunctions
 }
 
@@ -129,6 +135,12 @@ export const PageTable = forwardRef(
       }
     }, []);
 
+    const renderParams: PageTableRenderProps = {
+      filters,
+      selecteds,
+      selectOptions
+    }
+
     return (
       <pageTableContext.Provider value={tableResult}>
         <Main
@@ -156,11 +168,13 @@ export const PageTable = forwardRef(
           actions={
             <>
               <appHook.Render mark={[moduleName, resource?.name as string, 'table', 'action']} />
-              {actionRender?.()}
+              {actionRender?.({
+                filters, selecteds, selectOptions
+              })}
             </>
           }
         >
-          {headerRender?.()}
+          {headerRender?.(renderParams)}
 
           <appHook.Render mark={[moduleName, resource?.name as string, 'table', 'header']} />
 
@@ -183,7 +197,7 @@ export const PageTable = forwardRef(
                   ))}
                 </Radio.Group>
               )}
-              <div>{actionRender?.()}</div>
+              <div>{actionRender?.(renderParams)}</div>
             </div>
           )}
 
@@ -203,7 +217,7 @@ export const PageTable = forwardRef(
                     }}
                     form={form}
                   >
-                    {filterRender?.()}
+                    {filterRender?.(renderParams)}
                     <appHook.Render
                       mark={[moduleName, resource?.name as string, 'table', 'filter']}
                     />
@@ -225,7 +239,7 @@ export const PageTable = forwardRef(
                 ...pagination,
                 totalContent: selecteds && selecteds.length > 0 ? (
                   <div>
-                    {batchRender?.(selecteds, selectOptions)}
+                    {batchRender?.(renderParams)}
                     <appHook.Render
                       mark={[moduleName, resource?.name as string, 'table', 'batch']}
                     />
@@ -254,7 +268,7 @@ export const PageTable = forwardRef(
           </Card>
 
           <div ref={footerRef}>
-            {footerRender?.()}
+            {footerRender?.(renderParams)}
             <appHook.Render mark={[moduleName, resource?.name as string, 'table', 'footer']} />
           </div>
         </Main>
