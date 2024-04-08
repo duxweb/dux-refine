@@ -2,7 +2,7 @@ import React, { ReactNode, useMemo } from 'react'
 
 interface RenderProps {
   mark: string | string[]
-  option?: Record<string, any[]>
+  option?: Record<string, any>
   children?: any
   max?: number
 }
@@ -111,7 +111,7 @@ export class RenderHook {
 
 interface ContainerProps {
   containers: any[]
-  option?: Record<string, any[]>
+  option?: Record<string, any>
   index?: number
   children?: ReactNode
 }
