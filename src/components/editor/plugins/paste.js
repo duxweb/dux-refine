@@ -1,8 +1,18 @@
 import { client } from '@duxweb/dux-refine'
 
 tinymce.PluginManager.add('customPaste', function (editor) {
+  
   editor.on('paste', function (e) {
-    var imgUrls = extractImageUrls(e)
+    let htmlString = (e.clipboardData || e.originalEvent.clipboardData).getData('text/html')
+    parse(htmlString)
+  })
+
+  editor.on('pasteHtml', function (e) {
+    parse( e?.content)
+  })
+
+  const parse = (content) => {
+    var imgUrls = extractImageUrls(content)
 
     if (imgUrls.length <= 0) {
       return
@@ -76,16 +86,16 @@ tinymce.PluginManager.add('customPaste', function (editor) {
           })
       },
     })
-  })
+  }
+
   return {
     name: 'customPaste',
     url: 'https://www.dux.plus',
   }
 })
 
-function extractImageUrls(e) {
-  let htmlString = (e.clipboardData || e.originalEvent.clipboardData).getData('text/html')
-
+function extractImageUrls(htmlString) {
+  
   const urls = []
   const imgRegex = /<img[^>]+src="([^">]+)"/g
   let match
