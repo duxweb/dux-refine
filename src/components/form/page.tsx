@@ -110,6 +110,9 @@ export const FormPage = ({
           }}
           onSubmit={async (e: SubmitContext) => {
             await onSubmit?.(e)
+            if (back) {
+              backFn()
+            }
           }}
           formProps={{
             labelAlign: 'left',
