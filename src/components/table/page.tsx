@@ -80,6 +80,9 @@ export const PageTable = forwardRef(
       columns: getColumns,
       rowKey: table?.rowKey,
       filterForm: form,
+      onPagination() {
+        handleResize()
+      },
       ...tableHook,
     })
 
@@ -115,19 +118,20 @@ export const PageTable = forwardRef(
     const footerRef = useRef<HTMLDivElement>(null)
     const [tableHeight, setTableHeight] = useState<number|undefined>(undefined)
 
+    const handleResize = () => {
+      const elementRect = cardRef?.current?.getBoundingClientRect()
+      let height = elementRect?.top || 0
+      let footer = footerRef?.current?.clientHeight || 0
+      if (height) {
+        height -= footer
+      }
+      setTableHeight(height ? window.innerHeight - 100 - height : undefined)
+    }
+
     useEffect(() => {
       if (!cardRef?.current) {
         return
       }
-      const handleResize = () => {
-        const elementRect = cardRef?.current?.getBoundingClientRect()
-        let height = elementRect?.top || 0
-        let footer = footerRef?.current?.clientHeight || 0
-        if (height) {
-          height -= footer
-        }
-        setTableHeight(height ? window.innerHeight - 100 - height : undefined)
-      };
       window.addEventListener('resize', handleResize)
       handleResize()
       return () => {

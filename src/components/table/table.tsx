@@ -22,6 +22,7 @@ import {
   NamePath,
   Form,
   FormInstanceFunctions,
+  PageInfo,
 } from 'tdesign-react/esm'
 import { InternalFormInstance } from 'tdesign-react/esm/form/hooks/interface'
 
@@ -30,6 +31,7 @@ export interface useTableProps<TQueryFnData, TError, TData>
   filterForm?: FormInstanceFunctions
   columns?: PrimaryTableCol[]
   rowKey?: string
+  onPagination?: (pageInfo: PageInfo) => void
 }
 
 export interface useTableReturnType<TData> {
@@ -56,6 +58,7 @@ export const useTable = <
   columns,
   rowKey = 'id',
   filterForm,
+  onPagination,
   ...props
 }: useTableProps<TQueryFnData, TError, TData>): useTableReturnType<TData> => {
   const {
@@ -134,6 +137,7 @@ export const useTable = <
     [formatFilter, setFilters]
   )
 
+
   const getTableFilterFields = useMemo(() => {
     return columns
       ?.map((item) => {
@@ -190,6 +194,7 @@ export const useTable = <
       onChange(pageInfo) {
         setCurrent(pageInfo.current)
         setPageSize(pageInfo.pageSize)
+        onPagination?.(pageInfo)
       },
     }
   }, [current, pageSize, setCurrent, setPageSize, data?.total])
