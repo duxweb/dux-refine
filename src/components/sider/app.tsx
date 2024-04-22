@@ -69,7 +69,18 @@ export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
           className='my-4 py-4 flex justify-center flex-none cursor-pointer'
           onClick={() => setCollapse((v) => !v)}
         >
-          <DuxLogo className='h-4' />
+          {module.config?.appLogo ? (
+                  <img
+                    src={
+                      dark
+                        ? module.config?.appDarkLogo || module.config.appLogo
+                        : module.config.appLogo
+                    }
+                    className='h-4'
+                  />
+                ) : (
+                  <DuxLogo className='h-4' />
+                )}
         </div>
 
         <div className='flex-none  mb-6 flex justify-center items-center'>
