@@ -23,9 +23,6 @@ interface ModuleProps {
 
 export const Module = (props: ModuleProps) => {
 
-
-  const [modalList, setModalList] = useState([])
-
   return (
     <moduleContext.Provider
       value={{ name: props.name, config: props.config, userMenu: props.userMenu }}
