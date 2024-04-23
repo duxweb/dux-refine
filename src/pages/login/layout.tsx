@@ -11,6 +11,7 @@ interface LoginLayoutProps {
 
 export const LoginLayout = ({ title, children }: LoginLayoutProps) => {
   const switchDark = useAppStore((state) => state.switchDark)
+  const dark = useAppStore((state) => state.dark)
   const { name, config } = useModuleContext()
   const translate = useTranslate()
 
@@ -31,7 +32,7 @@ export const LoginLayout = ({ title, children }: LoginLayoutProps) => {
         <div className='flex flex-1 flex-col'>
           <div className='mt-4 flex flex-col items-center justify-center'>
             {config?.appLogo ? (
-              <img src={config.appDarkLogo || config.appLogo} className='w-30 text-white' />
+              <img src={dark ? (config.appDarkLogo || config.appLogo) : config.appLogo} className='w-30 text-white' />
             ) : (
               <DuxLogo className='w-30 text-white' />
             )}
