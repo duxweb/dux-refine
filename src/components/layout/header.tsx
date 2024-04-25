@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { DuxLogo } from '../logo'
-import { useWindowSize } from '../../core'
+import { useModuleContext, useWindowSize } from '../../core'
 import { Button, Menu } from 'tdesign-react/esm'
 import { MoreIcon, Icon } from 'tdesign-icons-react'
 import { TabMenu } from './menu'
 import clsx from 'clsx'
+import { useAppStore } from '../../stores'
 const { HeadMenu } = Menu
 
 interface HeaderProps {
@@ -17,11 +18,25 @@ interface HeaderProps {
 const Header = ({ title, icon, actions, children }: HeaderProps) => {
   const [size, sizeMap] = useWindowSize()
   const [open, setOpen] = useState(false)
+  const module = useModuleContext()
+  const dark = useAppStore((state) => state.dark)
+  
   return (
     <>
       <HeadMenu
         className='border-b border-component'
-        logo={size <= sizeMap.md && <DuxLogo className='w-14 md:hidden ml-4' />}
+        logo={size <= sizeMap.md && module.config?.appLogo ? (
+          <img
+            src={
+              dark
+                ? module.config?.appDarkLogo || module.config.appLogo
+                : module.config.appLogo
+            }
+            className='h-4 md:hidden ml-4'
+          />
+        ) : (
+          <DuxLogo className='w-14 md:hidden ml-4' />
+        )}
         operations={
           size > sizeMap.md ? (
             <div className='md:flex gap-2 items-center'>{actions}</div>
