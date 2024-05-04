@@ -28,14 +28,19 @@ export const useDownload = (): UseDownloadHook => {
           ...config,
         },
         true
-      ).then((res: Record<string, any>) => {
-        if (res.code !== 200) {
-          MessagePlugin.error(res.message)
-          return
+      ).then(({response, ...res}) => {
+        if (res?.data) {
+          const type = contentType || res.headers['content-type']
+          const name = filename || dayjs().format('YYYYMMDD_HHmmss') + '.' + mime.getExtension(type)
+          downloadFile(res.data, type, name)
+        }else {
+          const reader = new FileReader()
+          reader.onload = function () {
+            const message = JSON.parse(reader.result as string)?.data[0]?.message
+            MessagePlugin.error(message || 'download error')
+          }
+          reader.readAsText(response.data)
         }
-        const type = contentType || res.headers['content-type']
-        const name = filename || dayjs().format('YYYYMMDD_HHmmss') + '.' + mime.getExtension(type)
-        downloadFile(res.data, type, name)
       })
     },
     [request]
