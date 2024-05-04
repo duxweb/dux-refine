@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { useClient } from '../../provider'
 import { AxiosRequestConfig } from 'axios'
+import { MessagePlugin } from 'tdesign-react/esm'
 import dayjs from 'dayjs'
 import mime from 'mime'
 
@@ -11,10 +12,11 @@ interface UseDownloadHook {
     config?: AxiosRequestConfig,
     contentType?: string
   ) => void
+  isLoading: boolean
 }
 
 export const useDownload = (): UseDownloadHook => {
-  const { request } = useClient()
+  const { request, isLoading } = useClient()
 
   const download = useCallback(
     (url: string, filename?: string, config?: AxiosRequestConfig, contentType?: string) => {
@@ -27,6 +29,10 @@ export const useDownload = (): UseDownloadHook => {
         },
         true
       ).then((res: Record<string, any>) => {
+        if (res.code !== 200) {
+          MessagePlugin.error(res.message)
+          return
+        }
         const type = contentType || res.headers['content-type']
         const name = filename || dayjs().format('YYYYMMDD_HHmmss') + '.' + mime.getExtension(type)
         downloadFile(res.data, type, name)
@@ -37,6 +43,7 @@ export const useDownload = (): UseDownloadHook => {
 
   return {
     download,
+    isLoading,
   }
 }
 
