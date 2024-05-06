@@ -34,6 +34,7 @@ export interface PageTableProps {
   filterRender?: (params: PageTableRenderProps) => React.ReactElement
   batchRender?: (params: PageTableRenderProps) => React.ReactElement
   filterForm?: FormInstanceFunctions
+  onData?: (data?: Record<string, any>[]) => void
 }
 
 export const pageTableContext = createContext<useTableReturnType<any>>({} as any)
@@ -52,6 +53,7 @@ export const PageTable = forwardRef(
       batchRender,
       tableHook,
       filterForm,
+      onData,
     }: PageTableProps,
     ref: React.ForwardedRef<TableRef>
   ) => {
@@ -83,6 +85,7 @@ export const PageTable = forwardRef(
       onPagination() {
         handleResize()
       },
+      onData,
       ...tableHook,
     })
 

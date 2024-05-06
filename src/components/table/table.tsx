@@ -32,6 +32,7 @@ export interface useTableProps<TQueryFnData, TError, TData>
   columns?: PrimaryTableCol[]
   rowKey?: string
   onPagination?: (pageInfo: PageInfo) => void
+  onData?: (data?: Record<string, any>[]) => void
 }
 
 export interface useTableReturnType<TData> {
@@ -59,6 +60,7 @@ export const useTable = <
   rowKey = 'id',
   filterForm,
   onPagination,
+  onData,
   ...props
 }: useTableProps<TQueryFnData, TError, TData>): useTableReturnType<TData> => {
   const {
@@ -182,6 +184,7 @@ export const useTable = <
       selectedRowData: [],
       type: 'check',
     })
+    onData?.(tableQueryResult?.data as any)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableQueryResult?.data])
 
