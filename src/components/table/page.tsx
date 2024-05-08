@@ -8,13 +8,17 @@ import {
   Radio,
   FormInstanceFunctions,
   SelectOptions,
+
 } from 'tdesign-react/esm'
+import { AppIcon } from 'tdesign-icons-react';
 import { useWindowSize } from '../../core/helper'
 import { TableRef, TableTab, useTable, useTableProps, useTableReturnType } from './table'
 import { Main } from '../main'
-import { useResource, BaseRecord, HttpError } from '@refinedev/core'
+import { useResource, BaseRecord, HttpError, useTranslate } from '@refinedev/core'
 import { appHook } from '../../utils/hook'
 import { useModuleContext } from '../../core'
+import { Result } from '../result'
+import { EmptyWidget } from '../status';
 
 export interface PageTableRenderProps {
   filters?: Record<string, any>
@@ -28,6 +32,7 @@ export interface PageTableProps {
   table?: EnhancedTableProps
   tableHook?: useTableProps<BaseRecord, HttpError, BaseRecord>
   columns?: PrimaryTableCol[]
+  siderRender?: (params: PageTableRenderProps) => React.ReactElement
   headerRender?: (params: PageTableRenderProps) => React.ReactElement
   footerRender?: (params: PageTableRenderProps) => React.ReactElement
   actionRender?: (params: PageTableRenderProps) => React.ReactElement
@@ -48,6 +53,7 @@ export const PageTable = forwardRef(
       table,
       headerRender,
       footerRender,
+      siderRender,
       filterRender,
       actionRender,
       batchRender,
@@ -61,6 +67,7 @@ export const PageTable = forwardRef(
     const [form] = Form.useForm(filterForm)
     const { resource } = useResource()
     const { name: moduleName } = useModuleContext()
+    const t = useTranslate()
 
     const hookColumns = appHook.useMark([moduleName, resource?.name as string, 'table', 'columns'])
 
@@ -208,71 +215,70 @@ export const PageTable = forwardRef(
             </div>
           )}
 
-          
-          <Card
-            headerBordered
-
-            header={
-              (filterRender || (selecteds && selecteds.length > 0)) && (
-                <div className='flex flex-1 flex-col flex-wrap justify-between gap-2 md:flex-row md:items-center'>
-                  <Form
-                    initialData={filters}
-                    labelWidth={0}
-                    className='app-filter flex-wrap'
-                    onValuesChange={(values) => {
-                      setFilters(values)
-                    }}
-                    form={form}
-                  >
-                    {filterRender?.(renderParams)}
-                    <appHook.Render
-                      mark={[moduleName, resource?.name as string, 'table', 'filter']}
-                    />
-                  </Form>
-                </div>
-              )
-            }
-          >
-          <div ref={cardRef}>
-            <TdTable
-              rowKey={table?.rowKey || 'id'}
-              columns={getColumns}
-              data={data}
-              cellEmptyContent={'-'}
-              stripe
-              showSortColumnBgColor={true}
-              loading={loading}
-              pagination={{
-                ...pagination,
-                totalContent: selecteds && selecteds.length > 0 ? (
-                  <div>
-                    {batchRender?.(renderParams)}
-                    <appHook.Render
-                      mark={[moduleName, resource?.name as string, 'table', 'batch']}
-                    />
+          <div className='flex gap-4 flex-col lg:flex-row items-start'>
+            {siderRender?.(renderParams)}
+            <div className='border border-component rounded p-4 bg-container lg:flex-1 lg:w-full flex flex-col gap-4'>
+              
+                {(filterRender || (selecteds && selecteds.length > 0)) && (
+                  <div className='flex flex-1 flex-col flex-wrap justify-between gap-2 md:flex-row md:items-center'>
+                    <Form
+                      initialData={filters}
+                      labelWidth={0}
+                      className='app-filter flex-wrap'
+                      onValuesChange={(values) => {
+                        setFilters(values)
+                      }}
+                      form={form}
+                    >
+                      {filterRender?.(renderParams)}
+                      <appHook.Render
+                        mark={[moduleName, resource?.name as string, 'table', 'filter']}
+                      />
+                    </Form>
                   </div>
-                ) : true,
-                className: 'app-pagination',
-                theme: selecteds && selecteds.length > 0 || size <= sizeMap.xl ? 'simple' :  (table?.pagination?.theme || 'default'),
-                showJumper:
-                  table?.pagination?.showJumper !== undefined || size <= sizeMap.xl ? false : true,
-                showPageSize:
-                  table?.pagination?.showPageSize !== undefined || size <= sizeMap.xl
-                    ? false
-                    : true,
-              }}
-              sort={sorters}
-              onSortChange={setSorters}
-              selectedRowKeys={selecteds}
-              onSelectChange={setSelecteds}
-              filterValue={tableFilters}
-              onFilterChange={setTableFilters}
-              onRowEdit={onRowEdit}
-              maxHeight={tableHeight}
-              {...table}
-            />
+                )}
+              
+              <div ref={cardRef}>
+                <TdTable
+                  rowKey={table?.rowKey || 'id'}
+                  columns={getColumns}
+                  data={data}
+                  cellEmptyContent={'-'}
+                  showSortColumnBgColor={true}
+                  loading={loading}
+                  empty={<EmptyWidget />}
+                  pagination={{
+                    ...pagination,
+                    totalContent: selecteds && selecteds.length > 0 ? (
+                      <div>
+                        {batchRender?.(renderParams)}
+                        <appHook.Render
+                          mark={[moduleName, resource?.name as string, 'table', 'batch']}
+                        />
+                      </div>
+                    ) : true,
+                    className: 'app-pagination',
+                    theme: selecteds && selecteds.length > 0 || size <= sizeMap.xl ? 'simple' :  (table?.pagination?.theme || 'default'),
+                    showJumper:
+                      table?.pagination?.showJumper !== undefined || size <= sizeMap.xl ? false : true,
+                    showPageSize:
+                      table?.pagination?.showPageSize !== undefined || size <= sizeMap.xl
+                        ? false
+                        : true,
+                  }}
+                  sort={sorters}
+                  onSortChange={setSorters}
+                  selectedRowKeys={selecteds}
+                  onSelectChange={setSelecteds}
+                  filterValue={tableFilters}
+                  onFilterChange={setTableFilters}
+                  onRowEdit={onRowEdit}
+                  maxHeight={tableHeight}
+                  {...table}
+                />
+              </div>
             </div>
-          </Card>
+          </div>
 
           <div ref={footerRef}>
             {footerRender?.(renderParams)}

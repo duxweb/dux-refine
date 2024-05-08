@@ -111,3 +111,11 @@ html:root, *:root[theme-mode="light"] {
 .app-card-tabs > .t-card__body > .t-form > .t-tabs {
   @apply bg-transparent;
 }
+
+.app-pagination {
+  
+}
+
+.t-table__pagination {
+  @apply px-0 pb-0;
+}

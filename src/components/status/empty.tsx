@@ -7,7 +7,7 @@ export const StatusEmpty = () => {
     <Result
       show={
         <svg
-          className='h-50'
+          className='h-40'
           xmlns='http://www.w3.org/2000/svg'
           width='934.98'
           height='571.14'
