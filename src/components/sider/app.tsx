@@ -38,10 +38,11 @@ const siderContext = createContext<siderContextProps>({
 export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
   const go = useGo()
   const translate = useTranslate()
-  const [collapse, setCollapse] = useState<boolean>(false)
   const [value, setValue] = useState<string[] | undefined>()
   const module = useModuleContext()
   const dark = useAppStore((state) => state.dark)
+  const siderHidden = useAppStore((state) => state.siderHidden)
+  const switchSiderHidden = useAppStore((state) => state.switchSiderHidden)
 
   useEffect(() => {
     setValue(defaultOpenKeys.reverse())
@@ -59,28 +60,26 @@ export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
     <div className='flex h-screen'>
       <div
         className={clsx([
-          'flex flex-col w-[80px] bg-component',
-          !collapse && panelData?.children?.length && panelData.children.length > 0
-            ? 'border-r border-component'
-            : '',
+          'flex flex-col w-[75px] bg-component border-r',
+          !siderHidden && panelData?.children?.length && panelData.children.length > 0
+            ? 'border-component'
+            : 'border-transparent',
         ])}
       >
         <div
           className='my-4 py-4 flex justify-center flex-none cursor-pointer'
-          onClick={() => setCollapse((v) => !v)}
+          onClick={() => switchSiderHidden()}
         >
           {module.config?.appLogo ? (
-                  <img
-                    src={
-                      dark
-                        ? module.config?.appDarkLogo || module.config.appLogo
-                        : module.config.appLogo
-                    }
-                    className='h-4'
-                  />
-                ) : (
-                  <DuxLogo className='h-4' />
-                )}
+            <img
+              src={
+                dark ? module.config?.appDarkLogo || module.config.appLogo : module.config.appLogo
+              }
+              className='h-4'
+            />
+          ) : (
+            <DuxLogo className='h-4' />
+          )}
         </div>
 
         <div className='flex-none  mb-6 flex justify-center items-center'>
@@ -94,13 +93,13 @@ export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
           </div>
         </div>
         <OverlayScrollbarsComponent defer className='flex-1 h-1'>
-          <div className=' flex flex-col gap-4 px-1'>
+          <div className=' flex flex-col gap-2 px-2 text-secondary'>
             {menuData.map((item, key) => (
               <div
                 key={key}
                 className={clsx([
-                  'flex flex-col gap-1 justify-center items-center cursor-pointer hover:text-brand',
-                  value?.[0] == item.key ? 'text-brand' : 'text-secondary',
+                  'flex flex-col justify-center py-1.5 items-center cursor-pointer hover:text-brand rounded-md',
+                  value?.[0] == item.key ? 'text-brand bg-gray-1 dark:bg-gray-10' : '',
                 ])}
                 onClick={() => {
                   if (item.route) {
@@ -144,7 +143,7 @@ export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
           setValue: setValue,
         }}
       >
-        {!collapse && panelData?.children?.length && panelData?.children.length > 0 ? (
+        {!siderHidden && panelData?.children?.length && panelData?.children.length > 0 ? (
           <OverlayScrollbarsComponent defer className='w-[190px] bg-container'>
             <div className='flex flex-col divide-y divide-gray-3 dark:divide-gray-11 px-3 text-sm'>
               {panelData?.children?.map((sub, subIndex) => {
@@ -228,8 +227,8 @@ const SiderItem = ({ menuData, active, icon }: SiderItemProps) => {
   return (
     <div
       className={clsx([
-        'flex gap-2 py-2.5 px-4 items-center rounded hover:text-brand-7 cursor-pointer',
-        active && active == menuData.key ? 'bg-brand-1 text-brand-7' : 'text-secondary',
+        'flex gap-2 py-2.5 px-4 items-center rounded hover:text-brand cursor-pointer',
+        active && active == menuData.key ? 'bg-brand-1 text-brand' : 'text-secondary',
       ])}
       onClick={() => {
         setValue(getPathValue(menus, menuData.key))

@@ -3,15 +3,18 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 
 interface ThemeState {
   dark: boolean
+  siderHidden: boolean
   switchDark: () => void
   setLight: () => void
   setDark: () => void
+  switchSiderHidden: () => void
 }
 
 const useAppStore = create<ThemeState>()(
   persist(
     (set, get) => ({
       dark: window.matchMedia('(prefers-color-scheme: dark)').matches,
+      siderHidden: false,
       switchDark: () => {
         document.documentElement.setAttribute('theme-mode', !get().dark ? 'dark' : '')
         set({ dark: !get().dark })
@@ -24,12 +27,15 @@ const useAppStore = create<ThemeState>()(
         document.documentElement.setAttribute('theme-mode', 'dark')
         set({ dark: true })
       },
+      switchSiderHidden: () => {
+        set({ siderHidden: !get().siderHidden })
+      },
     }),
     {
       name: 'theme-mode',
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 )
 
 interface UserState {
@@ -50,8 +56,8 @@ const useUserStore = create<UserState>()(
     {
       name: 'authorization',
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 )
 
 export { useAppStore, useUserStore }

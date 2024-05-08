@@ -136,7 +136,7 @@ export const useWindowSize = (): [number, Record<string, number>] => {
         return [sizeEmit.xxl, sizeEmit]
       }
     },
-    [sizeEmit]
+    [sizeEmit],
   )
 
   useEffect(() => {

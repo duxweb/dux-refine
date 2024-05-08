@@ -11,7 +11,7 @@ export const authProvider = (app: string, config: Config): AuthBindings => {
           {
             username: username,
             password: password,
-          }
+          },
         )
         .then((res) => {
           localStorage.setItem(app + ':auth', JSON.stringify(res?.data?.data))
@@ -48,7 +48,7 @@ export const authProvider = (app: string, config: Config): AuthBindings => {
           config.apiUrl + '/' + (config.resourcesPrefix ? app + '/' : '') + config.apiPath.check,
           {
             token: token,
-          }
+          },
         )
         .then((res) => {
           localStorage.setItem(app + ':auth', JSON.stringify(res?.data?.data))
@@ -83,7 +83,7 @@ export const authProvider = (app: string, config: Config): AuthBindings => {
           {
             username: username,
             password: password,
-          }
+          },
         )
         .then(() => {
           return {
@@ -109,7 +109,7 @@ export const authProvider = (app: string, config: Config): AuthBindings => {
             username: username,
             password: password,
             code: code,
-          }
+          },
         )
         .then(() => {
           return {
@@ -132,7 +132,7 @@ export const authProvider = (app: string, config: Config): AuthBindings => {
             password: password,
             newPassword: newPassword,
             code: code,
-          }
+          },
         )
         .then((res) => {
           localStorage.setItem(app + ':auth', JSON.stringify(res))

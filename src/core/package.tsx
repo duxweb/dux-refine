@@ -13,7 +13,6 @@ import { ForgotPassword } from '../pages/forgotPassword'
 import { Config, userMenuItem } from './config'
 import { authProvider } from '../provider/authProvider'
 import { canProvider } from '../provider/canProvider'
-import { Unauthorized } from '../pages/common/unauthorized'
 import { Module } from './module'
 import { ErrorBoundary } from '../pages/common/boundary'
 
@@ -114,11 +113,7 @@ export const createRefine = ({
       {
         element: (
           <Authenticated key={name} fallback={<CatchAllNavigate to='login' />}>
-            <Layout siderType={config.sideType}>
-              <CanAccess fallback={<Unauthorized />}>
-                <Outlet />
-              </CanAccess>
-            </Layout>
+            <Layout siderType={config.sideType}></Layout>
           </Authenticated>
         ),
         children: [

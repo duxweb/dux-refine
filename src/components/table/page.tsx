@@ -1,28 +1,34 @@
-import React, { createContext, forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import React, {
+  createContext,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import {
   EnhancedTable as TdTable,
   EnhancedTableProps,
   Form,
-  Card,
   PrimaryTableCol,
   Radio,
   FormInstanceFunctions,
   SelectOptions,
-
 } from 'tdesign-react/esm'
-import { AppIcon } from 'tdesign-icons-react';
 import { useWindowSize } from '../../core/helper'
 import { TableRef, TableTab, useTable, useTableProps, useTableReturnType } from './table'
 import { Main } from '../main'
 import { useResource, BaseRecord, HttpError, useTranslate } from '@refinedev/core'
 import { appHook } from '../../utils/hook'
 import { useModuleContext } from '../../core'
-import { Result } from '../result'
-import { EmptyWidget } from '../status';
+import { EmptyWidget } from '../status'
+import { Card } from '../card/card'
 
 export interface PageTableRenderProps {
   filters?: Record<string, any>
-  selecteds?: Array<string | number>,
+  selecteds?: Array<string | number>
   selectOptions?: SelectOptions<BaseRecord>
 }
 
@@ -61,7 +67,7 @@ export const PageTable = forwardRef(
       filterForm,
       onData,
     }: PageTableProps,
-    ref: React.ForwardedRef<TableRef>
+    ref: React.ForwardedRef<TableRef>,
   ) => {
     const [size, sizeMap] = useWindowSize()
     const [form] = Form.useForm(filterForm)
@@ -126,12 +132,12 @@ export const PageTable = forwardRef(
 
     const cardRef = useRef<HTMLDivElement>(null)
     const footerRef = useRef<HTMLDivElement>(null)
-    const [tableHeight, setTableHeight] = useState<number|undefined>(undefined)
+    const [tableHeight, setTableHeight] = useState<number | undefined>(undefined)
 
     const handleResize = () => {
       const elementRect = cardRef?.current?.getBoundingClientRect()
       let height = elementRect?.top || 0
-      let footer = footerRef?.current?.clientHeight || 0
+      const footer = footerRef?.current?.clientHeight || 0
       if (height) {
         height -= footer
       }
@@ -147,19 +153,18 @@ export const PageTable = forwardRef(
       return () => {
         window.removeEventListener('resize', handleResize)
       }
-    }, []);
+    }, [])
 
     const renderParams: PageTableRenderProps = {
       filters,
       selecteds,
-      selectOptions
+      selectOptions,
     }
 
     return (
       <pageTableContext.Provider value={tableResult}>
         <Main
           title={title}
-          icon={resource?.meta?.icon}
           header={
             tabs && (
               <Radio.Group
@@ -183,7 +188,9 @@ export const PageTable = forwardRef(
             <>
               <appHook.Render mark={[moduleName, resource?.name as string, 'table', 'action']} />
               {actionRender?.({
-                filters, selecteds, selectOptions
+                filters,
+                selecteds,
+                selectOptions,
               })}
             </>
           }
@@ -215,10 +222,10 @@ export const PageTable = forwardRef(
             </div>
           )}
 
-          <div className='flex gap-4 flex-col lg:flex-row items-start'>
-            {siderRender?.(renderParams)}
-            <div className='border border-component rounded p-4 bg-container lg:flex-1 lg:w-full flex flex-col gap-4'>
-              
+          <Card>
+            <div className='flex gap-4 flex-col lg:flex-row items-start'>
+              {siderRender?.(renderParams)}
+              <div className='w-full lg:flex-1 lg:w-1 flex flex-col gap-4'>
                 {(filterRender || (selecteds && selecteds.length > 0)) && (
                   <div className='flex flex-1 flex-col flex-wrap justify-between gap-2 md:flex-row md:items-center'>
                     <Form
@@ -237,48 +244,57 @@ export const PageTable = forwardRef(
                     </Form>
                   </div>
                 )}
-              
-              <div ref={cardRef}>
-                <TdTable
-                  rowKey={table?.rowKey || 'id'}
-                  columns={getColumns}
-                  data={data}
-                  cellEmptyContent={'-'}
-                  showSortColumnBgColor={true}
-                  loading={loading}
-                  empty={<EmptyWidget />}
-                  pagination={{
-                    ...pagination,
-                    totalContent: selecteds && selecteds.length > 0 ? (
-                      <div>
-                        {batchRender?.(renderParams)}
-                        <appHook.Render
-                          mark={[moduleName, resource?.name as string, 'table', 'batch']}
-                        />
-                      </div>
-                    ) : true,
-                    className: 'app-pagination',
-                    theme: selecteds && selecteds.length > 0 || size <= sizeMap.xl ? 'simple' :  (table?.pagination?.theme || 'default'),
-                    showJumper:
-                      table?.pagination?.showJumper !== undefined || size <= sizeMap.xl ? false : true,
-                    showPageSize:
-                      table?.pagination?.showPageSize !== undefined || size <= sizeMap.xl
-                        ? false
-                        : true,
-                  }}
-                  sort={sorters}
-                  onSortChange={setSorters}
-                  selectedRowKeys={selecteds}
-                  onSelectChange={setSelecteds}
-                  filterValue={tableFilters}
-                  onFilterChange={setTableFilters}
-                  onRowEdit={onRowEdit}
-                  maxHeight={tableHeight}
-                  {...table}
-                />
+
+                <div ref={cardRef}>
+                  <TdTable
+                    rowKey={table?.rowKey || 'id'}
+                    columns={getColumns}
+                    data={data}
+                    cellEmptyContent={'-'}
+                    showSortColumnBgColor={true}
+                    loading={loading}
+                    empty={<EmptyWidget />}
+                    pagination={{
+                      ...pagination,
+                      totalContent:
+                        selecteds && selecteds.length > 0 ? (
+                          <div>
+                            {batchRender?.(renderParams)}
+                            <appHook.Render
+                              mark={[moduleName, resource?.name as string, 'table', 'batch']}
+                            />
+                          </div>
+                        ) : (
+                          true
+                        ),
+                      className: 'app-pagination',
+                      theme:
+                        (selecteds && selecteds.length > 0) || size <= sizeMap.xl
+                          ? 'simple'
+                          : table?.pagination?.theme || 'default',
+                      showJumper:
+                        table?.pagination?.showJumper !== undefined || size <= sizeMap.xl
+                          ? false
+                          : true,
+                      showPageSize:
+                        table?.pagination?.showPageSize !== undefined || size <= sizeMap.xl
+                          ? false
+                          : true,
+                    }}
+                    sort={sorters}
+                    onSortChange={setSorters}
+                    selectedRowKeys={selecteds}
+                    onSelectChange={setSelecteds}
+                    filterValue={tableFilters}
+                    onFilterChange={setTableFilters}
+                    onRowEdit={onRowEdit}
+                    maxHeight={tableHeight}
+                    {...table}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          </Card>
 
           <div ref={footerRef}>
             {footerRender?.(renderParams)}
@@ -287,7 +303,7 @@ export const PageTable = forwardRef(
         </Main>
       </pageTableContext.Provider>
     )
-  }
+  },
 )
 
 PageTable.displayName = 'PageTable'

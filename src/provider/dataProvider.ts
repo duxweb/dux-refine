@@ -35,7 +35,7 @@ client.interceptors.response.use(
       window.location.reload()
     }
     return Promise.reject(customError)
-  }
+  },
 )
 
 export interface UseClientResult {
@@ -43,7 +43,7 @@ export interface UseClientResult {
     url: string,
     method?: string,
     axConfig?: AxiosRequestConfig,
-    original?: boolean
+    original?: boolean,
   ) => Promise<any>
   isLoading: boolean
 }
@@ -268,7 +268,7 @@ export const dataProvider = (app: string, config: Config): DataProvider => ({
           Authorization: getToken(app),
           ...meta?.headers,
         },
-      }
+      },
     )
     return {
       code: data?.code,

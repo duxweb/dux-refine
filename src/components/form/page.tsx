@@ -52,7 +52,6 @@ export const FormPage = ({
     <Main
       title={title}
       header={headerRender}
-      icon={resource?.meta?.icon}
       actions={
         <>
           {back && (

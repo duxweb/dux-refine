@@ -13,7 +13,7 @@ export const useCanHelper = (app: string): CanHelper => {
       return canCheck({ permission, resource, action })
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [auth]
+    [auth],
   )
   return { check }
 }

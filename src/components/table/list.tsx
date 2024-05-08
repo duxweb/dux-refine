@@ -44,7 +44,7 @@ export const PageList = forwardRef(
       children,
       filterForm,
     }: PageListProps,
-    ref: React.ForwardedRef<TableRef>
+    ref: React.ForwardedRef<TableRef>,
   ) => {
     const tableResult = useTable({
       pagination: {
@@ -76,7 +76,6 @@ export const PageList = forwardRef(
     return (
       <Main
         title={title}
-        icon={resource?.meta?.icon}
         header={
           tabs && (
             <Radio.Group
@@ -171,7 +170,7 @@ export const PageList = forwardRef(
         <appHook.Render mark={[moduleName, resource?.name as string, 'list', 'footer']} />
       </Main>
     )
-  }
+  },
 )
 
 PageList.displayName = 'PageList'

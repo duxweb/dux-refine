@@ -112,7 +112,7 @@ export const AppProvider = ({ appsData, config }: AppProviderProps) => {
 
     const formatResources = (
       name: string,
-      res?: ResourceRouteComposition
+      res?: ResourceRouteComposition,
     ): ResourceRouteComposition | undefined => {
       return typeof res === 'string' ? [`/${name}`, res].join('/') : res
     }

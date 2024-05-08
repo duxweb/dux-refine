@@ -62,7 +62,7 @@ export const useMenu = (): UseMenuProps => {
           } as MenuItemProps
         })
     },
-    [check]
+    [check],
   )
 
   const { data: identity } = useGetIdentity<{
@@ -139,12 +139,12 @@ const getNameByKey = (curKey: string, name: 'name' | 'route', data: MenuItemProp
 
 const mergeByProperty = (targetArray: MenuItemProps[], sourceArray: MenuItemProps[]) => {
   sourceArray.forEach((sourceElement) => {
-    const targetElement = targetArray.find(
-      (targetElement) => targetElement.name === sourceElement.name
+    const targetElement = targetArray?.find(
+      (targetElement) => targetElement.name === sourceElement.name,
     )
 
     if (!targetElement) {
-      targetArray.push(sourceElement)
+      targetArray?.push?.(sourceElement)
     } else {
       if (Array.isArray(sourceElement.children) && sourceElement.children.length > 0) {
         mergeByProperty(targetElement.children, sourceElement.children)
