@@ -60,6 +60,18 @@ html:root[theme-mode="dark"] {
   @apply mt-2 text-sm;
 }
 
+.t-form .t-upload__flow {
+  @apply w-full min-w-auto max-w-full;
+}
+
+.t-table__pagination {
+  @apply px-0 pb-0;
+}
+
+.t-dropdown, .t-popup__content {
+  @apply bg-white/30 dark:bg-black/30 backdrop-blur-md;
+}
+
 .app-code {
   @apply flex-grow rounded-lg p-2 bg-gray-12 text-white-1;
 }
@@ -72,9 +84,6 @@ html:root[theme-mode="dark"] {
   @apply w-full;
 }
 
-.t-form .t-upload__flow {
-  @apply w-full min-w-auto max-w-full;
-}
 
 .app-filter {
   @apply flex flex-col gap-2 md:flex-row flex-wrap;
@@ -105,10 +114,6 @@ html:root[theme-mode="dark"] {
 
 .app-pagination {
   
-}
-
-.t-table__pagination {
-  @apply px-0 pb-0;
 }
 
 .page {
