@@ -1,5 +1,5 @@
 .app-sider-collapse {
-  @apply border-r border-component z-1 h-full;
+  @apply border-r border-gray-4 dark:border-gray-10 z-1 h-full;
 }
 
 .app-sider-collapse .t-default-menu__inner .t-menu__logo:not(:empty) {
@@ -11,4 +11,9 @@
 
 .app-sider-collapse .t-menu__logo > * {
   @apply ml-0;
+}
+
+
+.app-sider-menu .t-default-menu__inner .t-menu  {
+  @apply p-0;
 }

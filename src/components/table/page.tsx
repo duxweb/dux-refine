@@ -223,7 +223,7 @@ export const PageTable = forwardRef(
           )}
 
           <Card>
-            <div className='flex gap-4 flex-col lg:flex-row items-start'>
+            <div className='flex gap-6 flex-col lg:flex-row lg:items-start'>
               {siderRender?.(renderParams)}
               <div className='w-full lg:flex-1 lg:w-1 flex flex-col gap-4'>
                 {(filterRender || (selecteds && selecteds.length > 0)) && (

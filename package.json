@@ -70,7 +70,7 @@
     "screenfull": "^6.0.2",
     "tdesign-react": "^1.7.0",
     "tinymce": "^6.8.2",
-    "unocss": "^0.59.4",
+    "unocss": "^0.60.0",
     "zustand": "^4.5.1"
   },
   "devDependencies": {
