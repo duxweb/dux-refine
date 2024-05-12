@@ -116,6 +116,10 @@ html:root[theme-mode="dark"] {
   
 }
 
+.app-upload-file .t-upload__trigger{
+  @apply block;
+}
+
 .page {
   position: absolute;
   left: 15px;
