@@ -1,6 +1,6 @@
 import React, { ComponentType, useCallback, useContext, useEffect, useState } from 'react'
 import { useTranslate, useList, useDeleteMany } from '@refinedev/core'
-import { Button, Menu, Dropdown, MenuValue, DialogPlugin } from 'tdesign-react/esm'
+import { Button, Dropdown, DialogPlugin, Tree, TreeNodeValue } from 'tdesign-react/esm'
 import { CardSider } from '../card/cardSider'
 import { ButtonModal } from '../action'
 import { EmptyWidget } from '../status/emptyWidget'
@@ -14,8 +14,8 @@ interface FilterSiderProps {
   component: () => Promise<{
     default: ComponentType<any>
   }>
-  optionLabel?: any
-  optionValue?: any
+  optionLabel?: string
+  optionValue?: string
   defaultSelect?: boolean
 }
 
@@ -32,16 +32,16 @@ export const FilterSider = ({
   const [init, setInit] = useState(false)
   const tableContext = useContext(pageTableContext)
   const { mutate } = useDeleteMany()
-  const [value, setValue] = useState<MenuValue>(tableContext.filters[field])
+  const [value, setValue] = useState<TreeNodeValue[]>([tableContext.filters[field]])
   const { data } = useList({
     resource: resource,
   })
 
   const onChange = useCallback(
-    (value: MenuValue) => {
+    (value: TreeNodeValue[]) => {
       setValue(value)
       tableContext.setFilters({
-        [field]: value,
+        [field]: value[0],
       })
     },
     [field, tableContext],
@@ -79,13 +79,13 @@ export const FilterSider = ({
             theme='default'
             icon={<div className='i-tabler:refresh' />}
             onClick={() => {
-              setValue('0')
+              setValue([])
               tableContext.setFilters({
                 [field]: undefined,
               })
             }}
           />
-          {value && value != '0' && (
+          {value && (
             <Dropdown direction='right' hideAfterItemClick placement='bottom-left' trigger='hover'>
               <Button
                 variant='text'
@@ -124,7 +124,7 @@ export const FilterSider = ({
                       onConfirm: () => {
                         mutate({
                           resource: resource,
-                          ids: [value],
+                          ids: [value[0]],
                         })
                         confirmDia.hide()
                       },
@@ -139,56 +139,24 @@ export const FilterSider = ({
         </>
       }
     >
-      {data?.data && data?.data.length > 0 ? (
-        <Menu
-          expandType='normal'
-          theme='light'
-          width={'100%'}
-          className='app-sider-menu bg-transparent'
-          value={value}
-          onChange={(v) => {
-            onChange(v)
-          }}
-        >
-          <SideTreeChilren data={data?.data} optionLabel={optionLabel} optionValue={optionValue} />
-        </Menu>
-      ) : (
-        <div className='text-sm mt-4'>
-          <EmptyWidget type='simple' />
-        </div>
-      )}
+      <Tree
+        data={data?.data}
+        activable
+        line
+        expandAll={true}
+        actived={value}
+        icon={true}
+        keys={{
+          label: optionLabel,
+          value: optionValue,
+        }}
+        onActive={onChange}
+        empty={
+          <div className='text-sm mt-4'>
+            <EmptyWidget type='simple' />
+          </div>
+        }
+      />
     </CardSider>
   )
-}
-
-interface SideTreeChilrenProps {
-  data?: Record<string, any>[]
-  optionLabel?: string
-  optionValue?: string
-  optionChildren?: string
-}
-
-const SideTreeChilren = ({
-  data,
-  optionLabel = 'label',
-  optionValue = 'value',
-  optionChildren = 'children',
-}: SideTreeChilrenProps) => {
-  return data?.map((item, k) => {
-    if (item['optionChildren'] && item['optionChildren'].length > 0) {
-      return (
-        <Menu.SubMenu key={k} title={item[optionLabel]} value={String(item[optionValue])}>
-          {SideTreeChilren({
-            data: item[optionChildren] as Record<string, any>[],
-          })}
-        </Menu.SubMenu>
-      )
-    } else {
-      return (
-        <Menu.MenuItem key={k} value={String(item[optionValue])}>
-          {item[optionLabel]}
-        </Menu.MenuItem>
-      )
-    }
-  })
 }
