@@ -54,7 +54,7 @@ export interface useTableReturnType<TData> {
 export const useTable = <
   TQueryFnData extends BaseRecord = BaseRecord,
   TError extends HttpError = HttpError,
-  TData extends BaseRecord = TQueryFnData
+  TData extends BaseRecord = TQueryFnData,
 >({
   columns,
   rowKey = 'id',
@@ -109,7 +109,7 @@ export const useTable = <
   // Selected
   const setOnSelecteds = (
     selectedRowKeys: Array<string | number>,
-    options: SelectOptions<TData>
+    options: SelectOptions<TData>,
   ) => {
     setSelecteds(selectedRowKeys)
     setSelectOptions(options)
@@ -120,7 +120,7 @@ export const useTable = <
     (sort: TableSort) => {
       setSorters(formatSorters(sort))
     },
-    [formatSorters, setSorters]
+    [formatSorters, setSorters],
   )
 
   const getSorters = useMemo(() => {
@@ -136,9 +136,8 @@ export const useTable = <
       setFilters(formatFilter(values))
       filterForm?.setFieldsValue(values)
     },
-    [formatFilter, setFilters]
+    [formatFilter, setFilters],
   )
-
 
   const getTableFilterFields = useMemo(() => {
     return columns
@@ -169,7 +168,7 @@ export const useTable = <
       }
       setFilters(formatFilter(values))
     },
-    [formatFilter, getTableFilterFields, setFilters]
+    [formatFilter, getTableFilterFields, setFilters],
   )
 
   const getFilters = useMemo(() => {
@@ -226,7 +225,7 @@ export const useTable = <
       })
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [resource?.name, rowKey]
+    [resource?.name, rowKey],
   )
 
   // Refetch

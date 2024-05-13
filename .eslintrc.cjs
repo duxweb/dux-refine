@@ -8,7 +8,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
-    '@unocss',
     'prettier',
   ],
   parser: '@typescript-eslint/parser',
@@ -41,5 +40,5 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': ['off'],
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 0,
-  }
+  },
 }
