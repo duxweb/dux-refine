@@ -1,6 +1,6 @@
 {
   "name": "@duxweb/dux-refine",
-  "version": "0.12.7",
+  "version": "0.12.8",
   "description": "🌲 Integrated UI based on refine and tdesign",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -71,7 +71,7 @@
     "screenfull": "^6.0.2",
     "tdesign-react": "^1.7.0",
     "tinymce": "^6.8.2",
-    "unocss": "^0.60.1",
+    "unocss": "^0.60.2",
     "zustand": "^4.5.1"
   },
   "devDependencies": {
@@ -81,10 +81,10 @@
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",
-    "@unocss/eslint-config": "^0.60.0",
+    "@unocss/eslint-config": "^0.60.2",
     "@vitejs/plugin-react": "^4.2.1",
     "copyfiles": "^2.4.1",
-    "eslint": "^9.2.0",
+    "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-mdx": "^3.1.5",
     "eslint-plugin-prettier": "^5.1.3",
