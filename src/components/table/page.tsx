@@ -1,7 +1,6 @@
 import React, {
   createContext,
   forwardRef,
-  useCallback,
   useEffect,
   useImperativeHandle,
   useMemo,
@@ -20,7 +19,7 @@ import {
 import { useWindowSize } from '../../core/helper'
 import { TableRef, TableTab, useTable, useTableProps, useTableReturnType } from './table'
 import { Main } from '../main'
-import { useResource, BaseRecord, HttpError, useTranslate } from '@refinedev/core'
+import { useResource, BaseRecord, HttpError } from '@refinedev/core'
 import { appHook } from '../../utils/hook'
 import { useModuleContext } from '../../core'
 import { EmptyWidget } from '../status'
@@ -73,7 +72,6 @@ export const PageTable = forwardRef(
     const [form] = Form.useForm(filterForm)
     const { resource } = useResource()
     const { name: moduleName } = useModuleContext()
-    const t = useTranslate()
 
     const hookColumns = appHook.useMark([moduleName, resource?.name as string, 'table', 'columns'])
 
@@ -223,7 +221,7 @@ export const PageTable = forwardRef(
           )}
 
           <Card>
-            <div className='flex gap-4 flex-col lg:flex-row items-start'>
+            <div className='flex gap-6 flex-col lg:flex-row'>
               {siderRender?.(renderParams)}
               <div className='w-full lg:flex-1 lg:w-1 flex flex-col gap-4'>
                 {(filterRender || (selecteds && selecteds.length > 0)) && (

@@ -6,7 +6,8 @@
     "all": "全部",
     "create": "创建",
     "cancel": "取消",
-    "confirm": "确认"
+    "confirm": "确认",
+    "placeholder": "拖动文件到此处或点击上传"
   },
   "placeholder": {
     "image": "请选择图片",

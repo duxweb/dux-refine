@@ -50,8 +50,6 @@ export const FilterEdit = ({
     tableContext.setFilters({
       [field]: options[0]?.value,
     })
-
-    console.log(form?.getFieldValue(field))
   }, [defaultSelect, field, form, init, options, tableContext])
 
   const id = Form.useWatch(field, form)
