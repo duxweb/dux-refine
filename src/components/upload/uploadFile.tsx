@@ -1,10 +1,19 @@
-import { TdUploadProps, Upload as TdUpload, UploadFile as TdUploadFile, RequestMethodResponse, Link, Button, Progress, StatusEnum } from 'tdesign-react/esm'
+import {
+  TdUploadProps,
+  Upload as TdUpload,
+  UploadFile as TdUploadFile,
+  RequestMethodResponse,
+  Link,
+  Button,
+  Progress,
+  StatusEnum,
+} from 'tdesign-react/esm'
 import { humanFileSize, useUpload } from './useUpload'
 import { useControllableValue } from 'ahooks'
 import { useCallback, useMemo, useRef, useState } from 'react'
 import * as qiniu from 'qiniu-js'
 import { useClient } from '../../provider'
-import { UploadRef,  } from 'tdesign-react/esm/upload/interface'
+import { UploadRef } from 'tdesign-react/esm/upload/interface'
 import dayjs from 'dayjs'
 import clsx from 'clsx'
 import { useTranslate } from '@refinedev/core'
@@ -46,17 +55,16 @@ export const UploadFile = ({
     }
     return [state]
   }, [state])
-  
 
   // qiniu
   const requestQiniuMethod = useCallback(
-    (files: TdUploadFile | TdUploadFile[]):Promise<RequestMethodResponse>  =>
+    (files: TdUploadFile | TdUploadFile[]): Promise<RequestMethodResponse> =>
       new Promise((resolve) => {
         let file: TdUploadFile = files
         if (Array.isArray(files)) {
           file = files[0]
         }
-        
+
         const fileName = generateRandomFileName(file?.name || '')
         request('upload/qiniu', 'POST').then((res) => {
           const observable = qiniu.upload(
@@ -86,7 +94,11 @@ export const UploadFile = ({
             complete({ key }) {
               resolve({
                 status: 'success',
-                response: { url: res?.data?.public_url + '/' + key, size: file.size, name: file.name },
+                response: {
+                  url: res?.data?.public_url + '/' + key,
+                  size: file.size,
+                  name: file.name,
+                },
               })
             },
           })
@@ -100,10 +112,7 @@ export const UploadFile = ({
   return (
     <TdUpload
       ref={uploadDom}
-      className={clsx([
-        className,
-        'w-full app-upload-file'
-      ])}
+      className={clsx([className, 'w-full app-upload-file'])}
       files={files}
       theme='file'
       onChange={(value) => {
@@ -147,8 +156,16 @@ export const UploadFile = ({
                 <div className='flex items-center justify-between'>
                   <div className='flex flex-col'>
                     <div className='flex gap-2 items-center'>
-                      {item.status == 'success' && <div className='bg-success text-white rounded-full flex items-center justify-center p-0.5'><div className='i-tabler:check w-2.5 h-2.5'></div></div>}
-                      {item.status == 'fail' && <div className='bg-error text-white rounded-full flex items-center justify-center p-0.5'><div className='i-tabler:x w-2.5 h-2.5'></div></div>}
+                      {item.status == 'success' && (
+                        <div className='bg-success text-white rounded-full flex items-center justify-center p-0.5'>
+                          <div className='i-tabler:check w-2.5 h-2.5'></div>
+                        </div>
+                      )}
+                      {item.status == 'fail' && (
+                        <div className='bg-error text-white rounded-full flex items-center justify-center p-0.5'>
+                          <div className='i-tabler:x w-2.5 h-2.5'></div>
+                        </div>
+                      )}
                       <Link href={item.url} target='_blank'>
                         {item.name}
                       </Link>
@@ -156,30 +173,35 @@ export const UploadFile = ({
                     <div className='text-xs text-placeholder'>{humanFileSize(item.size || 0)}</div>
                   </div>
                   <div className='flex'>
-                    {item.url && <Button
-                      theme='default'
-                      variant='text'
-                      shape='circle'
-                      icon={<div className='i-tabler:download'></div>}
-                      onClick={() => {
-                        window.open(item.url)
-                      }}
-                    ></Button>}
-                    {item.status == 'success' && <Button
-                      theme='default'
-                      variant='text'
-                      shape='circle'
-                      icon={<div className='i-tabler:x'></div>}
-                      onClick={() => {
-                        if (Array.isArray(files)) {
-                          const tmpFiles = [...files];
-                          tmpFiles.splice(index, 1)
-                          setState(tmpFiles)
-                        }else {
-                          setState(undefined)
-                        }
-                      }}
-                    ></Button>}
+                    {item.url && (
+                      <Button
+                        theme='default'
+                        variant='text'
+                        shape='circle'
+                        icon={<div className='i-tabler:download'></div>}
+                        onClick={() => {
+                          window.open(item.url)
+                        }}
+                      ></Button>
+                    )}
+                    {!item.status ||
+                      (item.status == 'success' && (
+                        <Button
+                          theme='default'
+                          variant='text'
+                          shape='circle'
+                          icon={<div className='i-tabler:x'></div>}
+                          onClick={() => {
+                            if (Array.isArray(files)) {
+                              const tmpFiles = [...files]
+                              tmpFiles.splice(index, 1)
+                              setState(tmpFiles)
+                            } else {
+                              setState(undefined)
+                            }
+                          }}
+                        ></Button>
+                      ))}
                   </div>
                 </div>
                 {item.status == 'progress' && (
@@ -225,9 +247,11 @@ export const UploadFile = ({
             ></path>
           </svg>
         </div>
-        <div className='text-placeholder mt-2'>{translate('fields.placeholder', {
+        <div className='text-placeholder mt-2'>
+          {translate('fields.placeholder', {
             ns: 'file',
-          })}</div>
+          })}
+        </div>
         <div className='flex mt-4'>
           <Button icon={<div className='i-tabler:upload t-icon'></div>} loading={loading}>
             {translate('fields.file', {
@@ -240,7 +264,6 @@ export const UploadFile = ({
   )
 }
 
-
 const generateRandomFileName = (name: string) => {
   const extension = name.substring(name.lastIndexOf('.'))
   const randomString =
@@ -249,8 +272,6 @@ const generateRandomFileName = (name: string) => {
 
   return dayjs().format('YYYY-MM-DD') + '/' + fileName
 }
-
-
 
 const getStatus = (status?: string): StatusEnum | undefined => {
   switch (status) {
