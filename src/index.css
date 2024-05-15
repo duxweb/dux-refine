@@ -69,7 +69,7 @@ html:root[theme-mode="dark"] {
 }
 
 .t-dropdown, .t-popup__content {
-  @apply bg-white/30 dark:bg-black/30 backdrop-blur-md;
+  @apply bg-white/70 dark:bg-black/70 backdrop-blur-md;
 }
 
 .app-code {

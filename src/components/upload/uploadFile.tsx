@@ -184,24 +184,25 @@ export const UploadFile = ({
                         }}
                       ></Button>
                     )}
-                    {!item.status ||
-                      (item.status == 'success' && (
-                        <Button
-                          theme='default'
-                          variant='text'
-                          shape='circle'
-                          icon={<div className='i-tabler:x'></div>}
-                          onClick={() => {
-                            if (Array.isArray(files)) {
-                              const tmpFiles = [...files]
-                              tmpFiles.splice(index, 1)
-                              setState(tmpFiles)
-                            } else {
-                              setState(undefined)
-                            }
-                          }}
-                        ></Button>
-                      ))}
+                    {!item?.status || item.status == 'success' ? (
+                      <Button
+                        theme='default'
+                        variant='text'
+                        shape='circle'
+                        icon={<div className='i-tabler:x'></div>}
+                        onClick={() => {
+                          if (Array.isArray(files)) {
+                            const tmpFiles = [...files]
+                            tmpFiles.splice(index, 1)
+                            setState(tmpFiles)
+                          } else {
+                            setState(undefined)
+                          }
+                        }}
+                      ></Button>
+                    ) : (
+                      ''
+                    )}
                   </div>
                 </div>
                 {item.status == 'progress' && (
