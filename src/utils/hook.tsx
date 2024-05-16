@@ -72,8 +72,8 @@ export class RenderHook {
           ? _markItem.self.slice(_markItem.self.length - max)
           : _markItem.self
         : typeof children !== 'undefined'
-        ? [children]
-        : []
+          ? [children]
+          : []
 
       if (_markItem.before?.length) {
         _element.unshift(..._markItem.before)
