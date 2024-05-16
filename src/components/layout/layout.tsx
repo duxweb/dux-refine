@@ -1,4 +1,4 @@
-import React, { ReactNode, Suspense, useCallback, useMemo, useState } from 'react'
+import React, { ReactNode, useCallback, useMemo, useState } from 'react'
 import { SiderCollapse, SiderApp } from '../sider'
 import { siderType } from '../../core/config'
 import { KBarProvider, Action } from 'kbar'
@@ -9,7 +9,6 @@ import { Icon } from 'tdesign-icons-react'
 import { SwitchTransition, CSSTransition } from 'react-transition-group'
 import { useAppStore } from '../../stores/app'
 import { useNProgress } from '@tanem/react-nprogress'
-import { Loading } from 'tdesign-react/esm'
 import { useOutlet } from 'react-router-dom'
 import { Unauthorized } from '../../pages/common/unauthorized'
 
@@ -18,7 +17,7 @@ export interface LayoutProps {
   children?: React.ReactNode
 }
 
-export const Layout = ({ children, siderType = 'collapse' }: LayoutProps) => {
+export const Layout = ({ siderType = 'collapse' }: LayoutProps) => {
   const { defaultOpenKeys, menuData } = useMenu()
   const t = useTranslate()
   const go = useGo()
