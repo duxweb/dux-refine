@@ -1,5 +1,5 @@
 import { BaseRecord, HttpError, useMany, useTranslate } from '@refinedev/core'
-import { useEffect, useMemo, useState } from 'react'
+import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { Input, Button, Dialog, Table, TableProps, PrimaryTableCol, Form } from 'tdesign-react/esm'
 import { useControllableValue } from 'ahooks'
 import { Listform, ListformData } from '../data/listform'
@@ -16,6 +16,7 @@ interface SpecProps {
   table?: TableProps
   tableHook?: useTableProps<BaseRecord, HttpError, BaseRecord>
   tableColumns?: PrimaryTableCol[]
+  filterRender?: ReactNode
   sort?: boolean
 }
 
@@ -25,6 +26,7 @@ export const ListSelect = ({
   table,
   tableHook,
   tableColumns,
+  filterRender,
   sort,
   ...props
 }: SpecProps) => {
@@ -79,6 +81,7 @@ export const ListSelect = ({
           tableHook={tableHook}
           columns={tableColumns}
           resource={resource}
+          filterRender={filterRender}
           onSelect={(values) => {
             setData((v) => {
               const items = v || []
@@ -104,6 +107,7 @@ interface ModalSelectProps {
   table?: TableProps
   tableHook?: useTableProps<BaseRecord, HttpError, BaseRecord>
   columns?: PrimaryTableCol[]
+  filterRender?: ReactNode
 }
 
 export const ModalSelect = ({
@@ -114,6 +118,7 @@ export const ModalSelect = ({
   open,
   onClose,
   onSelect,
+  filterRender,
 }: ModalSelectProps) => {
   const translate = useTranslate()
   const [select, setSelect] = useState<Record<string, any>[]>([])
@@ -135,6 +140,7 @@ export const ModalSelect = ({
         columns={columns}
         table={table}
         tableHook={tableHook}
+        filterRender={filterRender}
         onSelect={(v) => setSelect(v || [])}
       />
     </Dialog>
@@ -147,8 +153,9 @@ interface SelectProps {
   tableHook?: useTableProps<BaseRecord, HttpError, BaseRecord>
   columns?: PrimaryTableCol[]
   onSelect?: (value?: Record<string, any>[]) => void
+  filterRender?: ReactNode
 }
-const Select = ({ resource, columns, table, tableHook, onSelect }: SelectProps) => {
+const Select = ({ resource, columns, table, tableHook, onSelect, filterRender }: SelectProps) => {
   const translate = useTranslate()
 
   const getColumns = useMemo<PrimaryTableCol[]>(() => {
@@ -208,6 +215,7 @@ const Select = ({ resource, columns, table, tableHook, onSelect }: SelectProps) 
         <FilterItem name='keyword'>
           <Input placeholder={translate('common.placeholderKeyword')} />
         </FilterItem>
+        {filterRender}
       </Form>
 
       <Table
