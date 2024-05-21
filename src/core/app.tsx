@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useMemo, useState } from 'react'
 import { RouteObject, RouterProvider, createHashRouter, Navigate } from 'react-router-dom'
-import { ResourceRouteComposition } from '@refinedev/core/dist/interfaces/bindings/resource'
+import { ResourceRouteComposition } from '@refinedev/core/dist/contexts/resource/types'
 
 import { createRefine } from './package'
 import { App } from './helper'
