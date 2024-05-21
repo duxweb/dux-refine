@@ -114,7 +114,6 @@ export const UploadFile = ({
       ref={uploadDom}
       className={clsx([className, 'w-full app-upload-file'])}
       files={files}
-      theme='file'
       onChange={(value) => {
         const fileds: TdUploadFile[] = value?.map((item) => {
           return {
@@ -146,6 +145,8 @@ export const UploadFile = ({
       multiple={multiple}
       {...uploadParams}
       {...props}
+      draggable={false}
+      theme='file'
       requestMethod={driver == 'qiniu' ? requestQiniuMethod : undefined}
       formatResponse={driver == 'qiniu' ? undefined : uploadParams.formatResponse}
       fileListDisplay={({ files }) => {
