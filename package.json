@@ -1,6 +1,6 @@
 {
   "name": "@duxweb/dux-refine",
-  "version": "0.13.3",
+  "version": "0.13.4",
   "description": "🌲 Integrated UI based on refine and tdesign",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -69,7 +69,7 @@
     "react-transition-group": "^4.4.5",
     "remeda": "^1.28.0",
     "screenfull": "^6.0.2",
-    "tdesign-react": "^1.7.0",
+    "tdesign-react": "^1.7.3",
     "tinymce": "^6.8.2",
     "unocss": "^0.60.2",
     "zustand": "^4.5.1"
