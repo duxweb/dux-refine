@@ -1,6 +1,6 @@
 import { clsx } from 'clsx'
 import React, { forwardRef, ReactNode } from 'react'
-import { Avatar, AvatarProps, Image, ImageProps } from 'tdesign-react/esm'
+import { Avatar, AvatarProps, Image, ImageProps, ImageViewer } from 'tdesign-react/esm'
 import './style.css'
 import { ImageError } from '../image'
 import { ImageLoading } from '../image/loading'
@@ -11,7 +11,7 @@ export interface MediaTextProps {
 
 const MediaTextComp = (
   { size = 'default', children }: MediaTextProps,
-  ref: React.Ref<HTMLDivElement>
+  ref: React.Ref<HTMLDivElement>,
 ) => {
   return (
     <div className={clsx(['app-media-text', size == 'small' ? 'app-media-text-sm' : ''])} ref={ref}>
@@ -21,7 +21,7 @@ const MediaTextComp = (
           React.isValidElement(child) &&
           ((child.type as React.FunctionComponent).displayName === 'MediaText.Image' ||
             (child.type as React.FunctionComponent).displayName === 'MediaText.Avatar') &&
-          child
+          child,
       )}
       <div className='app-media-text-content'>
         {React.Children.map(
@@ -29,7 +29,7 @@ const MediaTextComp = (
           (child) =>
             React.isValidElement(child) &&
             (child.type as React.FunctionComponent).displayName === 'MediaText.Title' &&
-            child
+            child,
         )}
         <div className='empty:hidden'>
           {React.Children.map(
@@ -37,7 +37,7 @@ const MediaTextComp = (
             (child) =>
               React.isValidElement(child) &&
               (child.type as React.FunctionComponent).displayName === 'MediaText.Desc' &&
-              child
+              child,
           )}
         </div>
       </div>
@@ -54,17 +54,23 @@ interface MediaTextImageProps extends ImageProps {
   width?: string | number
   height?: string | number
   statsSize?: string | number
+  Images?: string[]
 }
 
 const MediaTextImage = (props: MediaTextImageProps) => {
   const { width = 45, height = 45, shape = 'round', statsSize = 18 } = props
   return (
-    <Image
-      error={<ImageError size={statsSize} />}
-      shape={shape}
-      style={{ width: width, height: height }}
-      loading={<ImageLoading size={statsSize} />}
-      {...props}
+    <ImageViewer
+      trigger={
+        <Image
+          error={<ImageError size={statsSize} />}
+          shape={shape}
+          style={{ width: width, height: height }}
+          loading={<ImageLoading size={statsSize} />}
+          {...props}
+        />
+      }
+      images={props?.Images || [props.src || '']}
     />
   )
 }
