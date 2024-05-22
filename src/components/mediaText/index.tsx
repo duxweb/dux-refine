@@ -61,15 +61,18 @@ const MediaTextImage = (props: MediaTextImageProps) => {
   const { width = 45, height = 45, shape = 'round', statsSize = 18 } = props
   return (
     <ImageViewer
-      trigger={
-        <Image
-          error={<ImageError size={statsSize} />}
-          shape={shape}
-          style={{ width: width, height: height }}
-          loading={<ImageLoading size={statsSize} />}
-          {...props}
-        />
-      }
+      trigger={({ open }) => {
+        return (
+          <Image
+            error={<ImageError size={statsSize} />}
+            shape={shape}
+            style={{ width: width, height: height }}
+            loading={<ImageLoading size={statsSize} />}
+            {...props}
+            onClick={open}
+          />
+        )
+      }}
       images={props?.Images || [props.src || '']}
     />
   )
