@@ -269,8 +269,13 @@ export interface TableTab {
 export interface FilterItemProps {
   children?: React.ReactNode
   name?: NamePath
+  label?: string
 }
 
-export const FilterItem = ({ name, children }: FilterItemProps) => {
-  return <Form.FormItem name={name}>{children}</Form.FormItem>
+export const FilterItem = ({ name, label, children }: FilterItemProps) => {
+  return (
+    <Form.FormItem name={name} label={label} labelAlign='right'>
+      {children}
+    </Form.FormItem>
+  )
 }

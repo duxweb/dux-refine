@@ -1,5 +1,5 @@
 import { Link, Progress, MessagePlugin } from 'tdesign-react/esm'
-import { useImport, useTranslate } from '@refinedev/core'
+import { useImport, useInvalidate, useTranslate } from '@refinedev/core'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { mkConfig, generateCsv, download } from 'export-to-csv'
 
@@ -9,10 +9,18 @@ export interface ImportCsvProps {
   size?: number
   example?: ImportExample
   onFinish?: () => void
+  refresh?: string
 }
 
-export const ImportCsv = ({ resource, example, size = 1000, onFinish }: ImportCsvProps) => {
+export const ImportCsv = ({
+  resource,
+  example,
+  size = 1000,
+  onFinish,
+  refresh,
+}: ImportCsvProps) => {
   const translate = useTranslate()
+  const invalidate = useInvalidate()
 
   const [importProgress, setImportProgress] = useState({
     processed: 0,
@@ -33,6 +41,12 @@ export const ImportCsv = ({ resource, example, size = 1000, onFinish }: ImportCs
         return
       }
       setStatus(2)
+      if (refresh) {
+        invalidate({
+          resource: refresh,
+          invalidates: ['list'],
+        })
+      }
       onFinish?.()
     },
     onProgress: (progress) => {

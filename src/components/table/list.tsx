@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle } from 'react'
+import React, { forwardRef, useImperativeHandle, useState } from 'react'
 import {
   Form,
   Card,
@@ -6,25 +6,28 @@ import {
   Radio,
   Pagination,
   FormInstanceFunctions,
+  Button,
 } from 'tdesign-react/esm'
 import { useWindowSize } from '../../core/helper'
 import { TableRef, TableTab, useTable, useTableProps, useTableReturnType } from './table'
 import { Main } from '../main'
-import { useResource, BaseRecord, HttpError } from '@refinedev/core'
+import { useResource, BaseRecord, HttpError, useTranslate } from '@refinedev/core'
 import { appHook } from '../../utils/hook'
 import { useModuleContext } from '../../core'
 import { StatusEmpty } from '../status/empty'
+import { PageTableRenderProps } from './page'
 
 export interface PageListProps {
   title?: React.ReactNode
   tabs?: Array<TableTab>
   tableHook?: useTableProps<BaseRecord, HttpError, BaseRecord>
   columns?: PrimaryTableCol[]
-  headerRender?: () => React.ReactElement
-  footerRender?: () => React.ReactElement
-  actionRender?: () => React.ReactElement
-  filterRender?: () => React.ReactElement
-  batchRender?: () => React.ReactElement
+  headerRender?: (params: PageTableRenderProps) => React.ReactElement
+  footerRender?: (params: PageTableRenderProps) => React.ReactElement
+  actionRender?: (params: PageTableRenderProps) => React.ReactElement
+  filterRender?: (params: PageTableRenderProps) => React.ReactElement
+  filterAdvRender?: (params: PageTableRenderProps) => React.ReactElement
+  batchRender?: (params: PageTableRenderProps) => React.ReactElement
   children?: (data: useTableReturnType<BaseRecord>) => React.ReactNode
   filterForm?: FormInstanceFunctions
 }
@@ -38,6 +41,7 @@ export const PageList = forwardRef(
       headerRender,
       footerRender,
       filterRender,
+      filterAdvRender,
       actionRender,
       batchRender,
       tableHook,
@@ -59,6 +63,8 @@ export const PageList = forwardRef(
 
     const [size, sizeMap] = useWindowSize()
     const [form] = Form.useForm(filterForm)
+    const [advFilter, setAdvFilter] = useState(false)
+    const translate = useTranslate()
 
     useImperativeHandle(ref, () => {
       return {
@@ -72,6 +78,12 @@ export const PageList = forwardRef(
     })
     const { resource } = useResource()
     const { name: moduleName } = useModuleContext()
+
+    const renderParams: PageTableRenderProps = {
+      filters,
+      selecteds,
+      selectOptions,
+    }
 
     return (
       <Main
@@ -98,11 +110,11 @@ export const PageList = forwardRef(
         actions={
           <>
             <appHook.Render mark={[moduleName, resource?.name as string, 'list', 'action']} />
-            {actionRender?.()}
+            {actionRender?.(renderParams)}
           </>
         }
       >
-        {headerRender?.()}
+        {headerRender?.(renderParams)}
 
         <appHook.Render mark={[moduleName, resource?.name as string, 'list', 'header']} />
 
@@ -125,7 +137,7 @@ export const PageList = forwardRef(
                 ))}
               </Radio.Group>
             )}
-            <div>{actionRender?.()}</div>
+            <div>{actionRender?.(renderParams)}</div>
           </div>
         )}
 
@@ -134,16 +146,47 @@ export const PageList = forwardRef(
             <Form
               initialData={filters}
               labelWidth={0}
-              className='app-filter flex-wrap'
+              labelAlign='right'
+              className='flex flex-col gap-2'
               onValuesChange={setFilters}
               form={form}
             >
-              {filterRender?.()}
-              <appHook.Render mark={[moduleName, resource?.name as string, 'list', 'filter']} />
+              <div className='app-filter'>
+                {filterRender?.(renderParams)}
+                <appHook.Render mark={[moduleName, resource?.name as string, 'list', 'filter']} />
+                <Form.FormItem>
+                  <div className='flex-1 flex gap-2 flex-wrap'>
+                    <Button type='submit' icon={<div className='t-icon i-tabler:search'></div>}>
+                      {translate('buttons.query')}
+                    </Button>
+                    {filterAdvRender && (
+                      <Button
+                        theme='primary'
+                        variant='text'
+                        suffix={<div className='t-icon i-tabler:chevrons-down'></div>}
+                        onClick={() => {
+                          setAdvFilter((v) => !v)
+                        }}
+                      >
+                        {translate('buttons.adv')}
+                      </Button>
+                    )}
+                  </div>
+                </Form.FormItem>
+              </div>
+              {advFilter && filterAdvRender && (
+                <div className='app-filter'>
+                  {filterAdvRender?.(renderParams)}
+
+                  <appHook.Render
+                    mark={[moduleName, resource?.name as string, 'list', 'filterAdv']}
+                  />
+                </div>
+              )}
             </Form>
             {selecteds && selecteds.length > 0 && (
               <div>
-                {batchRender?.()}{' '}
+                {batchRender?.(renderParams)}{' '}
                 <appHook.Render mark={[moduleName, resource?.name as string, 'list', 'batch']} />
               </div>
             )}
@@ -166,7 +209,7 @@ export const PageList = forwardRef(
           showPageSize={pagination?.showPageSize !== undefined || size <= sizeMap.xl ? false : true}
         />
 
-        {footerRender?.()}
+        {footerRender?.(renderParams)}
         <appHook.Render mark={[moduleName, resource?.name as string, 'list', 'footer']} />
       </Main>
     )

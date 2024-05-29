@@ -69,7 +69,7 @@ html:root[theme-mode="dark"] {
 }
 
 .t-dropdown, .t-popup__content {
-  @apply bg-white/70 dark:bg-black/70 backdrop-blur-md;
+  @apply bg-white/70 dark:bg-black/30 backdrop-blur-md;
 }
 
 .app-code {
@@ -86,7 +86,11 @@ html:root[theme-mode="dark"] {
 
 
 .app-filter {
-  @apply flex flex-col gap-2 md:flex-row flex-wrap;
+  @apply flex flex-col gap-4 md:flex-row flex-wrap;
+}
+
+.app-filter .t-form__label {
+ @apply min-w-100px;
 }
 
 .app-filter .t-form__item {

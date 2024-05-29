@@ -15,11 +15,12 @@ import {
   Radio,
   FormInstanceFunctions,
   SelectOptions,
+  Button,
 } from 'tdesign-react/esm'
 import { useWindowSize } from '../../core/helper'
 import { TableRef, TableTab, useTable, useTableProps, useTableReturnType } from './table'
 import { Main } from '../main'
-import { useResource, BaseRecord, HttpError } from '@refinedev/core'
+import { useResource, BaseRecord, HttpError, useTranslate } from '@refinedev/core'
 import { appHook } from '../../utils/hook'
 import { useModuleContext } from '../../core'
 import { EmptyWidget } from '../status'
@@ -33,6 +34,7 @@ export interface PageTableRenderProps {
 
 export interface PageTableProps {
   title?: React.ReactNode
+  titleLang?: string
   tabs?: Array<TableTab>
   table?: EnhancedTableProps
   tableHook?: useTableProps<BaseRecord, HttpError, BaseRecord>
@@ -42,6 +44,7 @@ export interface PageTableProps {
   footerRender?: (params: PageTableRenderProps) => React.ReactElement
   actionRender?: (params: PageTableRenderProps) => React.ReactElement
   filterRender?: (params: PageTableRenderProps) => React.ReactElement
+  filterAdvRender?: (params: PageTableRenderProps) => React.ReactElement
   batchRender?: (params: PageTableRenderProps) => React.ReactElement
   filterForm?: FormInstanceFunctions
   onData?: (data?: Record<string, any>[]) => void
@@ -53,6 +56,7 @@ export const PageTable = forwardRef(
   (
     {
       title,
+      titleLang,
       tabs,
       columns,
       table,
@@ -60,6 +64,7 @@ export const PageTable = forwardRef(
       footerRender,
       siderRender,
       filterRender,
+      filterAdvRender,
       actionRender,
       batchRender,
       tableHook,
@@ -72,6 +77,7 @@ export const PageTable = forwardRef(
     const [form] = Form.useForm(filterForm)
     const { resource } = useResource()
     const { name: moduleName } = useModuleContext()
+    const translate = useTranslate()
 
     const hookColumns = appHook.useMark([moduleName, resource?.name as string, 'table', 'columns'])
 
@@ -131,6 +137,7 @@ export const PageTable = forwardRef(
     const cardRef = useRef<HTMLDivElement>(null)
     const footerRef = useRef<HTMLDivElement>(null)
     const [tableHeight, setTableHeight] = useState<number | undefined>(undefined)
+    const [advFilter, setAdvFilter] = useState(false)
 
     const handleResize = () => {
       const elementRect = cardRef?.current?.getBoundingClientRect()
@@ -162,7 +169,7 @@ export const PageTable = forwardRef(
     return (
       <pageTableContext.Provider value={tableResult}>
         <Main
-          title={title}
+          title={titleLang ? translate(titleLang) : title}
           header={
             tabs && (
               <Radio.Group
@@ -228,17 +235,51 @@ export const PageTable = forwardRef(
                   <div className='flex flex-1 flex-col flex-wrap justify-between gap-2 md:flex-row md:items-center'>
                     <Form
                       initialData={filters}
-                      labelWidth={0}
-                      className='app-filter flex-wrap'
-                      onValuesChange={(values) => {
-                        setFilters(values)
+                      labelWidth={'auto'}
+                      labelAlign='left'
+                      className='flex flex-col gap-2'
+                      onSubmit={({ fields }) => {
+                        setFilters(fields)
                       }}
                       form={form}
                     >
-                      {filterRender?.(renderParams)}
-                      <appHook.Render
-                        mark={[moduleName, resource?.name as string, 'table', 'filter']}
-                      />
+                      <div className='app-filter'>
+                        {filterRender?.(renderParams)}
+                        <appHook.Render
+                          mark={[moduleName, resource?.name as string, 'list', 'filter']}
+                        />
+                        <Form.FormItem>
+                          <div className='flex-1 flex gap-2 flex-wrap'>
+                            <Button
+                              type='submit'
+                              icon={<div className='t-icon i-tabler:search'></div>}
+                            >
+                              {translate('buttons.query')}
+                            </Button>
+                            {filterAdvRender && (
+                              <Button
+                                theme='primary'
+                                variant='text'
+                                suffix={<div className='t-icon i-tabler:chevrons-down'></div>}
+                                onClick={() => {
+                                  setAdvFilter((v) => !v)
+                                }}
+                              >
+                                {translate('buttons.adv')}
+                              </Button>
+                            )}
+                          </div>
+                        </Form.FormItem>
+                      </div>
+                      {advFilter && filterAdvRender && (
+                        <div className='app-filter'>
+                          {filterAdvRender?.(renderParams)}
+
+                          <appHook.Render
+                            mark={[moduleName, resource?.name as string, 'list', 'filterAdv']}
+                          />
+                        </div>
+                      )}
                     </Form>
                   </div>
                 )}

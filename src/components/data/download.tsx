@@ -10,7 +10,7 @@ interface UseDownloadHook {
     url: string,
     filename?: string,
     config?: AxiosRequestConfig,
-    contentType?: string
+    contentType?: string,
   ) => void
   isLoading: boolean
 }
@@ -27,13 +27,13 @@ export const useDownload = (): UseDownloadHook => {
           responseType: 'blob',
           ...config,
         },
-        true
-      ).then(({response, ...res}) => {
+        true,
+      ).then(({ response, ...res }) => {
         if (res?.data) {
           const type = contentType || res.headers['content-type']
           const name = filename || dayjs().format('YYYYMMDD_HHmmss') + '.' + mime.getExtension(type)
           downloadFile(res.data, type, name)
-        }else {
+        } else {
           const reader = new FileReader()
           reader.onload = function () {
             const message = JSON.parse(reader.result as string)?.data[0]?.message
@@ -43,7 +43,7 @@ export const useDownload = (): UseDownloadHook => {
         }
       })
     },
-    [request]
+    [request],
   )
 
   return {
@@ -53,7 +53,6 @@ export const useDownload = (): UseDownloadHook => {
 }
 
 export const downloadFile = (res: BlobPart, type: string, filename: string) => {
-  // 创建blob对象，解析流数据
   const blob = new Blob([res], {
     type: type,
   })

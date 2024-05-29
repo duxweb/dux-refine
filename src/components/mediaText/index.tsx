@@ -46,7 +46,7 @@ const MediaTextComp = (
 }
 
 const MediaTextAvatar = (props: AvatarProps) => {
-  return <Avatar {...props} />
+  return <Avatar className='flex-none' {...props} />
 }
 MediaTextAvatar.displayName = 'MediaText.Avatar'
 
@@ -68,6 +68,7 @@ const MediaTextImage = (props: MediaTextImageProps) => {
             shape={shape}
             style={{ width: width, height: height }}
             loading={<ImageLoading size={statsSize} />}
+            className='flex-none'
             {...props}
             onClick={open}
           />

@@ -32,7 +32,9 @@ export const FilterSider = ({
   const [init, setInit] = useState(false)
   const tableContext = useContext(pageTableContext)
   const { mutate } = useDeleteMany()
-  const [value, setValue] = useState<TreeNodeValue[]>([tableContext.filters[field]])
+  const [value, setValue] = useState<TreeNodeValue[]>(
+    tableContext.filters[field] ? [tableContext.filters[field]] : [],
+  )
   const { data } = useList({
     resource: resource,
   })
@@ -85,7 +87,7 @@ export const FilterSider = ({
               })
             }}
           />
-          {value && (
+          {value?.length > 0 && (
             <Dropdown direction='right' hideAfterItemClick placement='bottom-left' trigger='hover'>
               <Button
                 variant='text'

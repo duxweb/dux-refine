@@ -102,7 +102,9 @@
     "trash": "清空",
     "notAccessTitle": "您无权访问",
     "submit": "提交",
-    "export": "导出"
+    "export": "导出",
+    "query": "查询",
+    "adv": "高级"
   },
   "warnWhenUnsavedChanges": "未保存的更改将不会保留。",
   "notifications": {
