@@ -166,6 +166,12 @@ export const PageTable = forwardRef(
       selectOptions,
     }
 
+    const [displayColumns, setDisplayColumns] = useState<(string | number | boolean)[]>(
+      (columns?.map((item) => item.colKey) as string[]) || [],
+    )
+
+    const [columnControllerVisible, setColumnControllerVisible] = useState(false)
+
     return (
       <pageTableContext.Provider value={tableResult}>
         <Main
@@ -237,39 +243,57 @@ export const PageTable = forwardRef(
                       initialData={filters}
                       labelWidth={'auto'}
                       labelAlign='left'
-                      className='flex flex-col gap-2'
+                      className='flex flex-col gap-2 flex-1'
                       onSubmit={({ fields }) => {
                         setFilters(fields)
                       }}
                       form={form}
                     >
-                      <div className='app-filter'>
-                        {filterRender?.(renderParams)}
-                        <appHook.Render
-                          mark={[moduleName, resource?.name as string, 'list', 'filter']}
-                        />
-                        <Form.FormItem>
-                          <div className='flex-1 flex gap-2 flex-wrap'>
-                            <Button
-                              type='submit'
-                              icon={<div className='t-icon i-tabler:search'></div>}
-                            >
-                              {translate('buttons.query')}
-                            </Button>
-                            {filterAdvRender && (
+                      <div className='flex flex-col md:flex-row gap-2'>
+                        <div className='app-filter flex-1 md:w-1'>
+                          {filterRender?.(renderParams)}
+                          <appHook.Render
+                            mark={[moduleName, resource?.name as string, 'list', 'filter']}
+                          />
+                          <Form.FormItem>
+                            <div className='flex-1 flex flex-col md:flex-row gap-2 flex-wrap'>
                               <Button
-                                theme='primary'
-                                variant='text'
-                                suffix={<div className='t-icon i-tabler:chevrons-down'></div>}
-                                onClick={() => {
-                                  setAdvFilter((v) => !v)
-                                }}
+                                type='submit'
+                                icon={<div className='t-icon i-tabler:search'></div>}
+                                className='w-full md:w-auto'
                               >
-                                {translate('buttons.adv')}
+                                {translate('buttons.query')}
                               </Button>
-                            )}
-                          </div>
-                        </Form.FormItem>
+                              {filterAdvRender && (
+                                <Button
+                                  theme='primary'
+                                  variant='text'
+                                  className='w-full md:w-auto'
+                                  suffix={<div className='t-icon i-tabler:chevrons-down'></div>}
+                                  onClick={() => {
+                                    setAdvFilter((v) => !v)
+                                  }}
+                                >
+                                  {translate('buttons.adv')}
+                                </Button>
+                              )}
+                            </div>
+                          </Form.FormItem>
+                        </div>
+                        <div className='flex-none flex flex-col md:flex-row gap-2'>
+                          <Button
+                            theme='default'
+                            variant='outline'
+                            onClick={() => setColumnControllerVisible(true)}
+                            icon={<div className='t-icon i-tabler:settings'></div>}
+                          ></Button>
+                          <Button
+                            theme='default'
+                            variant='outline'
+                            onClick={() => refetch()}
+                            icon={<div className='t-icon i-tabler:refresh'></div>}
+                          ></Button>
+                        </div>
                       </div>
                       {advFilter && filterAdvRender && (
                         <div className='app-filter'>
@@ -328,6 +352,17 @@ export const PageTable = forwardRef(
                     onFilterChange={setTableFilters}
                     onRowEdit={onRowEdit}
                     maxHeight={tableHeight}
+                    displayColumns={displayColumns}
+                    onDisplayColumnsChange={setDisplayColumns}
+                    columnControllerVisible={columnControllerVisible}
+                    onColumnControllerVisibleChange={setColumnControllerVisible}
+                    columnController={{
+                      dialogProps: {
+                        preventScrollThrough: true,
+                        className: 'app-modal app-modal-padding',
+                      },
+                      hideTriggerButton: true,
+                    }}
                     {...table}
                   />
                 </div>

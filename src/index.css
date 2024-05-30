@@ -38,6 +38,10 @@ html:root[theme-mode="dark"] {
   padding: 0;
 }
 
+.app-modal.app-modal-padding .t-dialog__body {
+  padding: var(--td-comp-paddingTB-m);
+}
+
 .app-modal .t-dialog__header {
   padding: var(--td-comp-paddingTB-m) var(--td-comp-paddingTB-l);
   @apply border-b border-component;
