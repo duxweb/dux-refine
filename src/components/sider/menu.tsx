@@ -90,8 +90,8 @@ export const useMenu = (): UseMenuProps => {
   }, [identity?.token, formatMenu, config])
 
   const menuData = useMemo(() => {
-    const array1 = [...apiMenuData] // your first array
-    const array2 = [...refineMenuData]
+    const array1 = [...refineMenuData] // your first array
+    const array2 = [...apiMenuData]
     mergeByProperty(array1, array2)
     const data = sortData(array1)
     return data
