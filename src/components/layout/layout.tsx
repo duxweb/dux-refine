@@ -98,12 +98,7 @@ export const Layout = ({ siderType = 'collapse' }: LayoutProps) => {
       <div className='inset-0 h-screen w-screen flex flex-row overflow-hidden'>
         <div className='app-sider-collapse hidden md:block'>
           {(siderType === 'collapse' || siderType === 'level') && (
-            <SiderCollapse
-              type={siderType}
-              col={true}
-              defaultOpenKeys={defaultOpenKeys}
-              menuData={menuData}
-            />
+            <SiderCollapse type={siderType} defaultOpenKeys={defaultOpenKeys} menuData={menuData} />
           )}
           {siderType === 'app' && (
             <SiderApp defaultOpenKeys={defaultOpenKeys} menuData={menuData} />

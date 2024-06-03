@@ -6,7 +6,6 @@ import { useKBar } from 'kbar'
 const { MenuItem, SubMenu } = Menu
 import {
   Icon,
-  ViewListIcon,
   SearchIcon,
   MoreIcon,
   BrightnessIcon,
@@ -44,15 +43,16 @@ const Search = () => {
 
 export interface SiderCollapseProps {
   type: siderType
-  col: boolean
   menuData: MenuItemProps[]
   defaultOpenKeys: string[]
 }
 
-export const SiderCollapse = ({ defaultOpenKeys, menuData, type, col }: SiderCollapseProps) => {
+export const SiderCollapse = ({ defaultOpenKeys, menuData, type }: SiderCollapseProps) => {
   const go = useGo()
   const translate = useTranslate()
-  const [collapse, setCollapse] = useState<boolean>(false)
+  const siderHidden = useAppStore((state) => state.siderHidden)
+  const switchSiderHidden = useAppStore((state) => state.switchSiderHidden)
+
   const [value, setValue] = useState<string | undefined>()
   const module = useModuleContext()
   const dark = useAppStore((state) => state.dark)
@@ -70,66 +70,38 @@ export const SiderCollapse = ({ defaultOpenKeys, menuData, type, col }: SiderCol
       width='210px'
       value={value}
       onChange={(value) => setValue(value as string)}
-      collapsed={collapse}
+      collapsed={siderHidden}
       logo={
-        <div className='relative w-full h-full flex items-center'>
-          {collapse ? (
-            <div
-              className='w-full h-15 flex items-center justify-center cursor-pointer'
-              onClick={() => setCollapse(!collapse)}
-            >
-              {module.config?.sideLogo ? (
-                <img
-                  src={
-                    dark
-                      ? module.config?.appDarkLogo || module.config.appLogo
-                      : module.config.appLogo
-                  }
-                  className='h-4'
-                />
-              ) : (
-                <DuxLogo className='h-4' />
-              )}
-            </div>
-          ) : (
-            <>
-              <div className='w-full flex items-center px-4'>
-                {module.config?.sideLogo ? (
-                  <img
-                    src={
-                      dark
-                        ? module.config?.sideDarkLogo || module.config.sideLogo
-                        : module.config.sideLogo
-                    }
-                    className='h-5'
-                  />
-                ) : (
-                  <DuxLogo className='h-6' />
-                )}
-              </div>
-              {col && (
-                <div className='absolute -right-3 z-1'>
-                  <Button
-                    size='small'
-                    shape='circle'
-                    icon={<ViewListIcon />}
-                    onClick={() => setCollapse(!collapse)}
-                  />
-                </div>
-              )}
-            </>
-          )}
+        <div className='relative w-full h-full flex items-center !ml-0'>
+          <div
+            className={clsx([
+              'w-full h-15 flex items-center cursor-pointer',
+              siderHidden ? 'px-2 justify-center' : 'px-4 justify-start',
+            ])}
+            onClick={() => switchSiderHidden()}
+          >
+            {module.config?.sideLogo ? (
+              <img
+                src={
+                  dark ? module.config?.appDarkLogo || module.config.appLogo : module.config.appLogo
+                }
+                className='w-full  max-h-6'
+              />
+            ) : (
+              <DuxLogo className='max-w-full max-h-6' />
+            )}
+          </div>
         </div>
       }
       operations={
         <>
           <div>
-            <SideUser collapse={collapse} menu={module.userMenu} />
+            <SideUser collapse={siderHidden} menu={module.userMenu} />
           </div>
         </>
       }
     >
-      {!collapse && (
+      {!siderHidden && (
         <div className='mb-2'>
           <Search />
         </div>
@@ -141,7 +113,7 @@ export const SiderCollapse = ({ defaultOpenKeys, menuData, type, col }: SiderCol
             value={app.key}
             icon={
               app.icon?.includes('i-') ? (
-                <div className={clsx(['h-6 w-6', app.icon])}></div>
+                <div className={clsx(['t-icon h-6 w-6', app.icon])}></div>
               ) : (
                 <Icon size={'22px'} name={app.icon} />
               )
@@ -162,18 +134,18 @@ export const SiderCollapse = ({ defaultOpenKeys, menuData, type, col }: SiderCol
             icon={
               app.icon ? (
                 app.icon?.includes('i-') ? (
-                  <div className={clsx(['h-6 w-6', app.icon])}></div>
+                  <div className={clsx(['t-icon h-6 w-6', app.icon])}></div>
                 ) : (
                   <Icon size={'22px'} name={app.icon} />
                 )
               ) : undefined
             }
           >
-            {app?.children?.length > 0 && <SiderCollapseSub data={app?.children} />}
+            {app?.children?.length > 0 && SiderCollapseSub({ data: app?.children })}
           </SubMenu>
         ) : (
           <Menu.MenuGroup title={translate(`${app.label}.name`, app?.label)} key={app.key}>
-            {app?.children?.length > 0 && <SiderCollapseSub data={app?.children} />}
+            {app?.children?.length > 0 && SiderCollapseSub({ data: app?.children, icon: true })}
           </Menu.MenuGroup>
         )
       })}
@@ -183,9 +155,10 @@ export const SiderCollapse = ({ defaultOpenKeys, menuData, type, col }: SiderCol
 
 export interface SiderCollapseSubProps {
   data: MenuItemProps[]
+  icon?: boolean
 }
 
-export const SiderCollapseSub = ({ data }: SiderCollapseSubProps) => {
+export const SiderCollapseSub = ({ data, icon }: SiderCollapseSubProps) => {
   const go = useGo()
   const translate = useTranslate()
   return data?.map((parent: MenuItemProps) => {
@@ -195,9 +168,9 @@ export const SiderCollapseSub = ({ data }: SiderCollapseSubProps) => {
         title={translate(`${parent.label}.name`, parent?.label)}
         value={parent.key}
         icon={
-          parent.icon ? (
+          icon && parent.icon ? (
             parent.icon?.includes('i-') ? (
-              <div className={clsx(['h-6 w-6', parent.icon])}></div>
+              <div className={clsx(['t-icon h-6 w-6', parent.icon])}></div>
             ) : (
               <Icon size={'22px'} name={parent.icon} />
             )
@@ -209,9 +182,9 @@ export const SiderCollapseSub = ({ data }: SiderCollapseSubProps) => {
             key={sub.key}
             value={sub.key}
             icon={
-              sub.icon ? (
+              icon && sub.icon ? (
                 sub.icon?.includes('i-') ? (
-                  <div className={clsx(['h-6 w-6', sub.icon])}></div>
+                  <div className={clsx(['t-icon h-6 w-6', sub.icon])}></div>
                 ) : (
                   <Icon size={'22px'} name={sub.icon} />
                 )
@@ -232,9 +205,9 @@ export const SiderCollapseSub = ({ data }: SiderCollapseSubProps) => {
         key={parent.key}
         value={parent.key}
         icon={
-          parent.icon ? (
+          icon && parent.icon ? (
             parent.icon?.includes('i-') ? (
-              <div className={clsx(['h-6 w-6', parent.icon])}></div>
+              <div className={clsx(['t-icon h-6 w-6', parent.icon])}></div>
             ) : (
               <Icon size={'22px'} name={parent.icon} />
             )
@@ -273,7 +246,7 @@ export const SideUser = ({ collapse, menu = [], size = 'medium' }: UserProps) =>
     (data: DropdownOption) => {
       changeLanguage(data.value as string)
     },
-    [changeLanguage]
+    [changeLanguage],
   )
 
   const options = useMemo(() => {
