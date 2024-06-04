@@ -67,7 +67,7 @@ export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
         ])}
       >
         <div
-          className='my-4 py-4 flex justify-center flex-none cursor-pointer'
+          className='h-20 flex items-center justify-center flex-none cursor-pointer px-3'
           onClick={() => switchSiderHidden()}
         >
           {module.config?.appLogo ? (
@@ -75,10 +75,10 @@ export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
               src={
                 dark ? module.config?.appDarkLogo || module.config.appLogo : module.config.appLogo
               }
-              className='h-4'
+              className='max-w-full  max-h-6'
             />
           ) : (
-            <DuxLogo className='h-4' />
+            <DuxLogo className='max-w-full  max-h-6' />
           )}
         </div>
 

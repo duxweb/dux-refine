@@ -32,15 +32,25 @@ export const LoginLayout = ({ title, children }: LoginLayoutProps) => {
         <div className='flex flex-1 flex-col'>
           <div className='mt-4 flex flex-col items-center justify-center'>
             {config?.appLogo ? (
-              <img src={dark ? (config.appDarkLogo || config.appLogo) : config.appLogo} className='w-30 text-white' />
+              <img
+                src={dark ? config.appDarkLogo || config.appLogo : config.appLogo}
+                className='max-w-30 max-h-14 text-white'
+              />
             ) : (
-              <DuxLogo className='w-30 text-white' />
+              <DuxLogo className='max-w-30 max-h-14 text-white' />
             )}
 
-            <div className='mt-4 text-lg'>{title || config?.moduleApp?.[name]?.title || config?.title || translate(`${name}.title`)}</div>
+            <div className='mt-4 text-lg'>
+              {title ||
+                config?.moduleApp?.[name]?.title ||
+                config?.title ||
+                translate(`${name}.title`)}
+            </div>
           </div>
           <div className='my-6'>{children}</div>
-          <div className='text-center text-sm text-placeholder'>{config?.copyright || translate(`copyright`)}</div>
+          <div className='text-center text-sm text-placeholder'>
+            {config?.copyright || translate(`copyright`)}
+          </div>
         </div>
       </div>
     </div>

@@ -85,7 +85,7 @@ export const SiderCollapse = ({ defaultOpenKeys, menuData, type }: SiderCollapse
                 src={
                   dark ? module.config?.appDarkLogo || module.config.appLogo : module.config.appLogo
                 }
-                className='w-full  max-h-6'
+                className='max-w-full  max-h-6'
               />
             ) : (
               <DuxLogo className='max-w-full max-h-6' />
