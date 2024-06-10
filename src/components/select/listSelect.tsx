@@ -8,6 +8,7 @@ import { FilterItem, useTable, useTableProps } from '../table/table'
 type Value = (string | number)[]
 
 interface SpecProps {
+  idField?: string
   value?: Value
   defaultValue?: Value
   onChange?: (value?: Value) => void
@@ -28,6 +29,7 @@ export const ListSelect = ({
   tableColumns,
   filterRender,
   sort,
+  idField = 'id',
   ...props
 }: SpecProps) => {
   const translate = useTranslate()
@@ -46,7 +48,7 @@ export const ListSelect = ({
   }, [list])
 
   useEffect(() => {
-    setValue(data.map((v) => v?.id))
+    setValue(data.map((v) => v?.[idField]))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
 
@@ -68,7 +70,7 @@ export const ListSelect = ({
           deleteAction={true}
           value={data}
           options={options || []}
-          rowKey='id'
+          rowKey={idField}
           onChange={(values) => {
             setData(values)
           }}
@@ -86,7 +88,7 @@ export const ListSelect = ({
             setData((v) => {
               const items = v || []
               values?.forEach((el) => {
-                if (!items.some((e) => e.id == el.id)) {
+                if (!items.some((e) => e[idField] == el[idField])) {
                   items.push(el)
                 }
               })
@@ -108,6 +110,7 @@ interface ModalSelectProps {
   tableHook?: useTableProps<BaseRecord, HttpError, BaseRecord>
   columns?: PrimaryTableCol[]
   filterRender?: ReactNode
+  idField?: string
 }
 
 export const ModalSelect = ({
@@ -119,6 +122,7 @@ export const ModalSelect = ({
   onClose,
   onSelect,
   filterRender,
+  idField = 'id',
 }: ModalSelectProps) => {
   const translate = useTranslate()
   const [select, setSelect] = useState<Record<string, any>[]>([])
@@ -141,6 +145,7 @@ export const ModalSelect = ({
         table={table}
         tableHook={tableHook}
         filterRender={filterRender}
+        idField={idField}
         onSelect={(v) => setSelect(v || [])}
       />
     </Dialog>
@@ -154,8 +159,17 @@ interface SelectProps {
   columns?: PrimaryTableCol[]
   onSelect?: (value?: Record<string, any>[]) => void
   filterRender?: ReactNode
+  idField?: string
 }
-const Select = ({ resource, columns, table, tableHook, onSelect, filterRender }: SelectProps) => {
+const Select = ({
+  resource,
+  columns,
+  table,
+  tableHook,
+  onSelect,
+  filterRender,
+  idField = 'id',
+}: SelectProps) => {
   const translate = useTranslate()
 
   const getColumns = useMemo<PrimaryTableCol[]>(() => {
@@ -220,7 +234,7 @@ const Select = ({ resource, columns, table, tableHook, onSelect, filterRender }:
 
       <Table
         bordered
-        rowKey={table?.rowKey || 'id'}
+        rowKey={idField}
         columns={getColumns}
         data={data}
         cellEmptyContent={'-'}

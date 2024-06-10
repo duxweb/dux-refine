@@ -75,7 +75,10 @@ export const UploadFileManage = ({
             })}
           </div>
           <div className='flex mt-4'>
-            <Button icon={<div className='i-tabler:upload t-icon'></div>}>
+            <Button
+              icon={<div className='i-tabler:upload t-icon'></div>}
+              onClick={() => setVisible(true)}
+            >
               {translate('fields.file', {
                 ns: 'file',
               })}
@@ -94,9 +97,7 @@ export const UploadFileManage = ({
                       {item.name}
                     </Link>
                   </div>
-                  <div className='text-xs text-placeholder'>
-                    {humanFileSize(Number(item.size) || 0)}
-                  </div>
+                  <div className='text-xs text-placeholder'>{item.size}</div>
                 </div>
                 <div className='flex'>
                   <Button
