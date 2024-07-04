@@ -16,6 +16,10 @@ html:root[theme-mode="dark"] {
   --scrollbar-thumb: #aaa;
 }
 
+html {
+  @apply overflow-hidden;
+}
+
 ::-webkit-scrollbar {
   width: 12px;
 }
