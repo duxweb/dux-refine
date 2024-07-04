@@ -4,11 +4,32 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { userMenuItem } from './config'
 
 interface ResourceModuleProps extends ResourceProps {
+  /**
+   * @deprecated change the name to listComponent
+   */
   listElenemt?: React.ReactNode | null
+  /**
+   * @deprecated change the name to createComponent
+   */
   createElenemt?: React.ReactNode | null
+  /**
+   * @deprecated change the name to cloneComponent
+   */
   cloneElenemt?: React.ReactNode | null
+  /**
+   * @deprecated change the name to editComponent
+   */
   editElenemt?: React.ReactNode | null
+  /**
+   * @deprecated change the name to showComponent
+   */
   showElenemt?: React.ReactNode | null
+
+  listComponent?: React.ReactNode | null
+  createComponent?: React.ReactNode | null
+  cloneComponent?: React.ReactNode | null
+  editComponent?: React.ReactNode | null
+  showComponent?: React.ReactNode | null
 }
 
 interface ResourceIndex {
@@ -41,38 +62,43 @@ export const createApp = (): App => {
 
   const addResources = (resource: ResourceModuleProps[]) => {
     resource = resource?.map((item) => {
-      const { listElenemt, createElenemt, cloneElenemt, editElenemt, showElenemt, ...items } = item
-      if (listElenemt && typeof item.list == 'string') {
+      const listComponent = item.listComponent || item.listElenemt
+      const createComponent = item.createComponent || item.createElenemt
+      const cloneComponent = item.cloneComponent || item.cloneElenemt
+      const editComponent = item.editComponent || item.editElenemt
+      const showComponent = item.showComponent || item.showElenemt
+
+      if (listComponent && typeof item.list == 'string') {
         routers.push({
           path: item.list,
-          element: listElenemt,
+          element: listComponent,
         })
       }
-      if (createElenemt && typeof item.create == 'string') {
+      if (createComponent && typeof item.create == 'string') {
         routers.push({
           path: item.create,
-          element: createElenemt,
+          element: createComponent,
         })
       }
-      if (cloneElenemt && typeof item.clone == 'string') {
+      if (cloneComponent && typeof item.clone == 'string') {
         routers.push({
           path: item.clone,
-          element: cloneElenemt,
+          element: cloneComponent,
         })
       }
-      if (editElenemt && typeof item.edit == 'string') {
+      if (editComponent && typeof item.edit == 'string') {
         routers.push({
           path: item.edit,
-          element: editElenemt,
+          element: editComponent,
         })
       }
-      if (showElenemt && typeof item.show == 'string') {
+      if (showComponent && typeof item.show == 'string') {
         routers.push({
           path: item.show,
-          element: showElenemt,
+          element: showComponent,
         })
       }
-      return items
+      return item
     })
     resources = [...resources, ...resource]
   }

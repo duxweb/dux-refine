@@ -4,7 +4,6 @@ import { useState } from 'react'
 import clsx from 'clsx'
 import { useTranslate } from '@refinedev/core'
 import { FileManage } from './manage'
-import { humanFileSize } from './useUpload'
 
 interface FileValue {
   url: string
