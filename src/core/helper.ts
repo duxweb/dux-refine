@@ -62,43 +62,57 @@ export const createApp = (): App => {
 
   const addResources = (resource: ResourceModuleProps[]) => {
     resource = resource?.map((item) => {
-      const listComponent = item.listComponent || item.listElenemt
-      const createComponent = item.createComponent || item.createElenemt
-      const cloneComponent = item.cloneComponent || item.cloneElenemt
-      const editComponent = item.editComponent || item.editElenemt
-      const showComponent = item.showComponent || item.showElenemt
+      const {
+        listElenemt,
+        createElenemt,
+        cloneElenemt,
+        editElenemt,
+        showElenemt,
+        listComponent,
+        createComponent,
+        cloneComponent,
+        editComponent,
+        showComponent,
+        ...items
+      } = item
 
-      if (listComponent && typeof item.list == 'string') {
+      const list = listComponent || listElenemt
+      const create = createComponent || createElenemt
+      const clone = cloneComponent || cloneElenemt
+      const edit = editComponent || editElenemt
+      const show = showComponent || showElenemt
+
+      if (list && typeof item.list == 'string') {
         routers.push({
           path: item.list,
-          element: listComponent,
+          element: list,
         })
       }
-      if (createComponent && typeof item.create == 'string') {
+      if (create && typeof item.create == 'string') {
         routers.push({
           path: item.create,
-          element: createComponent,
+          element: create,
         })
       }
-      if (cloneComponent && typeof item.clone == 'string') {
+      if (clone && typeof item.clone == 'string') {
         routers.push({
           path: item.clone,
-          element: cloneComponent,
+          element: clone,
         })
       }
-      if (editComponent && typeof item.edit == 'string') {
+      if (edit && typeof item.edit == 'string') {
         routers.push({
           path: item.edit,
-          element: editComponent,
+          element: edit,
         })
       }
-      if (showComponent && typeof item.show == 'string') {
+      if (show && typeof item.show == 'string') {
         routers.push({
           path: item.show,
-          element: showComponent,
+          element: show,
         })
       }
-      return item
+      return items
     })
     resources = [...resources, ...resource]
   }
