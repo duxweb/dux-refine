@@ -39,6 +39,7 @@ export interface PageTableProps {
   table?: EnhancedTableProps
   tableHook?: useTableProps<BaseRecord, HttpError, BaseRecord>
   columns?: PrimaryTableCol[]
+  columnHookIndex?: number
   siderRender?: (params: PageTableRenderProps) => React.ReactElement
   headerRender?: (params: PageTableRenderProps) => React.ReactElement
   footerRender?: (params: PageTableRenderProps) => React.ReactElement
@@ -70,6 +71,7 @@ export const PageTable = forwardRef(
       tableHook,
       filterForm,
       onData,
+      columnHookIndex,
     }: PageTableProps,
     ref: React.ForwardedRef<TableRef>,
   ) => {
@@ -79,14 +81,14 @@ export const PageTable = forwardRef(
     const { name: moduleName } = useModuleContext()
     const translate = useTranslate()
 
-    const hookColumns = appHook.useMark([moduleName, resource?.name as string, 'table', 'columns'])
+    const mark = [moduleName, resource?.name as string, 'table', 'columns']
+    const hookColumns = appHook.useMark(mark)
 
     const getColumns = useMemo(() => {
       if (!columns) {
         return []
       }
-      const insertIndex = columns.length - 1
-      columns.splice(insertIndex, 0, ...[].concat(...hookColumns))
+      columns.splice(columnHookIndex || 2, 0, ...[].concat(...hookColumns))
       return columns
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [columns])

@@ -4,7 +4,7 @@ import { Form as TdForm, Button, SubmitContext } from 'tdesign-react/esm'
 import { Modal, useModal } from '../modal'
 import { Form, FormProps, FormResult } from './form'
 import clsx from 'clsx'
-import { appHook } from '../../utils'
+import { appHook } from '../../utils/hook'
 import { useModuleContext } from '../../core'
 
 export interface FormModalProps extends FormProps {
@@ -41,7 +41,7 @@ export const FormModal = ({
       onResult?.(data)
       setResult(data)
     },
-    [onResult]
+    [onResult],
   )
 
   return (
