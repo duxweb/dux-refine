@@ -1,6 +1,6 @@
 {
   "name": "@duxweb/dux-refine",
-  "version": "0.16.1",
+  "version": "0.16.2",
   "description": "🌲 Integrated UI based on refine and tdesign",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "clean": "rimraf dist",
-    "copy-files": "copyfiles -u 1 src/**/*.{css,scss,js,png,jpg,svg} dist/",
+    "copy-files": "copyfiles -u 1 src/**/*.{css,scss,js,png,jpg,svg,jsx,d.ts} dist/",
     "build": "yarn clean && tsc && yarn copy-files",
     "local": "yarn build && yalc push",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
