@@ -120,6 +120,8 @@ export const FormPage = ({
           }}
           {...props}
         >
+          <appHook.Render mark={[moduleName, resource?.name as string, 'formBefore']} />
+
           {children}
 
           <appHook.Render mark={[moduleName, resource?.name as string, 'form']} />

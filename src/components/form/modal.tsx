@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useResource, useTranslate } from '@refinedev/core'
 import { Form as TdForm, Button, SubmitContext } from 'tdesign-react/esm'
 import { Modal, useModal } from '../modal'
@@ -55,6 +55,7 @@ export const FormModal = ({
       {...props}
     >
       <div className={clsx([padding ? 'p-5' : ''])}>
+        <appHook.Render mark={[moduleName, resource?.name as string, 'formBefore']} />
         {children}
         <appHook.Render mark={[moduleName, resource?.name as string, 'form']} />
       </div>
