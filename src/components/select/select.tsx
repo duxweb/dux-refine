@@ -25,7 +25,7 @@ export const SelectAsync = ({
 }: SelectAsyncProps) => {
   const [page, setPage] = useState(1)
 
-  const { queryResult, onSearch } = useSelect<Record<string, any>>({
+  const { queryResult, onSearch, defaultValueQueryResult } = useSelect<Record<string, any>>({
     resource: url,
     optionLabel: optionLabel,
     optionValue: optionValue,
@@ -45,7 +45,14 @@ export const SelectAsync = ({
   }, [queryResult])
 
   const getOptions = useMemo(() => {
-    return Array.from(new Set(queryResult?.data?.data || [])).map((item: Record<string, any>) => {
+    let data = queryResult?.data?.data || []
+
+    console.log('defaultValueQueryResult', defaultValueQueryResult)
+    const defaultData = defaultValueQueryResult?.data?.data || []
+    if (defaultData.length > 0) {
+      data = [...defaultData, ...data]
+    }
+    return data.map((item: Record<string, any>) => {
       return {
         content: optionRender?.(item),
         label: item[optionLabel],
@@ -53,7 +60,13 @@ export const SelectAsync = ({
         row: item,
       }
     })
-  }, [optionLabel, optionRender, optionValue, queryResult?.data?.data])
+  }, [
+    optionLabel,
+    optionRender,
+    optionValue,
+    queryResult?.data?.data,
+    defaultValueQueryResult?.data?.data,
+  ])
 
   return (
     <Select

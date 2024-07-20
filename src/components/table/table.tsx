@@ -135,6 +135,7 @@ export const useTable = <
     (values: Record<string, unknown>) => {
       setFilters(formatFilter(values))
       filterForm?.setFieldsValue(values)
+      setCurrent(1)
     },
     [formatFilter, setFilters],
   )
@@ -167,6 +168,7 @@ export const useTable = <
         return
       }
       setFilters(formatFilter(values))
+      setCurrent(1)
     },
     [formatFilter, getTableFilterFields, setFilters],
   )
