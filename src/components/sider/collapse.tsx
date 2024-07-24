@@ -275,15 +275,39 @@ export const SideUser = ({ collapse, menu = [], size = 'medium' }: UserProps) =>
         prefixIcon: <EarthIcon />,
         children: [
           {
-            value: 'en',
+            value: 'en-US',
             content: 'English',
             prefixIcon: <div>🇬🇧</div>,
             onClick: switchLang,
           },
           {
-            value: 'zh',
+            value: 'zh-CN',
             content: '中文',
             prefixIcon: <div>🇨🇳</div>,
+            onClick: switchLang,
+          },
+          // {
+          //   value: 'zh-TW',
+          //   content: '繁体中文',
+          //   prefixIcon: <div>🇨🇳</div>,
+          //   onClick: switchLang,
+          // },
+          // {
+          //   value: 'ja-JP',
+          //   content: 'はい',
+          //   prefixIcon: <div>🇯🇵</div>,
+          //   onClick: switchLang,
+          // },
+          // {
+          //   value: 'ru-RU',
+          //   content: 'россия',
+          //   prefixIcon: <div>🇷🇺</div>,
+          //   onClick: switchLang,
+          // },
+          {
+            value: 'ko-KR',
+            content: '한국어',
+            prefixIcon: <div>🇰🇷</div>,
             onClick: switchLang,
           },
         ],
