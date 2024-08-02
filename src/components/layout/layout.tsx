@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
-import { SiderCollapse, SiderApp } from '../sider'
+import { SiderCollapse, SliderApp } from '../sider'
 import { siderType } from '../../core/config'
 import { KBarProvider, Action } from 'kbar'
 import { Kbar } from './kbar'
@@ -101,7 +101,7 @@ export const Layout = ({ siderType = 'collapse' }: LayoutProps) => {
             <SiderCollapse type={siderType} defaultOpenKeys={defaultOpenKeys} menuData={menuData} />
           )}
           {siderType === 'app' && (
-            <SiderApp defaultOpenKeys={defaultOpenKeys} menuData={menuData} />
+            <SliderApp defaultOpenKeys={defaultOpenKeys} menuData={menuData} />
           )}
         </div>
 

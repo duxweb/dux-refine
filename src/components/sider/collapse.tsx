@@ -286,24 +286,24 @@ export const SideUser = ({ collapse, menu = [], size = 'medium' }: UserProps) =>
             prefixIcon: <div>🇨🇳</div>,
             onClick: switchLang,
           },
-          // {
-          //   value: 'zh-TW',
-          //   content: '繁体中文',
-          //   prefixIcon: <div>🇨🇳</div>,
-          //   onClick: switchLang,
-          // },
-          // {
-          //   value: 'ja-JP',
-          //   content: 'はい',
-          //   prefixIcon: <div>🇯🇵</div>,
-          //   onClick: switchLang,
-          // },
-          // {
-          //   value: 'ru-RU',
-          //   content: 'россия',
-          //   prefixIcon: <div>🇷🇺</div>,
-          //   onClick: switchLang,
-          // },
+          {
+            value: 'zh-TW',
+            content: '繁体中文',
+            prefixIcon: <div>🇨🇳</div>,
+            onClick: switchLang,
+          },
+          {
+            value: 'ja-JP',
+            content: 'はい',
+            prefixIcon: <div>🇯🇵</div>,
+            onClick: switchLang,
+          },
+          {
+            value: 'ru-RU',
+            content: 'россия',
+            prefixIcon: <div>🇷🇺</div>,
+            onClick: switchLang,
+          },
           {
             value: 'ko-KR',
             content: '한국어',
@@ -338,7 +338,12 @@ export const SideUser = ({ collapse, menu = [], size = 'medium' }: UserProps) =>
             <div className='text-placeholder'>{data?.userInfo?.rolename}</div>
           </div>
           <div className='flex-none'>
-            <Dropdown options={options} minColumnWidth={150} trigger='click'>
+            <Dropdown
+              options={options}
+              minColumnWidth={150}
+              trigger='click'
+              placement={'right-bottom'}
+            >
               <Button shape='square' variant='text'>
                 <MoreIcon />
               </Button>

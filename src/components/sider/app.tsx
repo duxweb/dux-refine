@@ -18,24 +18,24 @@ import clsx from 'clsx'
 import { SideUser } from './collapse'
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react'
 
-export interface SiderAppProps {
+export interface SliderAppProps {
   menuData: MenuItemProps[]
   defaultOpenKeys: string[]
 }
 
-interface siderContextProps {
+interface sliderContextProps {
   menus: MenuItemProps[]
   value: string[] | undefined
   setValue: Dispatch<SetStateAction<string[] | undefined>>
 }
 
-const siderContext = createContext<siderContextProps>({
+const sliderContext = createContext<sliderContextProps>({
   menus: [],
   value: [],
   setValue: () => [],
 })
 
-export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
+export const SliderApp = ({ defaultOpenKeys, menuData }: SliderAppProps) => {
   const go = useGo()
   const translate = useTranslate()
   const [value, setValue] = useState<string[] | undefined>()
@@ -136,7 +136,7 @@ export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
           <SideUser collapse={true} menu={module.userMenu} size='large' />
         </div>
       </div>
-      <siderContext.Provider
+      <sliderContext.Provider
         value={{
           menus: menuData,
           value: value,
@@ -148,10 +148,10 @@ export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
             <div className='flex flex-col divide-y divide-gray-3 dark:divide-gray-11 px-3 text-sm'>
               {panelData?.children?.map((sub, subIndex) => {
                 return sub.children && sub.children.length > 0 ? (
-                  <SiderGroup menuData={sub} key={subIndex} />
+                  <SliderGroup menuData={sub} key={subIndex} />
                 ) : (
                   <div className='py-2' key={subIndex}>
-                    <SiderItem menuData={sub} active={value?.[1]} icon={sub.icon} />
+                    <SliderItem menuData={sub} active={value?.[1]} icon={sub.icon} />
                   </div>
                 )
               })}
@@ -160,20 +160,20 @@ export const SiderApp = ({ defaultOpenKeys, menuData }: SiderAppProps) => {
         ) : (
           ''
         )}
-      </siderContext.Provider>
+      </sliderContext.Provider>
     </div>
   )
 }
 
-interface SiderGroupProps {
+interface SliderGroupProps {
   menuData: MenuItemProps
   //value: string[] | undefined
   //setValue: Dispatch<SetStateAction<string[] | undefined>>
 }
 
-const SiderGroup = ({ menuData }: SiderGroupProps) => {
+const SliderGroup = ({ menuData }: SliderGroupProps) => {
   const translate = useTranslate()
-  const { value } = useContext(siderContext)
+  const { value } = useContext(sliderContext)
   const [open, setOpen] = useState(value?.[1] == menuData.key)
   return (
     <div className='pb-2 pt-2'>
@@ -206,7 +206,7 @@ const SiderGroup = ({ menuData }: SiderGroupProps) => {
         ])}
       >
         {menuData.children?.map((item, itemIndex) => (
-          <SiderItem key={itemIndex} menuData={item} active={value?.[2]} />
+          <SliderItem key={itemIndex} menuData={item} active={value?.[2]} />
         ))}
       </div>
     </div>
@@ -219,11 +219,11 @@ interface SiderItemProps {
   icon?: string
 }
 
-const SiderItem = ({ menuData, active, icon }: SiderItemProps) => {
+const SliderItem = ({ menuData, active, icon }: SiderItemProps) => {
   const go = useGo()
   const translate = useTranslate()
 
-  const { menus, setValue } = useContext(siderContext)
+  const { menus, setValue } = useContext(sliderContext)
   return (
     <div
       className={clsx([
