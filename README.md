@@ -6,9 +6,7 @@
 <h1 align="center">Dux Refine</h1>
 
 <p align="center">
-<a href="https://ui.docs.dux.plus/zh/" target="_blank">中文文档</a>
-|
-<a href="https://ui.docs.dux.plus/en/" target="_blank">English Docs</a>
+<a href="https://next.dux.cn/react/start" target="_blank">中文文档</a>
 <p>
 
 
