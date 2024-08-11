@@ -47,7 +47,6 @@ export const SelectAsync = ({
   const getOptions = useMemo(() => {
     let data = queryResult?.data?.data || []
 
-    console.log('defaultValueQueryResult', defaultValueQueryResult)
     const defaultData = defaultValueQueryResult?.data?.data || []
     if (defaultData.length > 0) {
       data = [...defaultData, ...data]
