@@ -313,7 +313,7 @@ export const PageTable = forwardRef(
                 <div ref={cardRef}>
                   <TdTable
                     rowKey={table?.rowKey || 'id'}
-                    columns={getColumns}
+                    columns={columns}
                     data={data}
                     cellEmptyContent={'-'}
                     showSortColumnBgColor={true}
@@ -337,14 +337,12 @@ export const PageTable = forwardRef(
                         (selecteds && selecteds.length > 0) || size <= sizeMap.xl
                           ? 'simple'
                           : table?.pagination?.theme || 'default',
-                      showJumper:
+                      showJumper: !(
                         table?.pagination?.showJumper !== undefined || size <= sizeMap.xl
-                          ? false
-                          : true,
-                      showPageSize:
+                      ),
+                      showPageSize: !(
                         table?.pagination?.showPageSize !== undefined || size <= sizeMap.xl
-                          ? false
-                          : true,
+                      ),
                     }}
                     sort={sorters}
                     onSortChange={setSorters}

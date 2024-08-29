@@ -25,6 +25,7 @@ import {
   PageInfo,
 } from 'tdesign-react/esm'
 import { InternalFormInstance } from 'tdesign-react/esm/form/hooks/interface'
+import { TableRowData } from 'tdesign-react'
 
 export interface useTableProps<TQueryFnData, TError, TData>
   extends useRefineTableProps<TQueryFnData, TError, TData> {
@@ -36,7 +37,7 @@ export interface useTableProps<TQueryFnData, TError, TData>
 }
 
 export interface useTableReturnType<TData> {
-  data?: Array<TData>
+  data?: TableRowData[]
   filters: Record<string, any>
   setFilters: (values: Record<string, unknown>) => void
   tableFilters: FilterValue
@@ -50,6 +51,7 @@ export interface useTableReturnType<TData> {
   onRowEdit: (context: PrimaryTableRowEditContext<TData>) => void
   loading: boolean
   refetch: () => void
+  columns: PrimaryTableCol[]
 }
 export const useTable = <
   TQueryFnData extends BaseRecord = BaseRecord,
@@ -177,6 +179,8 @@ export const useTable = <
     return formatValues(filters as LogicalFilter[])
   }, [filters, formatValues])
 
+  const [tableData, setTableData] = useState<TableRowData[]>([])
+
   // Data
   const data = tableQueryResult?.data
 
@@ -185,6 +189,7 @@ export const useTable = <
       selectedRowData: [],
       type: 'check',
     })
+    setTableData(tableQueryResult?.data?.data as any)
     onData?.(tableQueryResult?.data as any)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableQueryResult?.data])
@@ -230,13 +235,29 @@ export const useTable = <
     [resource?.name, rowKey],
   )
 
+  // Columns
+  const tableColumns = useMemo<PrimaryTableCol[]>(() => {
+    columns?.forEach((item) => {
+      if (item.edit) {
+        item.edit.onEdited = (context: { rowIndex: number; newRowData: TableRowData }) => {
+          setTableData((v) => {
+            const newData = [...v]
+            newData.splice(context.rowIndex, 1, context.newRowData)
+            return newData
+          })
+        }
+      }
+    })
+    return columns || []
+  }, [columns])
+
   // Refetch
   const refetch = useCallback(() => {
     tableQueryResult.refetch()
   }, [tableQueryResult])
 
   return {
-    data: data?.data || [],
+    data: tableData,
     filters: getFilters,
     setFilters: setOnFilters,
     tableFilters: tableFilters,
@@ -250,6 +271,7 @@ export const useTable = <
     pagination: pagination,
     onRowEdit: onRowEdit,
     refetch: refetch,
+    columns: tableColumns,
   }
 }
 

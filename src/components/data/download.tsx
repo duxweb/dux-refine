@@ -31,6 +31,17 @@ export const useDownload = (): UseDownloadHook => {
       ).then(({ response, ...res }) => {
         if (res?.data) {
           const type = contentType || res.headers['content-type']
+          const contentDisposition = res.headers['content-disposition']
+
+          if (contentDisposition) {
+            const matches = /filename="([^"]+)"/.exec(contentDisposition)
+            if (matches && matches?.length > 1) {
+              filename = matches[1]
+              // urldecode
+              filename = decodeURIComponent(filename)
+            }
+          }
+
           const name = filename || dayjs().format('YYYYMMDD_HHmmss') + '.' + mime.getExtension(type)
           downloadFile(res.data, type, name)
         } else {
