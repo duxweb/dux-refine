@@ -18,17 +18,14 @@ export interface CardRadioProps {
 export const CardRadio = ({ width = '200px', options, ...props }: CardRadioProps) => {
   const [value, setValue] = useControllableValue<any>(props)
   return (
-    <div className='flex flex-row gap-4 flex-warp'>
+    <div className='flex flex-1 flex-col lg:flex-row gap-4 flex-warp'>
       {options?.map((item, key) => (
         <div
           key={key}
           className={clsx([
-            'overflow w-full lg:w-50  flex-wrap flex flex-col gap-1 border rounded px-4 py-4 text-center relative cursor-default',
+            'overflow  w-full lg:w-auto lg:w-1 flex flex-wrap flex-col items-center gap-1 border rounded px-4 py-4 text-center relative cursor-default',
             item?.value === value ? 'border-brand' : 'border-component',
           ])}
-          style={{
-            width: width,
-          }}
           tabIndex={0}
           role='radio'
           aria-checked={value === item?.value}
@@ -39,7 +36,14 @@ export const CardRadio = ({ width = '200px', options, ...props }: CardRadioProps
           }}
         >
           <div className='text-sm'>{item?.title}</div>
-          <div className='text-xs text-secondary'>{item?.desc}</div>
+          <div
+            className='text-xs text-secondary'
+            style={{
+              width: width,
+            }}
+          >
+            {item?.desc}
+          </div>
           {item?.value === value ? (
             <>
               <div className='absolute right-0 top-0 border-l-24 border-t-24 border-l-transparent border-t-brand'></div>

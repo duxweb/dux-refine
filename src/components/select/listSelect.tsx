@@ -2,8 +2,8 @@ import { BaseRecord, HttpError, useMany, useTranslate } from '@refinedev/core'
 import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { Input, Button, Dialog, Table, TableProps, PrimaryTableCol, Form } from 'tdesign-react/esm'
 import { useControllableValue } from 'ahooks'
-import { Listform, ListformData } from '../data/listform'
-import { FilterItem, useTable, useTableProps } from '../table/table'
+import { Listform, ListformData } from '../data'
+import { FilterItem, useTable, useTableProps } from '../table'
 
 type Value = (string | number)[]
 
@@ -44,12 +44,10 @@ export const ListSelect = ({
 
   useEffect(() => {
     setData(list?.data || [])
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [list])
 
   useEffect(() => {
     setValue(data.map((v) => v?.[idField]))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
 
   return (
@@ -58,7 +56,9 @@ export const ListSelect = ({
         <Button
           variant='outline'
           theme='primary'
-          onClick={() => setOpen(true)}
+          onClick={() => {
+            setOpen(true)
+          }}
           icon={<div className='t-icon i-tabler:plus'></div>}
         >
           {translate('common.select')}
@@ -200,6 +200,7 @@ const Select = ({
     tableFilters,
     setTableFilters,
     loading,
+    columns: TableColumns,
   } = useTable({
     pagination: {
       current: 0,
@@ -235,8 +236,8 @@ const Select = ({
       <Table
         bordered
         rowKey={idField}
-        columns={getColumns}
-        data={data}
+        columns={TableColumns}
+        data={data || []}
         cellEmptyContent={'-'}
         stripe
         showSortColumnBgColor={true}

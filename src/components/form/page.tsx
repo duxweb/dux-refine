@@ -13,7 +13,7 @@ import { Form, FormProps, FormResult } from './form'
 import { Main } from '../main'
 import clsx from 'clsx'
 import { appHook } from '../../utils/hook'
-import { useModuleContext } from '../../core'
+import { useModuleContext, useWindowSize } from '../../core'
 
 export interface FormPageProps extends FormProps {
   className?: string
@@ -47,6 +47,8 @@ export const FormPage = ({
   const { name: moduleName } = useModuleContext()
   const [visibleDrawer, setVisibleDrawer] = useState(false)
   const [form] = TdForm.useForm(tdForm)
+
+  const [size, sizeMap] = useWindowSize()
 
   return (
     <Main
@@ -114,7 +116,7 @@ export const FormPage = ({
             }
           }}
           formProps={{
-            labelAlign: 'left',
+            labelAlign: size <= sizeMap.lg ? 'top' : 'left',
             className: 'divide-y divide-gray-2 dark:divide-gray-10',
             ...formProps,
           }}

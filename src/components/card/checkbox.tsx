@@ -18,17 +18,14 @@ export interface CardCheckboxProps {
 export const CardCheckbox = ({ width = '170px', options, ...props }: CardCheckboxProps) => {
   const [value, setValue] = useControllableValue<any[]>(props)
   return (
-    <div className='flex flex-row gap-4 flex-warp'>
+    <div className='flex flex-1 flex-col lg:flex-row gap-4 flex-warp'>
       {options?.map((item, key) => (
         <div
           key={key}
           className={clsx([
-            'overflow w-full flex flex-wrap flex-col gap-1 border rounded px-4 py-4 text-center relative cursor-default',
+            'overflow w-full lg:w-auto flex flex-wrap flex-col items-center gap-1 border rounded px-4 py-4 text-center relative cursor-default',
             value?.includes?.(item?.value) ? 'border-brand' : 'border-component',
           ])}
-          style={{
-            width: width,
-          }}
           tabIndex={0}
           role='checkbox'
           aria-checked={value?.includes?.(item?.value)}
@@ -46,7 +43,14 @@ export const CardCheckbox = ({ width = '170px', options, ...props }: CardCheckbo
           }}
         >
           <div className='text-sm'>{item?.title}</div>
-          <div className='text-xs text-secondary'>{item?.desc}</div>
+          <div
+            className='text-xs text-secondary'
+            style={{
+              width: width,
+            }}
+          >
+            {item?.desc}
+          </div>
           {value?.includes?.(item.value) ? (
             <>
               <div className='absolute right-0 top-0 border-l-24 border-t-24 border-l-transparent border-t-brand'></div>

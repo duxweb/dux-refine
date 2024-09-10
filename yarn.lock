@@ -781,12 +781,12 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
-"@babel/runtime@~7.17.2":
-  version "7.17.9"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.17.9.tgz#d19fbf802d01a8cb6cf053a64e472d42c434ba72"
-  integrity sha512-lSiBBvodq29uShpWGNbgFdKYNiFDo5/HIYsaCEY9ff4sb10x9jizo2+pRrSyF4jKZCXqgzuqBOQKbUm90gQwJg==
+"@babel/runtime@~7.24.7":
+  version "7.24.8"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.24.8.tgz#5d958c3827b13cc6d05e038c07fb2e5e3420d82e"
+  integrity sha512-5F7SDGs1T72ZczbRwbGO9lQi0NLjQxzl6i4lJxLxfW9U5UluCSyEJeniWvnhl3/euNiqQVbo8zruhsDfid0esA==
   dependencies:
-    regenerator-runtime "^0.13.4"
+    regenerator-runtime "^0.14.0"
 
 "@babel/template@^7.22.15":
   version "7.22.15"
@@ -8422,11 +8422,6 @@ reflect.getprototypeof@^1.0.4:
     globalthis "^1.0.3"
     which-builtin-type "^1.1.3"
 
-regenerator-runtime@^0.13.4:
-  version "0.13.11"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz#f6dca3e7ceec20590d07ada785636a90cdca17f9"
-  integrity sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==
-
 regenerator-runtime@^0.14.0:
   version "0.14.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.14.1.tgz#356ade10263f685dda125100cd862c1db895327f"
@@ -9239,20 +9234,20 @@ synckit@^0.9.0:
     "@pkgr/core" "^0.1.0"
     tslib "^2.6.2"
 
-tdesign-icons-react@^0.3.0:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/tdesign-icons-react/-/tdesign-icons-react-0.3.2.tgz#0624371c6b5730668240c9716ffe57e9cf068565"
-  integrity sha512-J/82bexm9hj8yTZ91rQjVLMNTU2D43to8xWz5PIxnZo3FDImPdhksAPNHSN/lBQjzsu8gLRyAKfdnYwHbe/SaQ==
+tdesign-icons-react@^0.3.4:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/tdesign-icons-react/-/tdesign-icons-react-0.3.5.tgz#71da53356e7db77d3e661e0a1e20164eba656a6c"
+  integrity sha512-D2ynJjhnXXS/SYJg8mKrbkdVjaHmOtD1dRiR/6fbStm19YjNcuOkkO95wsQzSjKMOBXrOkdnqWEZJP1HBI+Q9w==
   dependencies:
     "@babel/runtime" "^7.16.5"
     classnames "^2.2.6"
 
-tdesign-react@^1.7.6:
-  version "1.7.6"
-  resolved "https://registry.yarnpkg.com/tdesign-react/-/tdesign-react-1.7.6.tgz#fbde4b81afaa30ca464a1446b50f12f1c31a7412"
-  integrity sha512-UZHbO9kc8nhg0GsY9Jw39r/msNVEJjteivC+xh6XpqZFOj6fax/aoKNkBSMn/FVbd6inGAkkUu17W0HGeeZI/w==
+tdesign-react@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/tdesign-react/-/tdesign-react-1.8.1.tgz#918acd685e5623fa3c7a95885d5ad413ba1d25c5"
+  integrity sha512-QpsCxT8dVfNHhE2zAjC2zwqMcalzox+FU+mvNCmAxkEkrAGCpXJEzoLFNxAkeDM9irXnZ1rWJLqc0D/JVj2UZQ==
   dependencies:
-    "@babel/runtime" "~7.17.2"
+    "@babel/runtime" "~7.24.7"
     "@popperjs/core" "~2.11.2"
     "@types/sortablejs" "^1.10.7"
     "@types/tinycolor2" "^1.4.3"
@@ -9267,7 +9262,7 @@ tdesign-react@^1.7.6:
     react-popper "~2.3.0"
     react-transition-group "~4.4.1"
     sortablejs "^1.15.0"
-    tdesign-icons-react "^0.3.0"
+    tdesign-icons-react "^0.3.4"
     tinycolor2 "^1.4.2"
     tslib "~2.3.1"
     validator "~13.7.0"
