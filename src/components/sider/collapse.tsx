@@ -80,7 +80,7 @@ export const SiderCollapse = ({ defaultOpenKeys, menuData, type }: SiderCollapse
             ])}
             onClick={() => switchSiderHidden()}
           >
-            {module.config?.sideLogo ? (
+            {module.config?.appLogo ? (
               <img
                 src={
                   dark ? module.config?.appDarkLogo || module.config.appLogo : module.config.appLogo

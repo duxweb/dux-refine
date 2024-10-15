@@ -9,7 +9,7 @@ import {
   Button,
 } from 'tdesign-react/esm'
 import { useWindowSize } from '../../core/helper'
-import { TableRef, TableTab, useTable, useTableProps, useTableReturnType } from './table'
+import { TableRef, TableTab, useTable, useTableProps, useTableReturnType } from './useTable'
 import { Main } from '../main'
 import { useResource, BaseRecord, HttpError, useTranslate } from '@refinedev/core'
 import { appHook } from '../../utils/hook'

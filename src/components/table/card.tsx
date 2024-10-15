@@ -9,7 +9,7 @@ import {
   Button,
 } from 'tdesign-react/esm'
 import { useWindowSize } from '../../core/helper'
-import { TableRef, useTable, useTableProps } from './table'
+import { TableRef, useTable, useTableProps } from './useTable'
 import { useResource, BaseRecord, HttpError } from '@refinedev/core'
 import { appHook } from '../../utils/hook'
 import { useModuleContext } from '../../core'
@@ -41,7 +41,7 @@ export const CardTable = forwardRef(
       tableHook,
       filterForm,
     }: CardTableProps,
-    ref: React.ForwardedRef<TableRef>
+    ref: React.ForwardedRef<TableRef>,
   ) => {
     const [size, sizeMap] = useWindowSize()
     const [form] = Form.useForm(filterForm)
@@ -163,7 +163,7 @@ export const CardTable = forwardRef(
         {footerRender?.()}
       </Card>
     )
-  }
+  },
 )
 
 CardTable.displayName = 'CardTable'
