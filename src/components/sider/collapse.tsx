@@ -80,12 +80,14 @@ export const SiderCollapse = ({ defaultOpenKeys, menuData, type }: SiderCollapse
             ])}
             onClick={() => switchSiderHidden()}
           >
-            {module.config?.appLogo ? (
+            {module.config?.sideLogo ? (
               <img
                 src={
-                  dark ? module.config?.appDarkLogo || module.config.appLogo : module.config.appLogo
+                  dark
+                    ? module.config?.sideDarkLogo || module.config.sideLogo
+                    : module.config.sideLogo
                 }
-                className='max-w-full  max-h-6'
+                className='max-w-full  max-h-10'
               />
             ) : (
               <DuxLogo className='max-w-full max-h-6' />
